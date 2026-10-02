@@ -1,0 +1,7 @@
+{
+  "name": "pupyguido",
+  "private": true,
+  "scripts": {
+    "build": "node build/build.js"
+  }
+}

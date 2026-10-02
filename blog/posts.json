@@ -1,15 +1,5 @@
 [
   {
-    "slug": "puppy-crying-at-night",
-    "title": "Puppy Crying at Night? 7 Things to Check Before You Panic",
-    "description": "A new puppy crying at night is normal. Here are 7 common reasons and a calm, step-by-step bedtime routine that helps most puppies settle.",
-    "category": "Sleep & Crate",
-    "date": "2026-10-02",
-    "readMinutes": 5,
-    "image": "/assets/night.jpg",
-    "imageAlt": "Golden retriever puppy on a dark floor looking at the camera"
-  },
-  {
     "slug": "how-to-stop-puppy-biting",
     "title": "How to Stop Puppy Biting: The Pause, Redirect, Reward Method",
     "description": "Puppy biting is normal but painful. Learn why puppies bite and a simple three-step method (pause, redirect, reward) that works without punishment.",
@@ -20,16 +10,6 @@
     "imageAlt": "Golden retriever puppy resting its head on its paws"
   },
   {
-    "slug": "puppy-potty-training-schedule",
-    "title": "Puppy Potty Training Schedule: A Simple Daily Routine That Works",
-    "description": "A clear puppy potty training schedule: when to take your puppy out, how to reward success, and how to handle accidents calmly.",
-    "category": "Potty Training",
-    "date": "2026-10-02",
-    "readMinutes": 6,
-    "image": "/assets/potty.jpg",
-    "imageAlt": "Golden retriever puppy sitting on green grass"
-  },
-  {
     "slug": "new-puppy-checklist",
     "title": "New Puppy Checklist: 10 Essentials to Buy Before Your Puppy Comes Home",
     "description": "Your new puppy checklist: the essential items to have ready before day one, plus what you can wait on.",
@@ -38,5 +18,25 @@
     "readMinutes": 4,
     "image": "/assets/checklist.jpg",
     "imageAlt": "Golden retriever puppy walking across a floor at home"
+  },
+  {
+    "slug": "puppy-crying-at-night",
+    "title": "Puppy Crying at Night? 7 Things to Check Before You Panic",
+    "description": "A new puppy crying at night is normal. Here are 7 common reasons and a calm, step-by-step bedtime routine that helps most puppies settle.",
+    "category": "Sleep & Crate",
+    "date": "2026-10-02",
+    "readMinutes": 5,
+    "image": "/assets/night.jpg",
+    "imageAlt": "Golden retriever puppy on a dark floor looking at the camera"
+  },
+  {
+    "slug": "puppy-potty-training-schedule",
+    "title": "Puppy Potty Training Schedule: A Simple Daily Routine That Works",
+    "description": "A clear puppy potty training schedule: when to take your puppy out, how to reward success, and how to handle accidents calmly.",
+    "category": "Potty Training",
+    "date": "2026-10-02",
+    "readMinutes": 6,
+    "image": "/assets/potty.jpg",
+    "imageAlt": "Golden retriever puppy sitting on green grass"
   }
 ]

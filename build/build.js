@@ -6,7 +6,13 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SITE = process.env.SITE_URL || 'https://pupyguido.com';
 const EMAIL = 'hello@pupyguido.com';
-const posts = require('./posts.js').sort((a, b) => b.date.localeCompare(a.date));
+const CONTENT_DIR = path.join(ROOT, 'content', 'posts');
+const jsonPosts = fs.existsSync(CONTENT_DIR)
+  ? fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8')))
+  : [];
+const bySlug = new Map();
+for (const p of [...require('./posts.js'), ...jsonPosts]) bySlug.set(p.slug, p);
+const posts = [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fmtDate = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });

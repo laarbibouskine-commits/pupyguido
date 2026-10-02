@@ -1,5 +1,15 @@
 [
   {
+    "slug": "crate-training-a-puppy",
+    "title": "Crate Training a Puppy: A Step-by-Step Guide",
+    "description": "Master crate training a puppy with our positive, step-by-step guide. Learn how to create a safe space for your new best friend.",
+    "category": "Sleep & Crate",
+    "date": "2026-10-02",
+    "readMinutes": 7,
+    "image": "/assets/collar.jpg",
+    "imageAlt": "Golden retriever puppy wearing a blue collar"
+  },
+  {
     "slug": "how-to-stop-puppy-biting",
     "title": "How to Stop Puppy Biting: The Pause, Redirect, Reward Method",
     "description": "Puppy biting is normal but painful. Learn why puppies bite and a simple three-step method (pause, redirect, reward) that works without punishment.",
@@ -26,6 +36,16 @@
     "category": "Sleep & Crate",
     "date": "2026-10-02",
     "readMinutes": 5,
+    "image": "/assets/night.jpg",
+    "imageAlt": "Golden retriever puppy on a dark floor looking at the camera"
+  },
+  {
+    "slug": "puppy-first-night-home",
+    "title": "Puppy First Night: What to Expect and What to Do",
+    "description": "Your puppy's first night at home can be noisy. Learn what to expect, how to set up, and a calm step-by-step bedtime routine that works.",
+    "category": "Sleep & Crate",
+    "date": "2026-10-02",
+    "readMinutes": 7,
     "image": "/assets/night.jpg",
     "imageAlt": "Golden retriever puppy on a dark floor looking at the camera"
   },

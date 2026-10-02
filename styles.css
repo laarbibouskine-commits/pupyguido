@@ -386,3 +386,8 @@ footer a:hover{color:#fff}
 .prod-info .lead-s{font-size:19px;color:var(--muted);margin-bottom:24px}
 @media (max-width:900px){.prod-page{grid-template-columns:1fr;gap:32px}}
 .prod-body .tag{align-self:flex-start}
+
+.pick-cat{font-size:clamp(24px,3vw,32px);color:var(--navy);margin:44px 0 20px;text-transform:uppercase}
+.pick-cat:first-of-type{margin-top:28px}
+.why{font-size:14.5px;color:var(--ink)}
+.muted-s{font-size:13px;color:var(--muted);font-weight:700}

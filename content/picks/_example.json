@@ -1,0 +1,13 @@
+{
+  "slug": "example-pick",
+  "title": "Example: Washable Puppy Bed",
+  "merchant": "Temu",
+  "category": "Sleep & Crate",
+  "short": "One factual sentence about what it is.",
+  "why": "One honest sentence on why it suits new puppy parents.",
+  "url": "https://temu.to/k/YOUR-AFFILIATE-LINK",
+  "image": "/assets/picks/example.jpg",
+  "imageAlt": "Describe the product photo",
+  "order": 1,
+  "hidden": false
+}

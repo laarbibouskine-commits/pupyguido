@@ -15,7 +15,7 @@ for (const p of [...require('./posts.js'), ...jsonPosts]) bySlug.set(p.slug, p);
 const posts = [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
 const PRODUCT_DIR = path.join(ROOT, 'content', 'products');
-const products = fs.existsSync(PRODUCT_DIR)
+const ownProducts = fs.existsSync(PRODUCT_DIR)
   ? fs.readdirSync(PRODUCT_DIR).filter(f => f.endsWith('.json') && !f.startsWith('_')).map(f => JSON.parse(fs.readFileSync(path.join(PRODUCT_DIR, f), 'utf8'))).filter(p => !p.hidden).sort((a, b) => (a.order || 99) - (b.order || 99))
   : [];
 
@@ -23,6 +23,8 @@ const PICKS_DIR = path.join(ROOT, 'content', 'picks');
 const picks = fs.existsSync(PICKS_DIR)
   ? fs.readdirSync(PICKS_DIR).filter(f => f.endsWith('.json') && !f.startsWith('_')).map(f => JSON.parse(fs.readFileSync(path.join(PICKS_DIR, f), 'utf8'))).filter(p => !p.hidden).sort((a, b) => (a.order || 99) - (b.order || 99))
   : [];
+
+const products = [...ownProducts, ...picks];
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fmtDate = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -89,7 +91,7 @@ ${body}
         <p>Happy Puppy. Happy Life.<br>A practical system for new puppy parents.</p>
         <p class="tl" style="margin-top:16px">TRAIN &bull; CARE &bull; LOVE</p>
       </div>
-      <div><h4>Explore</h4><ul><li><a href="/#inside">What's inside</a></li><li><a href="/#plan">14-day plan</a></li><li><a href="/shop/">Shop</a></li><li><a href="/picks/">Our picks</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="/#inside">What's inside</a></li><li><a href="/#plan">14-day plan</a></li><li><a href="/shop/">Shop</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="/about/">About us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul></div>
     </div>
     <div class="legal"><span>&copy; ${new Date().getFullYear()} PupyGuido. All rights reserved.</span><span>For educational purposes only. Not veterinary advice. Some links may be affiliate links. Photos via Unsplash.</span></div>
@@ -154,56 +156,46 @@ function renderBlogIndex(all) {
 }
 
 const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></script>';
-const buyBtn = (p, label) => `<a class="btn btn-gold" href="${esc(p.gumroadUrl || '#')}" data-gumroad-overlay-checkout="true" target="_blank" rel="noopener">${label || 'Buy now'} <svg class="ico"><use href="#i-arrow"/></svg></a>`;
+const isAffiliate = p => !!p.url && !p.gumroadUrl;
+const arrow = '<svg class="ico"><use href="#i-arrow"/></svg>';
+const buyBtn = (p, label) => isAffiliate(p)
+  ? `<a class="btn btn-gold" href="/go/${p.slug}/" target="_blank" rel="sponsored nofollow noopener">${esc(p.cta || label || 'Buy here')} ${arrow}</a>`
+  : `<a class="btn btn-gold" href="${esc(p.gumroadUrl || '#')}" data-gumroad-overlay-checkout="true" target="_blank" rel="noopener">${esc(label || 'Buy now')} ${arrow}</a>`;
 const productImg = p => p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" width="600" height="600" loading="lazy">` : '<div class="ph">Photo coming soon</div>';
 
 function productCard(p) {
-  return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p><div class="prod-foot"><strong class="price">${esc(p.price)}</strong>${buyBtn(p, 'Buy')}</div></div></article>`;
+  return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p><div class="prod-foot">${p.price ? `<strong class="price">${esc(p.price)}</strong>` : '<span></span>'}${buyBtn(p, 'Buy here')}</div></div></article>`;
 }
 
+const SHOP_NOTE = '<b>Heads up.</b> Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
+
 function renderShop() {
+  const cats = [...new Set(products.map(p => p.category || 'Puppy essentials'))];
   const list = products.length
-    ? `<div class="cards3">${products.map(productCard).join('')}</div>`
-    : `<div class="contact-card"><span class="ic"><svg class="ico fill"><use href="#i-paw"/></svg></span><h2>Our shop is opening soon</h2><p class="muted">We are choosing practical puppy essentials, printables and guides. Get the free guide now and we will let you know when the first products are ready.</p><p style="margin-top:22px"><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p></div>`;
+    ? cats.map(c => `<h2 class="pick-cat">${esc(c)}</h2><div class="cards3">${products.filter(p => (p.category || 'Puppy essentials') === c).map(productCard).join('')}</div>`).join('')
+    : `<div class="contact-card"><span class="ic"><svg class="ico fill"><use href="#i-paw"/></svg></span><h2>Our shop is opening soon</h2><p class="muted">We are choosing practical puppy essentials, printables and guides. Get the free guide now and we will let you know when the first products are ready.</p><p style="margin-top:22px"><a class="btn btn-gold" href="/#signup">Get the free guide ${arrow}</a></p></div>`;
   const ld = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + '/shop/' + p.slug + '/', name: p.title })) };
   return layout({
     title: 'Puppy Shop: Essentials, Printables & Guides | PupyGuido',
     description: 'Practical puppy essentials, printable trackers and guides picked for new puppy parents.',
     urlPath: '/shop/',
     extraHead: products.length ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + GUMROAD_JS : '',
-    body: pageHero('Shop', 'Puppy <span class="hl white">essentials.</span>', 'Practical things for the first weeks, chosen for new puppy parents.') + `<section class="sec"><div class="wrap">${list}<p class="disc" style="margin-top:36px"><b>Heads up.</b> Checkout is handled securely by Gumroad. Some links may be affiliate links. PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p></div></section>`
+    body: pageHero('Shop', 'Puppy <span class="hl white">essentials.</span>', 'Practical things for the first weeks, chosen for new puppy parents.') + `<section class="sec"><div class="wrap">${list}<p class="disc" style="margin-top:44px">${SHOP_NOTE}</p></div></section>`
   });
 }
 
 function renderProduct(p) {
   const ld = { '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.short || p.title, image: p.image ? SITE + p.image : undefined, brand: { '@type': 'Brand', name: 'PupyGuido' },
     offers: p.priceValue ? { '@type': 'Offer', price: String(p.priceValue), priceCurrency: p.currency || 'USD', availability: 'https://schema.org/InStock', url: SITE + '/shop/' + p.slug + '/' } : undefined };
-  const others = products.filter(x => x.slug !== p.slug).slice(0, 3);
+  const others = products.filter(x => x.slug !== p.slug && (x.category === p.category)).concat(products.filter(x => x.slug !== p.slug && x.category !== p.category)).slice(0, 3);
+  const note = isAffiliate(p) ? "You'll complete your purchase on the seller's website." : 'Secure checkout by Gumroad.';
   const body = `<section class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/shop/">Shop</a> / <span>${esc(p.category || 'Puppy essentials')}</span></nav><h1>${esc(p.title)}</h1></div></section>
-<section class="sec"><div class="wrap prod-page"><div class="prod-media">${productImg(p)}</div><div class="prod-info"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><p class="price big">${esc(p.price)}</p><p class="lead-s">${esc(p.short || '')}</p>${buyBtn(p, 'Buy now')}<ul class="ticks" style="margin-top:26px">${(p.bullets || []).map(x => `<li><svg class="ico"><use href="#i-check"/></svg> ${esc(x)}</li>`).join('')}</ul><p class="muted">Secure checkout by Gumroad.${p.shipping ? ' ' + esc(p.shipping) : ''}</p></div></div>
+<section class="sec"><div class="wrap prod-page"><div class="prod-media">${productImg(p)}</div><div class="prod-info"><span class="tag">${esc(p.category || 'Puppy essentials')}</span>${p.price ? `<p class="price big">${esc(p.price)}</p>` : ''}<p class="lead-s">${esc(p.short || '')}</p>${buyBtn(p, 'Buy here')}${p.why ? `<div class="why-box"><strong>Why we like it</strong><p>${esc(p.why)}</p></div>` : ''}<ul class="ticks" style="margin-top:26px">${(p.bullets || []).map(x => `<li><svg class="ico"><use href="#i-check"/></svg> ${esc(x)}</li>`).join('')}</ul><p class="muted">${note}${p.shipping ? ' ' + esc(p.shipping) : ''}</p></div></div>
 ${p.description ? `<div class="wrap narrow"><div class="prose" style="margin-top:44px">${p.description}</div></div>` : ''}
-<div class="wrap narrow"><p class="disc" style="margin-top:36px"><b>Disclaimer.</b> PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer. Some links may be affiliate links.</p></div></section>
+<div class="wrap narrow"><p class="disc" style="margin-top:36px">${SHOP_NOTE}</p></div></section>
 ${others.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">More from the shop</h2><div class="cards3">${others.map(productCard).join('')}</div></div></section>` : ''}`;
   return layout({ title: `${p.title} | PupyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/hero.jpg',
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + GUMROAD_JS });
-}
-
-function pickCard(p) {
-  const img = p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" width="600" height="600" loading="lazy">` : '<div class="ph">Photo coming soon</div>';
-  return `<article class="prod-card"><a class="prod-img" href="${esc(p.url)}" target="_blank" rel="sponsored nofollow noopener">${img}<span class="badge-tag">${esc(p.merchant || 'Temu')}</span></a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="${esc(p.url)}" target="_blank" rel="sponsored nofollow noopener">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p>${p.why ? `<p class="why"><strong>Why we like it:</strong> ${esc(p.why)}</p>` : ''}<div class="prod-foot"><span class="muted-s">Affiliate link</span><a class="btn btn-gold" href="${esc(p.url)}" target="_blank" rel="sponsored nofollow noopener">View on ${esc(p.merchant || 'Temu')} <svg class="ico"><use href="#i-arrow"/></svg></a></div></div></article>`;
-}
-
-function renderPicks() {
-  const cats = [...new Set(picks.map(p => p.category || 'Puppy essentials'))];
-  const list = picks.length
-    ? cats.map(c => `<h2 class="pick-cat">${esc(c)}</h2><div class="cards3">${picks.filter(p => (p.category || 'Puppy essentials') === c).map(pickCard).join('')}</div>`).join('')
-    : `<div class="contact-card"><span class="ic"><svg class="ico fill"><use href="#i-paw"/></svg></span><h2>Our picks are coming soon</h2><p class="muted">We are choosing a short list of useful puppy essentials. Get the free guide and we will tell you when it is ready.</p><p style="margin-top:22px"><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p></div>`;
-  return layout({
-    title: 'Puppy Essentials We Recommend | PupyGuido Picks',
-    description: 'A short list of useful puppy essentials chosen for new puppy parents, with honest notes on why we like them.',
-    urlPath: '/picks/',
-    body: pageHero('Recommended', 'Our <span class="hl white">picks.</span>', 'A short, practical list of puppy essentials we think are worth a look.') + `<section class="sec"><div class="wrap"><p class="disc"><b>Affiliate disclosure.</b> Some links on this page are affiliate links. If you buy through them we may earn a commission at no extra cost to you. Prices and availability are set by the seller and can change. Always check that a product suits your puppy's size and age and supervise play. PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>${list}</div></section>`
-  });
 }
 
 const pages = {
@@ -317,7 +309,7 @@ function write(rel, content) {
 }
 
 function sitemap(all) {
-  const urls = [['/', '1.0'], ['/blog/', '0.8'], ['/shop/', '0.8'], ['/picks/', '0.7'], ['/about/', '0.5'], ['/contact/', '0.4'], ['/privacy/', '0.2'], ['/terms/', '0.2'],
+  const urls = [['/', '1.0'], ['/blog/', '0.8'], ['/shop/', '0.8'], ['/about/', '0.5'], ['/contact/', '0.4'], ['/privacy/', '0.2'], ['/terms/', '0.2'],
     ...all.map(p => [`/blog/${p.slug}/`, '0.7']), ...products.map(p => [`/shop/${p.slug}/`, '0.6'])];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, pr]) => `  <url><loc>${SITE}${u}</loc><priority>${pr}</priority></url>`).join('\n')}\n</urlset>\n`;
 }
@@ -330,9 +322,24 @@ if (require.main === module) {
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));
   write('shop/index.html', renderShop());
   for (const p of products) write(`shop/${p.slug}/index.html`, renderProduct(p));
-  write('picks/index.html', renderPicks());
+  const vercel = {
+    buildCommand: 'node build/build.js',
+    outputDirectory: '.',
+    cleanUrls: false,
+    trailingSlash: true,
+    redirects: [
+      { source: '/picks', destination: '/shop/', permanent: true },
+      { source: '/picks/', destination: '/shop/', permanent: true },
+      ...products.filter(isAffiliate).flatMap(p => [
+        { source: '/go/' + p.slug, destination: p.url, permanent: false },
+        { source: '/go/' + p.slug + '/', destination: p.url, permanent: false }
+      ])
+    ],
+    headers: [{ source: '/go/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }]
+  };
+  fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
   write('sitemap.xml', sitemap(posts));
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
   fs.writeFileSync(path.join(ROOT, 'blog', 'posts.json'), JSON.stringify(posts.map(({ html, ...m }) => m), null, 2));
-  console.log('Built', posts.length, 'posts,', products.length, 'products,', picks.length, 'picks +', Object.keys(pages).length, 'pages for', SITE);
+  console.log('Built', posts.length, 'posts,', products.length, 'products (', picks.length, 'affiliate) +', Object.keys(pages).length, 'pages for', SITE);
 }

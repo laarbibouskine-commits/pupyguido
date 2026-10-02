@@ -2,5 +2,108 @@
   "buildCommand": "node build/build.js",
   "outputDirectory": ".",
   "cleanUrls": false,
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/picks",
+      "destination": "/shop/",
+      "permanent": true
+    },
+    {
+      "source": "/picks/",
+      "destination": "/shop/",
+      "permanent": true
+    },
+    {
+      "source": "/go/puppy-plush-teething-toy-set",
+      "destination": "https://temu.to/k/ehrwhols6h6",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-plush-teething-toy-set/",
+      "destination": "https://temu.to/k/ehrwhols6h6",
+      "permanent": false
+    },
+    {
+      "source": "/go/knot-braided-rubber-chew-toy-set",
+      "destination": "https://temu.to/k/emoxc657d6d",
+      "permanent": false
+    },
+    {
+      "source": "/go/knot-braided-rubber-chew-toy-set/",
+      "destination": "https://temu.to/k/emoxc657d6d",
+      "permanent": false
+    },
+    {
+      "source": "/go/dental-chew-toy-set-for-puppies",
+      "destination": "https://temu.to/k/e4l11am2xl6",
+      "permanent": false
+    },
+    {
+      "source": "/go/dental-chew-toy-set-for-puppies/",
+      "destination": "https://temu.to/k/e4l11am2xl6",
+      "permanent": false
+    },
+    {
+      "source": "/go/durable-rubber-chewing-toy-set-6-pieces",
+      "destination": "https://temu.to/k/ehg8qzt97eq",
+      "permanent": false
+    },
+    {
+      "source": "/go/durable-rubber-chewing-toy-set-6-pieces/",
+      "destination": "https://temu.to/k/ehg8qzt97eq",
+      "permanent": false
+    },
+    {
+      "source": "/go/double-sided-flannel-pet-bed-small-dogs",
+      "destination": "https://temu.to/k/e8zehclz6uj",
+      "permanent": false
+    },
+    {
+      "source": "/go/double-sided-flannel-pet-bed-small-dogs/",
+      "destination": "https://temu.to/k/e8zehclz6uj",
+      "permanent": false
+    },
+    {
+      "source": "/go/all-season-washable-dog-bed",
+      "destination": "https://temu.to/k/eymwfyg7a88",
+      "permanent": false
+    },
+    {
+      "source": "/go/all-season-washable-dog-bed/",
+      "destination": "https://temu.to/k/eymwfyg7a88",
+      "permanent": false
+    },
+    {
+      "source": "/go/disposable-puppy-training-pads",
+      "destination": "https://temu.to/k/e3qu1krfyrs",
+      "permanent": false
+    },
+    {
+      "source": "/go/disposable-puppy-training-pads/",
+      "destination": "https://temu.to/k/e3qu1krfyrs",
+      "permanent": false
+    },
+    {
+      "source": "/go/silicone-slow-feeder-dog-bowl",
+      "destination": "https://temu.to/k/ez6kkhcomsw",
+      "permanent": false
+    },
+    {
+      "source": "/go/silicone-slow-feeder-dog-bowl/",
+      "destination": "https://temu.to/k/ez6kkhcomsw",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/go/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
 }

@@ -391,3 +391,7 @@ footer a:hover{color:#fff}
 .pick-cat:first-of-type{margin-top:28px}
 .why{font-size:14.5px;color:var(--ink)}
 .muted-s{font-size:13px;color:var(--muted);font-weight:700}
+
+.why-box{margin-top:22px;background:var(--gold-soft);border-radius:var(--r-md);padding:16px 18px}
+.why-box strong{font-family:var(--f-display);color:var(--navy)}
+.why-box p{margin:6px 0 0;font-size:15.5px;color:var(--ink)}

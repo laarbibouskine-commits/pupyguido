@@ -1,13 +1,13 @@
 {
+  "merchant": "Temu",
+  "hidden": false,
   "slug": "puppy-plush-teething-toy-set",
   "title": "Puppy Plush Teething Toy Set",
   "category": "Chew toys",
   "short": "A set of soft plush toys sized for small dogs. Styles are random.",
   "why": "Soft toys are an easy first option for small puppies. Supervise play and remove any toy that starts to fall apart.",
   "url": "https://temu.to/k/ehrwhols6h6",
+  "image": "/assets/picks/puppy-plush-teething-toy-set.jpg",
   "order": 1,
-  "merchant": "Temu",
-  "image": "",
-  "imageAlt": "Puppy Plush Teething Toy Set",
-  "hidden": false
+  "imageAlt": "Puppy Plush Teething Toy Set"
 }

@@ -1,0 +1,18 @@
+{
+  "slug": "example-product",
+  "title": "Example Product Name",
+  "category": "Puppy essentials",
+  "badge": "New",
+  "price": "$19",
+  "priceValue": 19,
+  "currency": "USD",
+  "short": "One sentence that tells the buyer what it is and why it helps.",
+  "bullets": ["Key benefit one", "Key benefit two", "Key benefit three"],
+  "shipping": "Ships worldwide. Delivery times shown at checkout.",
+  "gumroadUrl": "https://YOURNAME.gumroad.com/l/product-id",
+  "image": "/assets/products/example.jpg",
+  "imageAlt": "Describe the product photo",
+  "description": "<h2>About this product</h2><p>Longer description in simple HTML.</p>",
+  "order": 1,
+  "hidden": false
+}

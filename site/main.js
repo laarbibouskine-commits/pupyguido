@@ -15,7 +15,7 @@
   var days = document.querySelectorAll('#days .day');
   tabs.forEach(function (t) {
     t.addEventListener('click', function () {
-      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t); });
+      tabs.forEach(function (x) { x.setAttribute('aria-pressed', x === t); });
       days.forEach(function (d) {
         d.classList.toggle('hidden', t.dataset.week !== 'all' && d.dataset.w !== t.dataset.week);
       });
@@ -37,17 +37,26 @@
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // email form -> n8n, then thank-you page
+  // email form -> n8n webhook; thank-you page only on a successful response
   var form = document.getElementById('pupyguido-form');
-  var frame = document.getElementById('pupyguido-response');
   var button = document.getElementById('pupyguido-submit');
-  var submitted = false;
-  form.addEventListener('submit', function () {
-    submitted = true;
+  var errBox = document.getElementById('pupyguido-error');
+  var label = button.innerHTML;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errBox.hidden = true;
+    var data = new FormData(form);
+    if (data.get('website')) { window.location.href = '/thank-you.html'; return; } // honeypot: bots
+    data.delete('website');
     button.disabled = true;
     button.textContent = 'Sending…';
-  });
-  frame.addEventListener('load', function () {
-    if (submitted) { window.location.href = '/thank-you.html'; }
+    fetch(form.action, { method: 'POST', body: data })
+      .then(function (r) { if (!r.ok) throw new Error('bad status'); window.location.href = '/thank-you.html'; })
+      .catch(function () {
+        button.disabled = false;
+        button.innerHTML = label;
+        errBox.textContent = 'Sorry, something went wrong and we could not send your guide. Please try again in a moment or email hello@pupyguido.com.';
+        errBox.hidden = false;
+      });
   });
 })();

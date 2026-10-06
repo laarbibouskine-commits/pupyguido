@@ -1,17 +1,26 @@
-// node build/build.js  ->  generates /blog/*, /about, /contact, /privacy, /terms, sitemap.xml, robots.txt
-// The render functions are reused by the n8n auto-blog workflow (it commits the same files).
+// node build/build.js  ->  writes the public website into dist/ (only dist/ is published, see vercel.json outputDirectory):
+//   site/ (homepage, thank-you, css, js, assets) + generated /blog, /shop, /about, /contact, /privacy, /terms, 404.html, sitemap.xml, robots.txt
+// Also regenerates vercel.json (redirects + headers) at the repo root, because Vercel reads it before the build.
+// Site URL: set SITE_URL (e.g. https://pupyguido.com) in Vercel to switch domains. Default: https://pupyguido.vercel.app
+// Posts in content/posts/*.json are published only when they contain "draft": false (auto-written posts are drafts until reviewed).
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SITE = process.env.SITE_URL || 'https://pupyguido.com';
+const SITE = (process.env.SITE_URL || 'https://pupyguido.vercel.app').replace(/\/+$/, '');
+const DIST = path.join(ROOT, 'dist');
+const SRC = path.join(ROOT, 'site');
 const EMAIL = 'hello@pupyguido.com';
 const CONTENT_DIR = path.join(ROOT, 'content', 'posts');
-const jsonPosts = fs.existsSync(CONTENT_DIR)
+const jsonAll = fs.existsSync(CONTENT_DIR)
   ? fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8')))
   : [];
+// Default-deny: a JSON post is public only with an explicit "draft": false (set by a human after review).
+const jsonPosts = jsonAll.filter(p => p.draft === false);
+const draftPosts = jsonAll.filter(p => p.draft !== false);
 const bySlug = new Map();
-for (const p of [...require('./posts.js'), ...jsonPosts]) bySlug.set(p.slug, p);
+for (const p of require('./posts.js').filter(p => p.draft !== true)) bySlug.set(p.slug, p);
+for (const p of jsonPosts) bySlug.set(p.slug, p);
 const posts = [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
 const PRODUCT_DIR = path.join(ROOT, 'content', 'products');
@@ -37,7 +46,7 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 </svg>`;
 
-function layout({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/hero.jpg', ogType = 'website', noindex = false }) {
+function layout({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/og-default.jpg', ogImageAlt = '', ogType = 'website', noindex = false }) {
   const url = SITE + urlPath;
   return `<!doctype html>
 <html lang="en">
@@ -49,14 +58,21 @@ function layout({ title, description, urlPath, body, extraHead = '', ogImage = '
 <link rel="canonical" href="${url}">
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
 <meta name="theme-color" content="#0B1F44">
-<link rel="icon" type="image/png" href="/assets/mascot.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta property="og:type" content="${ogType}">
 <meta property="og:site_name" content="PupyGuido">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="${SITE}${ogImage}">
+${ogImage === '/assets/og-default.jpg' ? '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n' : ''}<meta property="og:image:alt" content="${esc(ogImageAlt || title)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${SITE}${ogImage}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
@@ -68,7 +84,7 @@ ${extraHead}
 ${SPRITE}
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="/" aria-label="PupyGuido home"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&reg;</span></span></a>
+    <a class="brand" href="/" aria-label="PupyGuido home"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&trade;</span></span></a>
     <nav class="nav-links" id="menu" aria-label="Main">
       <a href="/#inside">What's inside</a>
       <a href="/shop/">Shop</a>
@@ -87,7 +103,7 @@ ${body}
   <div class="wrap">
     <div class="foot">
       <div>
-        <div class="brand"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&reg;</span></span></div>
+        <div class="brand"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&trade;</span></span></div>
         <p>Happy Puppy. Happy Life.<br>A practical system for new puppy parents.</p>
         <p class="tl" style="margin-top:16px">TRAIN &bull; CARE &bull; LOVE</p>
       </div>
@@ -120,7 +136,7 @@ function renderPost(p, all) {
       { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.date,
         image: SITE + p.image, mainEntityOfPage: SITE + url,
         author: { '@type': 'Organization', name: 'PupyGuido' },
-        publisher: { '@type': 'Organization', name: 'PupyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/mascot.png' } } },
+        publisher: { '@type': 'Organization', name: 'PupyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' },
@@ -141,7 +157,7 @@ ${disclaimer}
 </div>
 ${related.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">Keep reading</h2><div class="cards3">${related.map(card).join('')}</div></div></section>` : ''}
 </article>`;
-  return layout({ title: `${p.title} | PupyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogType: 'article',
+  return layout({ title: `${p.title} | PupyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogImageAlt: p.imageAlt, ogType: 'article',
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` });
 }
 
@@ -151,7 +167,7 @@ function card(p) {
 
 function renderBlogIndex(all) {
   const body = `${pageHero('PupyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
-<section class="sec"><div class="wrap"><div class="cards3">${all.map(card).join('')}</div>${ctaBox}</div></section>`;
+<section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${ctaBox}</div></section>`;
   return layout({ title: 'Puppy Blog: Training, Potty, Sleep & New Puppy Tips | PupyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PupyGuido.', urlPath: '/blog/', body });
 }
 
@@ -179,14 +195,21 @@ function renderShop() {
     title: 'Puppy Shop: Essentials, Printables & Guides | PupyGuido',
     description: 'Practical puppy essentials, printable trackers and guides picked for new puppy parents.',
     urlPath: '/shop/',
-    extraHead: products.length ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + GUMROAD_JS : '',
+    extraHead: products.length ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (products.some(p => !isAffiliate(p)) ? GUMROAD_JS : '') : '',
     body: pageHero('Shop', 'Puppy <span class="hl white">essentials.</span>', 'Practical things for the first weeks, chosen for new puppy parents.') + `<section class="sec"><div class="wrap">${list}<p class="disc" style="margin-top:44px">${SHOP_NOTE}</p></div></section>`
   });
 }
 
 function renderProduct(p) {
-  const ld = { '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.short || p.title, image: p.image ? SITE + p.image : undefined, brand: { '@type': 'Brand', name: 'PupyGuido' },
-    offers: p.priceValue ? { '@type': 'Offer', price: String(p.priceValue), priceCurrency: p.currency || 'USD', availability: 'https://schema.org/InStock', url: SITE + '/shop/' + p.slug + '/' } : undefined };
+  // Affiliate picks are third-party items: no Product markup (no brand/offer we can truthfully claim). Own products keep Product + Offer.
+  const crumbs = { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Shop', item: SITE + '/shop/' },
+    { '@type': 'ListItem', position: 3, name: p.title, item: SITE + '/shop/' + p.slug + '/' } ] };
+  const graph = [crumbs];
+  if (!isAffiliate(p)) graph.push({ '@type': 'Product', name: p.title, description: p.short || p.title, image: p.image ? SITE + p.image : undefined, brand: { '@type': 'Brand', name: 'PupyGuido' },
+    offers: p.priceValue ? { '@type': 'Offer', price: String(p.priceValue), priceCurrency: p.currency || 'USD', availability: 'https://schema.org/InStock', url: SITE + '/shop/' + p.slug + '/' } : undefined });
+  const ld = { '@context': 'https://schema.org', '@graph': graph };
   const others = products.filter(x => x.slug !== p.slug && (x.category === p.category)).concat(products.filter(x => x.slug !== p.slug && x.category !== p.category)).slice(0, 3);
   const note = isAffiliate(p) ? "You'll complete your purchase on the seller's website." : 'Secure checkout by Gumroad.';
   const body = `<section class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/shop/">Shop</a> / <span>${esc(p.category || 'Puppy essentials')}</span></nav><h1>${esc(p.title)}</h1></div></section>
@@ -194,8 +217,8 @@ function renderProduct(p) {
 ${p.description ? `<div class="wrap narrow"><div class="prose" style="margin-top:44px">${p.description}</div></div>` : ''}
 <div class="wrap narrow"><p class="disc" style="margin-top:36px">${SHOP_NOTE}</p></div></section>
 ${others.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">More from the shop</h2><div class="cards3">${others.map(productCard).join('')}</div></div></section>` : ''}`;
-  return layout({ title: `${p.title} | PupyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/hero.jpg',
-    extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + GUMROAD_JS });
+  return layout({ title: `${p.title} | PupyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/og-default.jpg', ogImageAlt: p.imageAlt || p.title, noindex: isAffiliate(p),
+    extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (isAffiliate(p) ? '' : GUMROAD_JS) });
 }
 
 const pages = {
@@ -216,7 +239,7 @@ const pages = {
 <li><strong>Honest about limits.</strong> We share general educational information. We do not replace your veterinarian or a professional trainer.</li>
 </ul>
 <h2>What we offer</h2>
-<p>We start with the free <strong>New Puppy Survival Guide</strong>. Printable workbooks, planners and more guides are on the way, along with Guido AI, a puppy-parent assistant in development.</p>
+<p>Right now that is the free <strong>New Puppy Survival Guide</strong>, plus the articles on this blog and a short list of puppy essentials in the shop.</p>
 <p><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p>
 </div></div></section>` }),
 
@@ -242,7 +265,7 @@ const pages = {
     title: 'Privacy Policy | PupyGuido',
     description: 'How PupyGuido collects, uses and protects your personal information.',
     urlPath: '/privacy/',
-    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 2, 2026')}
+    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 6, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
 <p>PupyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
 <h2>Information we collect</h2>
@@ -259,7 +282,7 @@ const pages = {
 </ul>
 <p>We do not sell your personal information.</p>
 <h2>Who processes your data</h2>
-<p>We use service providers to run the site, process sign-up forms and send email. They process data on our behalf and only for those purposes.</p>
+<p>We use service providers to run the site and handle sign-ups: a hosting provider, a self-hosted n8n automation server that receives the sign-up form, Google Sheets (to store the sign-up list), and Gmail and Google Drive (to send you the guide). They process data on our behalf and only for those purposes.</p>
 <h2>Cookies and analytics</h2>
 <p>At the time of writing the site does not use advertising cookies. If we add analytics or advertising tools, such as a Pinterest tag, we will update this policy and, where required, ask for your consent.</p>
 <h2>Affiliate links</h2>
@@ -267,7 +290,7 @@ const pages = {
 <h2>Your rights</h2>
 <p>Depending on where you live, you may have the right to access, correct, delete or export your personal data, and to object to or restrict certain processing. Email <a href="mailto:${EMAIL}">${EMAIL}</a> to make a request.</p>
 <h2>Data retention and security</h2>
-<p>We keep your information only as long as needed for the purposes above. We take reasonable steps to protect it, but no online service is completely secure.</p>
+<p>We keep your name and email address until you unsubscribe or ask us to delete them. We keep other information only as long as needed for the purposes above. We take reasonable steps to protect it, but no online service is completely secure.</p>
 <h2>Children</h2>
 <p>PupyGuido is intended for adults. We do not knowingly collect information from children under 13.</p>
 <h2>Changes</h2>
@@ -303,31 +326,69 @@ const pages = {
 };
 
 function write(rel, content) {
-  const f = path.join(ROOT, rel);
+  const f = path.join(DIST, rel);
   fs.mkdirSync(path.dirname(f), { recursive: true });
   fs.writeFileSync(f, content);
 }
 
 function sitemap(all) {
-  const urls = [['/', '1.0'], ['/blog/', '0.8'], ['/shop/', '0.8'], ['/about/', '0.5'], ['/contact/', '0.4'], ['/privacy/', '0.2'], ['/terms/', '0.2'],
-    ...all.map(p => [`/blog/${p.slug}/`, '0.7']), ...products.map(p => [`/shop/${p.slug}/`, '0.6'])];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, pr]) => `  <url><loc>${SITE}${u}</loc><priority>${pr}</priority></url>`).join('\n')}\n</urlset>\n`;
+  const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/contact/'], ['/privacy/'], ['/terms/'],
+    ...all.map(p => [`/blog/${p.slug}/`, p.date]), ...products.filter(p => !isAffiliate(p)).map(p => [`/shop/${p.slug}/`])];
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
 }
 
 module.exports = { layout, renderPost, renderBlogIndex, sitemap, esc };
 
+function copyDir(from, to, skip = () => false) {
+  fs.mkdirSync(to, { recursive: true });
+  for (const e of fs.readdirSync(from, { withFileTypes: true })) {
+    if (e.name.startsWith('.') || skip(path.join(from, e.name))) continue;
+    const a = path.join(from, e.name), b = path.join(to, e.name);
+    e.isDirectory() ? copyDir(a, b, skip) : fs.copyFileSync(a, b);
+  }
+}
+
+// Fails the build if anything that must stay private ends up in dist/.
+function verifyDist() {
+  const forbidden = ['docs', 'build', 'content', 'node_modules', 'site', '.git', '.env', 'package.json', 'vercel.json'];
+  const problems = forbidden.filter(n => fs.existsSync(path.join(DIST, n)));
+  const files = [];
+  (function walk(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); e.isDirectory() ? walk(p) : files.push(p); } })(DIST);
+  for (const f of files) {
+    if (/\.(md|map|env)$/.test(f) || /posts\.json$/.test(f)) problems.push('unexpected file: ' + path.relative(DIST, f));
+    if (/\.(html|xml|txt)$/.test(f)) {
+      const t = fs.readFileSync(f, 'utf8');
+      if (t.includes('{{SITE}}')) problems.push('unreplaced {{SITE}} in ' + path.relative(DIST, f));
+      if (!SITE.includes('pupyguido.com') && /https:\/\/pupyguido\.com/.test(t)) problems.push('hardcoded pupyguido.com in ' + path.relative(DIST, f));
+    }
+  }
+  if (problems.length) { console.error('dist verification FAILED:\n - ' + problems.join('\n - ')); process.exit(1); }
+  console.log('dist verified:', files.length, 'files, no private folders, no hardcoded domain');
+}
+
 if (require.main === module) {
+  fs.rmSync(DIST, { recursive: true, force: true });
+  fs.mkdirSync(DIST, { recursive: true });
+  copyDir(SRC, DIST, p => p.replace(/\\/g, '/').endsWith('/assets/photos'));
+  for (const f of ['index.html', 'thank-you.html']) {
+    const p = path.join(DIST, f);
+    fs.writeFileSync(p, fs.readFileSync(p, 'utf8').split('{{SITE}}').join(SITE));
+  }
   for (const [name, fn] of Object.entries(pages)) write(`${name}/index.html`, fn());
   write('blog/index.html', renderBlogIndex(posts));
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));
   write('shop/index.html', renderShop());
   for (const p of products) write(`shop/${p.slug}/index.html`, renderProduct(p));
+  write('404.html', layout({ title: 'Page not found | PupyGuido', description: 'This page could not be found.', urlPath: '/404.html', noindex: true,
+    body: pageHero('404', 'Page not <span class="hl white">found.</span>', 'The page you are looking for has moved or does not exist.') + `<section class="sec"><div class="wrap narrow"><div class="contact-card"><h2>Try one of these</h2><p style="margin-top:18px"><a class="btn btn-gold" href="/#signup">Get the free guide ${arrow}</a></p><p style="margin-top:14px"><a href="/blog/">Read the blog</a> &middot; <a href="/shop/">Browse the shop</a> &middot; <a href="/">Home</a></p></div></div></section>` }));
   const vercel = {
     buildCommand: 'node build/build.js',
-    outputDirectory: '.',
+    outputDirectory: 'dist',
     cleanUrls: false,
     trailingSlash: true,
     redirects: [
+      // Enable only once SITE_URL's domain is attached to this Vercel project: set PRIMARY_REDIRECT_FROM=pupyguido.store
+      ...(process.env.PRIMARY_REDIRECT_FROM ? [{ source: '/:path*', has: [{ type: 'host', value: process.env.PRIMARY_REDIRECT_FROM }], destination: SITE + '/:path*', permanent: true }] : []),
       { source: '/picks', destination: '/shop/', permanent: true },
       { source: '/picks/', destination: '/shop/', permanent: true },
       ...products.filter(isAffiliate).flatMap(p => [
@@ -335,11 +396,20 @@ if (require.main === module) {
         { source: '/go/' + p.slug + '/', destination: p.url, permanent: false }
       ])
     ],
-    headers: [{ source: '/go/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }]
+    headers: [
+      { source: '/(.*)', headers: [
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' } ] },
+      { source: '/assets/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+      { source: '/go/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }
+    ]
   };
   fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
   write('sitemap.xml', sitemap(posts));
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-  fs.writeFileSync(path.join(ROOT, 'blog', 'posts.json'), JSON.stringify(posts.map(({ html, ...m }) => m), null, 2));
+  verifyDist();
+  if (draftPosts.length) console.log('Drafts NOT published:', draftPosts.map(p => p.slug).join(', '));
   console.log('Built', posts.length, 'posts,', products.length, 'products (', picks.length, 'affiliate) +', Object.keys(pages).length, 'pages for', SITE);
 }

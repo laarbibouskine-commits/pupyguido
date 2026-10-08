@@ -1,7 +1,7 @@
 // node build/build.js  ->  writes the public website into dist/ (only dist/ is published, see vercel.json outputDirectory):
 //   site/ (homepage, thank-you, css, js, assets) + generated /blog, /shop, /about, /contact, /privacy, /terms, 404.html, sitemap.xml, robots.txt
 // Also regenerates vercel.json (redirects + headers) at the repo root, because Vercel reads it before the build.
-// Site URL: set SITE_URL (e.g. https://pupyguido.com) in Vercel to switch domains. Default: https://pupyguido.vercel.app
+// Site URL: set SITE_URL (e.g. https://puppyguido.com) in Vercel to switch domains. Default: https://pupyguido.vercel.app
 // Posts in content/posts/*.json are published only when they contain "draft": false (auto-written posts are drafts until reviewed).
 const fs = require('fs');
 const path = require('path');
@@ -10,7 +10,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = (process.env.SITE_URL || 'https://pupyguido.vercel.app').replace(/\/+$/, '');
 const DIST = path.join(ROOT, 'dist');
 const SRC = path.join(ROOT, 'site');
-const EMAIL = 'hello@pupyguido.com';
+const EMAIL = 'hello@puppyguido.com';
 const CONTENT_DIR = path.join(ROOT, 'content', 'posts');
 const jsonAll = fs.existsSync(CONTENT_DIR)
   ? fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8')))

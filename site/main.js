@@ -55,7 +55,7 @@
       .catch(function () {
         button.disabled = false;
         button.innerHTML = label;
-        errBox.textContent = 'Sorry, something went wrong and we could not send your guide. Please try again in a moment or email hello@pupyguido.com.';
+        errBox.textContent = 'Sorry, something went wrong and we could not send your guide. Please try again in a moment or email hello@puppyguido.com.';
         errBox.hidden = false;
       });
   });

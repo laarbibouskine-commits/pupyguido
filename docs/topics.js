@@ -1,4 +1,4 @@
-// Keyword-driven article topics for the PupyGuido auto-blog.
+// Keyword-driven article topics for the PuppyGuido auto-blog.
 // Source: Google Autocomplete (US, English) expanded from ~30 seed queries on 2026-10-02.
 // Order = demand (most suggested queries first). `keyword` is the primary query, `secondary` are related real queries.
 module.exports = [

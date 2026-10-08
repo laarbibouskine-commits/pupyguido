@@ -1,4 +1,4 @@
-# PupyGuido keyword research
+# PuppyGuido keyword research
 
 Source: Google Autocomplete (US/English), expanded from 30 seed queries x 7 modifiers on 2026-10-02. Score = summed suggestion rank weight (higher = suggested more often = more demand). This is a demand signal, not exact search volume.
 

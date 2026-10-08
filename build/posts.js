@@ -81,7 +81,7 @@ module.exports = [
 </ol>
 <h2>When to ask a professional</h2>
 <p>If biting is intense, comes with growling or stiff body language, or you are worried about safety, ask a qualified trainer or your veterinarian for help.</p>
-<p>The full 7-day bite plan is part of the PupyGuido system. <a href="/#signup">Start with the free guide</a>.</p>`
+<p>The full 7-day bite plan is part of the PuppyGuido system. <a href="/#signup">Start with the free guide</a>.</p>`
 },
 {
   slug: 'puppy-potty-training-schedule',
@@ -132,7 +132,7 @@ module.exports = [
 <li>Ask yourself what you missed: a long gap, a missed signal, too much freedom.</li>
 </ul>
 <h2>Track progress</h2>
-<p>A simple log of meals, naps and potty breaks quickly shows your puppy's natural rhythm. The PupyGuido workbook includes trackers for exactly this.</p>
+<p>A simple log of meals, naps and potty breaks quickly shows your puppy's natural rhythm. The PuppyGuido workbook includes trackers for exactly this.</p>
 <p>Ready for the full plan? <a href="/#signup">Get the free New Puppy Survival Guide</a>.</p>`
 },
 {
@@ -164,6 +164,6 @@ module.exports = [
 <h2>What can wait</h2>
 <p>You do not need everything on day one. Special gear, extra toys and fancy beds can wait until you know your puppy's habits.</p>
 <h2>Plan the first week</h2>
-<p>Know your vet, book the first visit, and have your daily routine written down. The free PupyGuido guide includes printable checklists and a 14-day plan. <a href="/#signup">Get your free copy</a>.</p>`
+<p>Know your vet, book the first visit, and have your daily routine written down. The free PuppyGuido guide includes printable checklists and a 14-day plan. <a href="/#signup">Get your free copy</a>.</p>`
 }
 ];

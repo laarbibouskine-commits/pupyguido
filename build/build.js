@@ -62,7 +62,7 @@ ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robot
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta property="og:type" content="${ogType}">
-<meta property="og:site_name" content="PupyGuido">
+<meta property="og:site_name" content="PuppyGuido">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
@@ -84,7 +84,7 @@ ${extraHead}
 ${SPRITE}
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="/" aria-label="PupyGuido home"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&trade;</span></span></a>
+    <a class="brand" href="/" aria-label="PuppyGuido home"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Puppy<b>Guido</b><span class="reg">&trade;</span></span></a>
     <nav class="nav-links" id="menu" aria-label="Main">
       <a href="/#inside">What's inside</a>
       <a href="/shop/">Shop</a>
@@ -103,14 +103,14 @@ ${body}
   <div class="wrap">
     <div class="foot">
       <div>
-        <div class="brand"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Pupy<b>Guido</b><span class="reg">&trade;</span></span></div>
+        <div class="brand"><img src="/assets/mascot.png" alt="" width="44" height="46"><span>Puppy<b>Guido</b><span class="reg">&trade;</span></span></div>
         <p>Happy Puppy. Happy Life.<br>A practical system for new puppy parents.</p>
         <p class="tl" style="margin-top:16px">TRAIN &bull; CARE &bull; LOVE</p>
       </div>
       <div><h4>Explore</h4><ul><li><a href="/#inside">What's inside</a></li><li><a href="/#plan">14-day plan</a></li><li><a href="/shop/">Shop</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="/about/">About us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul></div>
     </div>
-    <div class="legal"><span>&copy; ${new Date().getFullYear()} PupyGuido. All rights reserved.</span><span>For educational purposes only. Not veterinary advice. Some links may be affiliate links. Photos via Unsplash.</span></div>
+    <div class="legal"><span>&copy; ${new Date().getFullYear()} PuppyGuido. All rights reserved.</span><span>For educational purposes only. Not veterinary advice. Some links may be affiliate links. Photos via Unsplash.</span></div>
   </div>
 </footer>
 <script>
@@ -125,7 +125,7 @@ const pageHero = (kicker, h1, sub) => `<section class="page-hero"><div class="pa
 <h1>${h1}</h1>${sub ? `<p class="lead">${sub}</p>` : ''}</div></section>`;
 
 const ctaBox = `<aside class="cta-box"><div><h3>Get the free New Puppy Survival Guide</h3><p>Checklists, routines and a 14-day plan for your puppy's first days at home.</p></div><a class="btn btn-gold" href="/#signup">Get it free <svg class="ico"><use href="#i-arrow"/></svg></a></aside>`;
-const disclaimer = `<p class="disc"><b>Disclaimer.</b> PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>`;
+const disclaimer = `<p class="disc"><b>Disclaimer.</b> PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>`;
 
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
@@ -135,8 +135,8 @@ function renderPost(p, all) {
     '@graph': [
       { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.date,
         image: SITE + p.image, mainEntityOfPage: SITE + url,
-        author: { '@type': 'Organization', name: 'PupyGuido' },
-        publisher: { '@type': 'Organization', name: 'PupyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
+        author: { '@type': 'Organization', name: 'PuppyGuido' },
+        publisher: { '@type': 'Organization', name: 'PuppyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' },
@@ -157,7 +157,7 @@ ${disclaimer}
 </div>
 ${related.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">Keep reading</h2><div class="cards3">${related.map(card).join('')}</div></div></section>` : ''}
 </article>`;
-  return layout({ title: `${p.title} | PupyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogImageAlt: p.imageAlt, ogType: 'article',
+  return layout({ title: `${p.title} | PuppyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogImageAlt: p.imageAlt, ogType: 'article',
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` });
 }
 
@@ -166,9 +166,9 @@ function card(p) {
 }
 
 function renderBlogIndex(all) {
-  const body = `${pageHero('PupyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
+  const body = `${pageHero('PuppyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
 <section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${ctaBox}</div></section>`;
-  return layout({ title: 'Puppy Blog: Training, Potty, Sleep & New Puppy Tips | PupyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PupyGuido.', urlPath: '/blog/', body });
+  return layout({ title: 'Puppy Blog: Training, Potty, Sleep & New Puppy Tips | PuppyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PuppyGuido.', urlPath: '/blog/', body });
 }
 
 const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></script>';
@@ -183,7 +183,7 @@ function productCard(p) {
   return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p><div class="prod-foot">${p.price ? `<strong class="price">${esc(p.price)}</strong>` : '<span></span>'}${buyBtn(p, 'Buy here')}</div></div></article>`;
 }
 
-const SHOP_NOTE = '<b>Heads up.</b> Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PupyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
+const SHOP_NOTE = '<b>Heads up.</b> Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
 
 function renderShop() {
   const cats = [...new Set(products.map(p => p.category || 'Puppy essentials'))];
@@ -192,7 +192,7 @@ function renderShop() {
     : `<div class="contact-card"><span class="ic"><svg class="ico fill"><use href="#i-paw"/></svg></span><h2>Our shop is opening soon</h2><p class="muted">We are choosing practical puppy essentials, printables and guides. Get the free guide now and we will let you know when the first products are ready.</p><p style="margin-top:22px"><a class="btn btn-gold" href="/#signup">Get the free guide ${arrow}</a></p></div>`;
   const ld = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + '/shop/' + p.slug + '/', name: p.title })) };
   return layout({
-    title: 'Puppy Shop: Essentials, Printables & Guides | PupyGuido',
+    title: 'Puppy Shop: Essentials, Printables & Guides | PuppyGuido',
     description: 'Practical puppy essentials, printable trackers and guides picked for new puppy parents.',
     urlPath: '/shop/',
     extraHead: products.length ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (products.some(p => !isAffiliate(p)) ? GUMROAD_JS : '') : '',
@@ -207,7 +207,7 @@ function renderProduct(p) {
     { '@type': 'ListItem', position: 2, name: 'Shop', item: SITE + '/shop/' },
     { '@type': 'ListItem', position: 3, name: p.title, item: SITE + '/shop/' + p.slug + '/' } ] };
   const graph = [crumbs];
-  if (!isAffiliate(p)) graph.push({ '@type': 'Product', name: p.title, description: p.short || p.title, image: p.image ? SITE + p.image : undefined, brand: { '@type': 'Brand', name: 'PupyGuido' },
+  if (!isAffiliate(p)) graph.push({ '@type': 'Product', name: p.title, description: p.short || p.title, image: p.image ? SITE + p.image : undefined, brand: { '@type': 'Brand', name: 'PuppyGuido' },
     offers: p.priceValue ? { '@type': 'Offer', price: String(p.priceValue), priceCurrency: p.currency || 'USD', availability: 'https://schema.org/InStock', url: SITE + '/shop/' + p.slug + '/' } : undefined });
   const ld = { '@context': 'https://schema.org', '@graph': graph };
   const others = products.filter(x => x.slug !== p.slug && (x.category === p.category)).concat(products.filter(x => x.slug !== p.slug && x.category !== p.category)).slice(0, 3);
@@ -217,20 +217,20 @@ function renderProduct(p) {
 ${p.description ? `<div class="wrap narrow"><div class="prose" style="margin-top:44px">${p.description}</div></div>` : ''}
 <div class="wrap narrow"><p class="disc" style="margin-top:36px">${SHOP_NOTE}</p></div></section>
 ${others.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">More from the shop</h2><div class="cards3">${others.map(productCard).join('')}</div></div></section>` : ''}`;
-  return layout({ title: `${p.title} | PupyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/og-default.jpg', ogImageAlt: p.imageAlt || p.title, noindex: isAffiliate(p),
+  return layout({ title: `${p.title} | PuppyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/og-default.jpg', ogImageAlt: p.imageAlt || p.title, noindex: isAffiliate(p),
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (isAffiliate(p) ? '' : GUMROAD_JS) });
 }
 
 const pages = {
   about: () => layout({
-    title: 'About PupyGuido | A Practical System for New Puppy Parents',
-    description: 'PupyGuido helps first-time puppy parents know what to do, what to prepare and what to focus on next, with friendly, positive, step-by-step guidance.',
+    title: 'About PuppyGuido | A Practical System for New Puppy Parents',
+    description: 'PuppyGuido helps first-time puppy parents know what to do, what to prepare and what to focus on next, with friendly, positive, step-by-step guidance.',
     urlPath: '/about/',
     body: `${pageHero('About us', 'Happy puppy. <span class="hl white">Happy life.</span>', 'A friendly, practical system for the first days, weeks and months with a new puppy.')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
-<h2>Why PupyGuido exists</h2>
+<h2>Why PuppyGuido exists</h2>
 <p>Bringing home a puppy is exciting, and overwhelming. Advice is scattered across videos and forums, and it often contradicts itself. New puppy parents keep asking the same questions: <em>What do I need? What should I do today? Is this normal?</em></p>
-<p>PupyGuido turns those first weeks into clear steps: visual checklists, simple daily routines and a 14-day plan you can actually follow.</p>
+<p>PuppyGuido turns those first weeks into clear steps: visual checklists, simple daily routines and a 14-day plan you can actually follow.</p>
 <h2>What we believe</h2>
 <ul>
 <li><strong>Positive first.</strong> We teach with patience, consistency and rewards. No punishment-based advice.</li>
@@ -244,8 +244,8 @@ const pages = {
 </div></div></section>` }),
 
   contact: () => layout({
-    title: 'Contact PupyGuido',
-    description: 'Questions, feedback or partnership ideas? Contact the PupyGuido team by email.',
+    title: 'Contact PuppyGuido',
+    description: 'Questions, feedback or partnership ideas? Contact the PuppyGuido team by email.',
     urlPath: '/contact/',
     body: `${pageHero('Contact', 'Say <span class="hl white">hello.</span>', 'Questions about the free guide, feedback, or a partnership idea? We would love to hear from you.')}
 <section class="sec"><div class="wrap narrow"><div class="contact-card">
@@ -262,12 +262,12 @@ const pages = {
 </ul></div></div></section>` }),
 
   privacy: () => layout({
-    title: 'Privacy Policy | PupyGuido',
-    description: 'How PupyGuido collects, uses and protects your personal information.',
+    title: 'Privacy Policy | PuppyGuido',
+    description: 'How PuppyGuido collects, uses and protects your personal information.',
     urlPath: '/privacy/',
     body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 6, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
-<p>PupyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
+<p>PuppyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
 <h2>Information we collect</h2>
 <ul>
 <li><strong>Information you give us.</strong> When you request the free guide we collect your name and email address.</li>
@@ -277,7 +277,7 @@ const pages = {
 <h2>How we use it</h2>
 <ul>
 <li>To deliver the free guide you requested.</li>
-<li>To send helpful puppy tips and updates about PupyGuido. You can unsubscribe at any time.</li>
+<li>To send helpful puppy tips and updates about PuppyGuido. You can unsubscribe at any time.</li>
 <li>To answer your questions and improve the site.</li>
 </ul>
 <p>We do not sell your personal information.</p>
@@ -292,7 +292,7 @@ const pages = {
 <h2>Data retention and security</h2>
 <p>We keep your name and email address until you unsubscribe or ask us to delete them. We keep other information only as long as needed for the purposes above. We take reasonable steps to protect it, but no online service is completely secure.</p>
 <h2>Children</h2>
-<p>PupyGuido is intended for adults. We do not knowingly collect information from children under 13.</p>
+<p>PuppyGuido is intended for adults. We do not knowingly collect information from children under 13.</p>
 <h2>Changes</h2>
 <p>We may update this policy and will change the date above when we do.</p>
 <h2>Contact</h2>
@@ -300,24 +300,24 @@ const pages = {
 </div></div></section>` }),
 
   terms: () => layout({
-    title: 'Terms of Use | PupyGuido',
-    description: 'The terms that apply when you use the PupyGuido website and free guide.',
+    title: 'Terms of Use | PuppyGuido',
+    description: 'The terms that apply when you use the PuppyGuido website and free guide.',
     urlPath: '/terms/',
     body: `${pageHero('Legal', 'Terms of <span class="hl white">use</span>', 'Last updated: October 2, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
 <p>By using this website and our free guide you agree to these terms. If you do not agree, please do not use the site.</p>
 <h2>Educational purpose only</h2>
-<p>PupyGuido provides general educational information about puppy care and training. It is <strong>not</strong> veterinary, medical or professional training advice and does not replace a qualified veterinarian or professional trainer. Always consult a professional about your puppy's health or behavior, especially in an emergency.</p>
+<p>PuppyGuido provides general educational information about puppy care and training. It is <strong>not</strong> veterinary, medical or professional training advice and does not replace a qualified veterinarian or professional trainer. Always consult a professional about your puppy's health or behavior, especially in an emergency.</p>
 <h2>Use of the site and guide</h2>
 <p>The free guide is for your personal, non-commercial use. You may not resell, redistribute, or republish our guides, checklists or other content without written permission.</p>
 <h2>Intellectual property</h2>
-<p>The PupyGuido name, logo, text, graphics and other content are owned by PupyGuido or its licensors and are protected by applicable law.</p>
+<p>The PuppyGuido name, logo, text, graphics and other content are owned by PuppyGuido or its licensors and are protected by applicable law.</p>
 <h2>Affiliate disclosure</h2>
 <p>Some links on this site or in our content may be affiliate links. If you purchase through them we may earn a commission at no additional cost to you. We aim to recommend products that are genuinely useful for puppy parents.</p>
 <h2>Third-party sites</h2>
 <p>We are not responsible for the content, prices or practices of third-party websites we link to.</p>
 <h2>No warranties; limitation of liability</h2>
-<p>The site and guide are provided "as is" without warranties of any kind. To the fullest extent permitted by law, PupyGuido is not liable for any loss or damage arising from your use of the site or reliance on its content.</p>
+<p>The site and guide are provided "as is" without warranties of any kind. To the fullest extent permitted by law, PuppyGuido is not liable for any loss or damage arising from your use of the site or reliance on its content.</p>
 <h2>Changes</h2>
 <p>We may update these terms and will change the date above when we do. Continued use means you accept the updated terms.</p>
 <h2>Contact</h2>
@@ -379,7 +379,7 @@ if (require.main === module) {
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));
   write('shop/index.html', renderShop());
   for (const p of products) write(`shop/${p.slug}/index.html`, renderProduct(p));
-  write('404.html', layout({ title: 'Page not found | PupyGuido', description: 'This page could not be found.', urlPath: '/404.html', noindex: true,
+  write('404.html', layout({ title: 'Page not found | PuppyGuido', description: 'This page could not be found.', urlPath: '/404.html', noindex: true,
     body: pageHero('404', 'Page not <span class="hl white">found.</span>', 'The page you are looking for has moved or does not exist.') + `<section class="sec"><div class="wrap narrow"><div class="contact-card"><h2>Try one of these</h2><p style="margin-top:18px"><a class="btn btn-gold" href="/#signup">Get the free guide ${arrow}</a></p><p style="margin-top:14px"><a href="/blog/">Read the blog</a> &middot; <a href="/shop/">Browse the shop</a> &middot; <a href="/">Home</a></p></div></div></section>` }));
   const vercel = {
     buildCommand: 'node build/build.js',

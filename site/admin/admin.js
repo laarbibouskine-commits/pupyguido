@@ -9,7 +9,7 @@
     var init = { method: opts.body ? 'POST' : 'GET', credentials: 'same-origin', headers: {} };
     if (opts.body) { init.headers['Content-Type'] = 'application/json'; init.headers['X-Requested-With'] = 'pg-admin'; init.body = JSON.stringify(opts.body); }
     var qs = '?action=' + encodeURIComponent(action) + (opts.q ? '&' + opts.q : '');
-    return fetch('/api/admin' + qs, init).then(function (r) {
+    return fetch('/api/admin/' + qs, init).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.error || (j.errors && j.errors.join(' ')) || 'Request failed'); e.status = r.status; e.data = j; throw e; } return j; });
     });
   }

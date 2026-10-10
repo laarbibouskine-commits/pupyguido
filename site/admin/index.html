@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>PuppyGuido Admin</title>
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><img src="/assets/mascot.png" alt="" width="36" height="38"><span>Puppy<b>Guido</b> Admin</span></div>
+  <nav id="nav" hidden>
+    <button class="btn ghost" id="btn-list" type="button">Articles</button>
+    <button class="btn" id="btn-new" type="button">New article</button>
+    <button class="btn ghost" id="btn-logout" type="button">Sign out</button>
+  </nav>
+</header>
+<main>
+  <div id="msg" role="status" aria-live="polite" class="msg" hidden></div>
+
+  <section id="v-login" hidden>
+    <form id="login-form" class="card narrow" autocomplete="off">
+      <h1>Sign in</h1>
+      <label>Password<input id="login-pw" type="password" required autocomplete="current-password"></label>
+      <button class="btn" type="submit">Sign in</button>
+      <p class="hint" id="login-hint"></p>
+    </form>
+  </section>
+
+  <section id="v-list" hidden>
+    <div class="row">
+      <input id="search" type="search" placeholder="Search title, slug or category" aria-label="Search articles">
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>State</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="hint">Draft = not visible on the website. Published = live. Legacy = built-in article; editing it creates a draft copy that stays hidden until you publish it.</p>
+  </section>
+
+  <section id="v-edit" hidden>
+    <form id="edit-form" class="card" novalidate>
+      <h1 id="edit-h">New article</h1>
+      <div class="grid">
+        <label>Title <span class="cnt" data-for="title" data-max="70"></span><input id="title" maxlength="200" required></label>
+        <label>Slug <span class="cnt" data-for="slug" data-max="80"></span><input id="slug" maxlength="80" required pattern="[a-z0-9]+(-[a-z0-9]+)*"></label>
+        <label>Category<select id="category" required></select></label>
+        <label>Tags (comma separated)<input id="tags" placeholder="puppy, crate, sleep"></label>
+        <label class="wide">Excerpt <span class="cnt" data-for="excerpt" data-max="200"></span><textarea id="excerpt" rows="2" maxlength="400"></textarea></label>
+        <label>SEO title <span class="cnt" data-for="seoTitle" data-max="70"></span><input id="seoTitle" maxlength="200"></label>
+        <label>Meta description <span class="cnt" data-for="metaDescription" data-max="160"></span><textarea id="metaDescription" rows="2" maxlength="400" required></textarea></label>
+        <div class="wide imgbox">
+          <label>Featured image<select id="image"></select></label>
+          <label>Image alt text <span class="cnt" data-for="imageAlt" data-max="140"></span><input id="imageAlt" maxlength="200" required></label>
+          <label>Upload new image (JPG, PNG or WebP, max 2 MB)<input id="upload" type="file" accept="image/jpeg,image/png,image/webp"></label>
+          <img id="thumb" alt="" width="160" height="100">
+        </div>
+        <div class="wide">
+          <div class="tools" role="toolbar" aria-label="Formatting">
+            <button type="button" data-ins="h2">H2</button><button type="button" data-ins="h3">H3</button>
+            <button type="button" data-ins="p">Paragraph</button><button type="button" data-ins="strong">Bold</button>
+            <button type="button" data-ins="em">Italic</button><button type="button" data-ins="ul">List</button>
+            <button type="button" data-ins="a">Link</button>
+          </div>
+          <label>Article body (HTML: h2, h3, p, ul, ol, li, strong, em, a, table, blockquote, img)
+            <textarea id="html" rows="18" required spellcheck="true"></textarea></label>
+          <p class="hint" id="wc"></p>
+        </div>
+      </div>
+      <p id="state-line" class="state"></p>
+      <div class="actions">
+        <button class="btn" id="btn-save" type="submit">Save draft</button>
+        <button class="btn ghost" id="btn-preview" type="button">Preview</button>
+        <button class="btn gold" id="btn-publish" type="button">Publish...</button>
+        <button class="btn danger" id="btn-unpublish" type="button" hidden>Unpublish...</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<form id="preview-form" method="post" action="/api/admin?action=preview" target="_blank" hidden>
+  <input type="hidden" name="article" id="preview-article">
+</form>
+
+<dialog id="dlg">
+  <form method="dialog" id="dlg-form" class="card">
+    <h2 id="dlg-h">Publish</h2>
+    <p id="dlg-p"></p>
+    <label>Type the slug to confirm: <b id="dlg-slug"></b><input id="dlg-confirm" autocomplete="off" required></label>
+    <label>Admin password<input id="dlg-pw" type="password" autocomplete="current-password" required></label>
+    <div class="actions">
+      <button class="btn ghost" value="cancel" type="button" id="dlg-cancel">Cancel</button>
+      <button class="btn gold" type="submit" id="dlg-ok">Confirm</button>
+    </div>
+  </form>
+</dialog>
+<script src="/admin/admin.js"></script>
+</body>
+</html>

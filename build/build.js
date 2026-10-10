@@ -157,12 +157,12 @@ ${disclaimer}
 </div>
 ${related.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">Keep reading</h2><div class="cards3">${related.map(card).join('')}</div></div></section>` : ''}
 </article>`;
-  return layout({ title: `${p.title} | PuppyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogImageAlt: p.imageAlt, ogType: 'article',
+  return layout({ title: `${p.seoTitle || p.title} | PuppyGuido`, description: p.description, urlPath: url, body, ogImage: p.image, ogImageAlt: p.imageAlt, ogType: 'article',
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` });
 }
 
 function card(p) {
-  return `<a class="post-card" href="/blog/${p.slug}/"><div class="pc-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="600" height="380" loading="lazy"></div><div class="pc-body"><span class="tag">${esc(p.category)}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p><span class="more">Read article <svg class="ico"><use href="#i-arrow"/></svg></span></div></a>`;
+  return `<a class="post-card" href="/blog/${p.slug}/"><div class="pc-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="600" height="380" loading="lazy"></div><div class="pc-body"><span class="tag">${esc(p.category)}</span><h3>${esc(p.title)}</h3><p>${esc(p.excerpt || p.description)}</p><span class="more">Read article <svg class="ico"><use href="#i-arrow"/></svg></span></div></a>`;
 }
 
 function renderBlogIndex(all) {
@@ -403,7 +403,12 @@ if (require.main === module) {
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' } ] },
       { source: '/assets/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
-      { source: '/go/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }
+      { source: '/go/(.*)', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
+      // Admin dashboard shell: never indexed, never cached, strict CSP (all its JS/CSS are same-origin files).
+      { source: '/admin/(.*)', headers: [
+        { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        { key: 'Cache-Control', value: 'no-store' },
+        { key: 'Content-Security-Policy', value: "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } ] }
     ]
   };
   fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');

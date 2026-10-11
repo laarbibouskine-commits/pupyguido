@@ -325,6 +325,27 @@ const pages = {
 </div></div></section>` })
 };
 
+// RSS feed of published posts, for automation tools (e.g. Make) that turn new articles into pins or social posts.
+function rssFeed(all) {
+  const x = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const items = all.slice(0, 30).map(p => {
+    const url = SITE + '/blog/' + p.slug + '/';
+    const type = /\.png$/i.test(p.image) ? 'image/png' : /\.webp$/i.test(p.image) ? 'image/webp' : 'image/jpeg';
+    return [
+      '  <item>',
+      '    <title>' + x(p.title) + '</title>',
+      '    <link>' + url + '</link>',
+      '    <guid isPermaLink="true">' + url + '</guid>',
+      '    <pubDate>' + new Date(p.date + 'T12:00:00Z').toUTCString() + '</pubDate>',
+      '    <description>' + x(p.excerpt || p.description) + '</description>',
+      '    <category>' + x(p.category) + '</category>',
+      '    <enclosure url="' + SITE + p.image + '" type="' + type + '" length="0"/>',
+      '  </item>'
+    ].join('\n');
+  }).join('\n');
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n<channel>\n  <title>PuppyGuido blog</title>\n  <link>' + SITE + '/blog/</link>\n  <description>Practical puppy tips, routines and checklists for new puppy parents.</description>\n  <language>en-us</language>\n' + items + '\n</channel>\n</rss>\n';
+}
+
 function write(rel, content) {
   const f = path.join(DIST, rel);
   fs.mkdirSync(path.dirname(f), { recursive: true });
@@ -376,6 +397,7 @@ if (require.main === module) {
   }
   for (const [name, fn] of Object.entries(pages)) write(`${name}/index.html`, fn());
   write('blog/index.html', renderBlogIndex(posts));
+  write('blog/rss.xml', rssFeed(posts));
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));
   write('shop/index.html', renderShop());
   for (const p of products) write(`shop/${p.slug}/index.html`, renderProduct(p));

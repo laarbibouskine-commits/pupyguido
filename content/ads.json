@@ -1,0 +1,11 @@
+{
+  "_readme": "Set enabled=true and fill publisherId (ca-pub-XXXXXXXXXXXXXXXX) and the slot ids from AdSense. Leave slots empty to skip a position. Do not enable before AdSense approval and a cookie consent banner for EU/UK visitors.",
+  "enabled": false,
+  "publisherId": "",
+  "slots": {
+    "articleTop": "",
+    "articleMiddle": "",
+    "articleEnd": "",
+    "blogIndex": ""
+  }
+}

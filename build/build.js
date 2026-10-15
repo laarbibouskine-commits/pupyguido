@@ -23,6 +23,26 @@ for (const p of require('./posts.js').filter(p => p.draft !== true)) bySlug.set(
 for (const p of jsonPosts) bySlug.set(p.slug, p);
 const posts = [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
+// --- Google AdSense (OFF by default). Turn on by editing content/ads.json: enabled=true + publisherId + slot ids.
+const ADS_FILE = path.join(ROOT, 'content', 'ads.json');
+const ADS = fs.existsSync(ADS_FILE) ? JSON.parse(fs.readFileSync(ADS_FILE, 'utf8')) : { enabled: false, slots: {} };
+const ADS_ON = !!(ADS.enabled && /^ca-pub-\d{10,}$/.test(ADS.publisherId || ''));
+const adsLoader = ADS_ON ? '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADS.publisherId + '" crossorigin="anonymous"></script>' : '';
+function adSlot(name) {
+  const id = (ADS.slots || {})[name];
+  if (!ADS_ON || !id) return '';
+  return '<aside class="ad-slot ad-' + name + '" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="' + ADS.publisherId + '" data-ad-slot="' + id + '" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></aside>';
+}
+function withMidAd(html) {
+  const ad = adSlot('articleMiddle');
+  if (!ad) return html;
+  const parts = html.split(/(?=<h2[ >])/);
+  if (parts.length < 5) return html;
+  const at = Math.floor(parts.length / 2);
+  parts.splice(at, 0, ad);
+  return parts.join('');
+}
+
 const PRODUCT_DIR = path.join(ROOT, 'content', 'products');
 const ownProducts = fs.existsSync(PRODUCT_DIR)
   ? fs.readdirSync(PRODUCT_DIR).filter(f => f.endsWith('.json') && !f.startsWith('_')).map(f => JSON.parse(fs.readFileSync(path.join(PRODUCT_DIR, f), 'utf8'))).filter(p => !p.hidden).sort((a, b) => (a.order || 99) - (b.order || 99))
@@ -58,6 +78,7 @@ function layout({ title, description, urlPath, body, extraHead = '', ogImage = '
 <link rel="canonical" href="${url}">
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
 <meta name="theme-color" content="#0B1F44">
+${adsLoader}
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -151,7 +172,9 @@ function renderPost(p, all) {
 </div></div>
 <div class="wrap narrow">
 <figure class="post-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="900" height="560" loading="eager"></figure>
-<div class="prose">${p.html}</div>
+${adSlot('articleTop')}
+<div class="prose">${withMidAd(p.html)}</div>
+${adSlot('articleEnd')}
 ${ctaBox}
 ${disclaimer}
 </div>
@@ -167,7 +190,7 @@ function card(p) {
 
 function renderBlogIndex(all) {
   const body = `${pageHero('PuppyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
-<section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${ctaBox}</div></section>`;
+<section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${adSlot('blogIndex')}${ctaBox}</div></section>`;
   return layout({ title: 'Puppy Blog: Training, Potty & Sleep Tips | PuppyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PuppyGuido.', urlPath: '/blog/', body });
 }
 
@@ -435,6 +458,8 @@ if (require.main === module) {
   };
   fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
   write('sitemap.xml', sitemap(posts));
+  if (ADS_ON) write('ads.txt', 'google.com, ' + ADS.publisherId.replace('ca-', '') + ', DIRECT, f08c47fec0942fa0\n');
+  if (ADS_ON) { const hp = path.join(DIST, 'index.html'); if (fs.existsSync(hp)) fs.writeFileSync(hp, fs.readFileSync(hp, 'utf8').replace('</head>', adsLoader + '\n</head>')); }
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
   verifyDist();
   if (draftPosts.length) console.log('Drafts NOT published:', draftPosts.map(p => p.slug).join(', '));

@@ -395,3 +395,7 @@ footer a:hover{color:#fff}
 .why-box{margin-top:22px;background:var(--gold-soft);border-radius:var(--r-md);padding:16px 18px}
 .why-box strong{font-family:var(--f-display);color:var(--navy)}
 .why-box p{margin:6px 0 0;font-size:15.5px;color:var(--ink)}
+
+/* Ads (only rendered when AdSense is enabled) */
+.ad-slot{margin:28px 0;text-align:center;min-height:90px}
+.ad-slot .ad-label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}

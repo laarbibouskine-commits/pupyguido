@@ -216,7 +216,7 @@ function renderShop() {
   const ld = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: products.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + '/shop/' + p.slug + '/', name: p.title })) };
   return layout({
     title: 'Puppy Shop: Essentials, Printables & Guides | PuppyGuido',
-    description: 'Practical puppy essentials, printable trackers and guides picked for new puppy parents.',
+    description: 'Shop practical puppy essentials, printable trackers and calm, step-by-step guides chosen to help new puppy parents through the first weeks.',
     urlPath: '/shop/',
     extraHead: products.length ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (products.some(p => !isAffiliate(p)) ? GUMROAD_JS : '') : '',
     body: pageHero('Shop', 'Puppy <span class="hl white">essentials.</span>', 'Practical things for the first weeks, chosen for new puppy parents.') + `<section class="sec"><div class="wrap">${list}<p class="disc" style="margin-top:44px">${SHOP_NOTE}</p></div></section>`
@@ -267,8 +267,8 @@ const pages = {
 </div></div></section>` }),
 
   contact: () => layout({
-    title: 'Contact PuppyGuido',
-    description: 'Questions, feedback or partnership ideas? Contact the PuppyGuido team by email.',
+    title: 'Contact PuppyGuido | Questions, Feedback, Partnerships',
+    description: 'Questions, feedback or partnership ideas? Contact the PuppyGuido team by email and we will get back to you as soon as we can.',
     urlPath: '/contact/',
     body: `${pageHero('Contact', 'Say <span class="hl white">hello.</span>', 'Questions about the free guide, feedback, or a partnership idea? We would love to hear from you.')}
 <section class="sec"><div class="wrap narrow"><div class="contact-card">
@@ -286,7 +286,7 @@ const pages = {
 
   privacy: () => layout({
     title: 'Privacy Policy | PuppyGuido',
-    description: 'How PuppyGuido collects, uses and protects your personal information.',
+    description: 'How PuppyGuido collects, uses and protects your personal information, including the free guide sign-up, cookies and your rights.',
     urlPath: '/privacy/',
     body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 6, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
@@ -324,7 +324,7 @@ const pages = {
 
   terms: () => layout({
     title: 'Terms of Use | PuppyGuido',
-    description: 'The terms that apply when you use the PuppyGuido website and free guide.',
+    description: 'The terms that apply when you use the PuppyGuido website, free guide and printable resources, including disclaimers and affiliate links.',
     urlPath: '/terms/',
     body: `${pageHero('Legal', 'Terms of <span class="hl white">use</span>', 'Last updated: October 2, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">

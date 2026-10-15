@@ -4,6 +4,7 @@ module.exports = [
 {
   slug: 'puppy-crying-at-night',
   title: 'Puppy Crying at Night? 7 Things to Check Before You Panic',
+  seoTitle: 'Puppy Crying at Night? 7 Things to Check',
   description: 'A new puppy crying at night is normal. Here are 7 common reasons and a calm, step-by-step bedtime routine that helps most puppies settle.',
   category: 'Sleep & Crate',
   date: '2026-10-02',
@@ -42,6 +43,7 @@ module.exports = [
 {
   slug: 'how-to-stop-puppy-biting',
   title: 'How to Stop Puppy Biting: The Pause, Redirect, Reward Method',
+  seoTitle: 'How to Stop Puppy Biting: 3-Step Method',
   description: 'Puppy biting is normal but painful. Learn why puppies bite and a simple three-step method (pause, redirect, reward) that works without punishment.',
   category: 'Training',
   date: '2026-10-02',
@@ -86,6 +88,7 @@ module.exports = [
 {
   slug: 'puppy-potty-training-schedule',
   title: 'Puppy Potty Training Schedule: A Simple Daily Routine That Works',
+  seoTitle: 'Puppy Potty Training Schedule: Daily Routine',
   description: 'A clear puppy potty training schedule: when to take your puppy out, how to reward success, and how to handle accidents calmly.',
   category: 'Potty Training',
   date: '2026-10-02',
@@ -138,6 +141,7 @@ module.exports = [
 {
   slug: 'new-puppy-checklist',
   title: 'New Puppy Checklist: 10 Essentials to Buy Before Your Puppy Comes Home',
+  seoTitle: 'New Puppy Checklist: 10 Essentials to Buy',
   description: 'Your new puppy checklist: the essential items to have ready before day one, plus what you can wait on.',
   category: 'Preparation',
   date: '2026-10-02',

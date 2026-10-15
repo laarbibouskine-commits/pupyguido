@@ -168,7 +168,7 @@ function card(p) {
 function renderBlogIndex(all) {
   const body = `${pageHero('PuppyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
 <section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${ctaBox}</div></section>`;
-  return layout({ title: 'Puppy Blog: Training, Potty, Sleep & New Puppy Tips | PuppyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PuppyGuido.', urlPath: '/blog/', body });
+  return layout({ title: 'Puppy Blog: Training, Potty & Sleep Tips | PuppyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PuppyGuido.', urlPath: '/blog/', body });
 }
 
 const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></script>';
@@ -217,7 +217,7 @@ function renderProduct(p) {
 ${p.description ? `<div class="wrap narrow"><div class="prose" style="margin-top:44px">${p.description}</div></div>` : ''}
 <div class="wrap narrow"><p class="disc" style="margin-top:36px">${SHOP_NOTE}</p></div></section>
 ${others.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">More from the shop</h2><div class="cards3">${others.map(productCard).join('')}</div></div></section>` : ''}`;
-  return layout({ title: `${p.title} | PuppyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/og-default.jpg', ogImageAlt: p.imageAlt || p.title, noindex: isAffiliate(p),
+  return layout({ title: `${p.seoTitle || p.title} | PuppyGuido Shop`, description: p.short || p.title, urlPath: '/shop/' + p.slug + '/', body, ogImage: p.image || '/assets/og-default.jpg', ogImageAlt: p.imageAlt || p.title, noindex: isAffiliate(p),
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` + (isAffiliate(p) ? '' : GUMROAD_JS) });
 }
 

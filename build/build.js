@@ -174,13 +174,26 @@ function gearBox(p) {
   return '<aside class="gear-box"><h3>Helpful gear</h3><ul>' + items + '</ul><p class="gear-note">As an Amazon Associate we earn from qualifying purchases. Always check that an item suits your puppy\'s size and age.</p></aside>';
 }
 
+
+// Optional post fields: quick (short answer box), faq: [{q, a}] (rendered + FAQPage schema), updated (dateModified), author note.
+function quickBox(p) {
+  return p.quick ? '<aside class="quick-answer"><strong>Quick answer</strong><p>' + p.quick + '</p></aside>' : '';
+}
+function faqHtml(p) {
+  if (!p.faq || !p.faq.length) return '';
+  return '<h2 id="faq">Frequently asked questions</h2>' + p.faq.map(x => '<h3>' + esc(x.q) + '</h3><p>' + x.a + '</p>').join('');
+}
+function faqLd(p) {
+  return { '@type': 'FAQPage', mainEntity: p.faq.map(x => ({ '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: String(x.a).replace(/<[^>]+>/g, '') } })) };
+}
+
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
   const related = all.filter(x => x.slug !== p.slug).slice(0, 3);
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.date,
+      { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.updated || p.date,
         image: p.midImage ? [SITE + p.image, SITE + p.midImage] : SITE + p.image, mainEntityOfPage: SITE + url,
         author: { '@type': 'Organization', name: 'PuppyGuido' },
         publisher: { '@type': 'Organization', name: 'PuppyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
@@ -190,6 +203,7 @@ function renderPost(p, all) {
         { '@type': 'ListItem', position: 3, name: p.title, item: SITE + url } ] }
     ]
   };
+  if (p.faq && p.faq.length) ld['@graph'].push(faqLd(p));
   const body = `<article class="post">
 <div class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.category)}</span></nav>
@@ -199,7 +213,7 @@ function renderPost(p, all) {
 <div class="wrap narrow">
 <figure class="post-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="900" height="560" loading="eager"></figure>
 ${adSlot('articleTop')}
-<div class="prose">${withMidAd(withMidImage(p.html, p))}</div>
+${quickBox(p)}<div class="prose">${withMidAd(withMidImage(p.html, p))}${faqHtml(p)}</div>
 ${adSlot('articleEnd')}
 ${gearBox(p)}
 ${ctaBox}

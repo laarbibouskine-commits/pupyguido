@@ -422,3 +422,8 @@ footer a:hover{color:#fff}
 .cta-fine a{color:#F6C431}
 .cta-err{color:#ffd6d6;font-weight:700}
 @media (max-width:760px){.cta-signup{grid-template-columns:1fr}}
+
+.quick-answer{background:#EAF3FF;border-left:6px solid var(--blue);border-radius:var(--r-md);padding:16px 20px;margin:0 0 26px}
+.quick-answer strong{color:var(--navy);text-transform:uppercase;letter-spacing:.08em;font-size:13px}
+.quick-answer p{margin:6px 0 0;font-size:17px}
+.prose h3{margin-top:22px}

@@ -6,9 +6,9 @@
   var history = [];
   try { history = JSON.parse(sessionStorage.getItem('pgChat') || '[]'); } catch (e) {}
   var css = '' +
-    '#pgc-btn{position:fixed;right:16px;bottom:16px;z-index:9998;display:flex;align-items:center;gap:8px;background:#F6C431;color:#0B1F44;border:0;border-radius:999px;padding:11px 16px;font:800 14px/1 "Segoe UI",Arial,sans-serif;cursor:pointer;box-shadow:0 8px 22px rgba(11,31,68,.3)}' +
-    '#pgc-btn svg{width:20px;height:20px}' +
-    '#pgc-panel{position:fixed;right:16px;bottom:72px;z-index:9999;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 100px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(11,31,68,.35);display:none;flex-direction:column;overflow:hidden;font:15px/1.45 "Segoe UI",Arial,sans-serif;color:#172033}' +
+    '#pgc-btn{position:fixed;right:14px;bottom:14px;z-index:9998;display:flex;align-items:center;justify-content:center;width:46px;height:46px;background:#F6C431;color:#0B1F44;border:0;border-radius:50%;padding:0;cursor:pointer;box-shadow:0 4px 14px rgba(11,31,68,.28)}' +
+    '#pgc-btn svg{width:22px;height:22px}#pgc-btn span{display:none}' +
+    '#pgc-panel{position:fixed;right:14px;bottom:68px;z-index:9999;width:320px;max-width:calc(100vw - 32px);height:420px;max-height:calc(100vh - 90px);background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(11,31,68,.35);display:none;flex-direction:column;overflow:hidden;font:15px/1.45 "Segoe UI",Arial,sans-serif;color:#172033}' +
     '#pgc-panel.open{display:flex}' +
     '#pgc-head{background:#0B1F44;color:#fff;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}' +
     '#pgc-head b{font-size:15px}#pgc-head span{display:block;font-size:12px;color:#F6C431}' +
@@ -25,7 +25,7 @@
     '#pgc-note{font-size:11px;color:#5D6878;padding:0 10px 8px;background:#fff}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var btn = document.createElement('button');
-  btn.id = 'pgc-btn'; btn.type = 'button'; btn.setAttribute('aria-label', 'Ask PuppyGuido a puppy question');
+  btn.id = 'pgc-btn'; btn.type = 'button'; btn.setAttribute('aria-label', 'Ask PuppyGuido a puppy question'); btn.title = 'Ask a puppy question';
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg><span>Ask a puppy question</span>';
   var panel = document.createElement('div');
   panel.id = 'pgc-panel'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'PuppyGuido assistant');

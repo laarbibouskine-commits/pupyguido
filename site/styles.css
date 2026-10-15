@@ -399,3 +399,8 @@ footer a:hover{color:#fff}
 /* Ads (only rendered when AdSense is enabled) */
 .ad-slot{margin:28px 0;text-align:center;min-height:90px}
 .ad-slot .ad-label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+/* Middle article image */
+.post-img.mid{margin:30px 0}
+.post-img.mid img{width:100%;height:auto;border-radius:var(--r-md,18px);display:block}
+.post-img.mid figcaption{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}

@@ -23,6 +23,16 @@ for (const p of require('./posts.js').filter(p => p.draft !== true)) bySlug.set(
 for (const p of jsonPosts) bySlug.set(p.slug, p);
 const posts = [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
+// Optional second image in the middle of an article (fields: midImage, midImageAlt, midImageCaption).
+function withMidImage(html, p) {
+  if (!p.midImage) return html;
+  const parts = html.split(/(?=<h2[ >])/);
+  const fig = '<figure class="post-img mid"><img src="' + esc(p.midImage) + '" alt="' + esc(p.midImageAlt || '') + '" width="1200" height="800" loading="lazy">' + (p.midImageCaption ? '<figcaption>' + esc(p.midImageCaption) + '</figcaption>' : '') + '</figure>';
+  if (parts.length < 3) return html + fig;
+  const at = Math.min(parts.length - 1, Math.max(2, Math.floor(parts.length / 3)));
+  parts.splice(at, 0, fig);
+  return parts.join('');
+}
 // --- Google AdSense (OFF by default). Turn on by editing content/ads.json: enabled=true + publisherId + slot ids.
 const ADS_FILE = path.join(ROOT, 'content', 'ads.json');
 const ADS = fs.existsSync(ADS_FILE) ? JSON.parse(fs.readFileSync(ADS_FILE, 'utf8')) : { enabled: false, slots: {} };
@@ -155,7 +165,7 @@ function renderPost(p, all) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.date,
-        image: SITE + p.image, mainEntityOfPage: SITE + url,
+        image: p.midImage ? [SITE + p.image, SITE + p.midImage] : SITE + p.image, mainEntityOfPage: SITE + url,
         author: { '@type': 'Organization', name: 'PuppyGuido' },
         publisher: { '@type': 'Organization', name: 'PuppyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
       { '@type': 'BreadcrumbList', itemListElement: [
@@ -173,7 +183,7 @@ function renderPost(p, all) {
 <div class="wrap narrow">
 <figure class="post-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="900" height="560" loading="eager"></figure>
 ${adSlot('articleTop')}
-<div class="prose">${withMidAd(p.html)}</div>
+<div class="prose">${withMidAd(withMidImage(p.html, p))}</div>
 ${adSlot('articleEnd')}
 ${ctaBox}
 ${disclaimer}

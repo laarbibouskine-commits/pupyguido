@@ -143,7 +143,7 @@ ${body}
         <p class="tl" style="margin-top:16px">TRAIN &bull; CARE &bull; LOVE</p>
       </div>
       <div><h4>Explore</h4><ul><li><a href="/#inside">What's inside</a></li><li><a href="/#plan">14-day plan</a></li><li><a href="/shop/">Shop</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="/about/">About us</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="/about/">About us</a></li><li><a href="/how-we-write/">How we write</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy policy</a></li><li><a href="/terms/">Terms of use</a></li></ul></div>
     </div>
     <div class="legal"><span>&copy; ${new Date().getFullYear()} PuppyGuido. All rights reserved.</span><span>For educational purposes only. Not veterinary advice. Some links may be affiliate links. Photos via Unsplash.</span></div>
   </div>
@@ -160,6 +160,7 @@ const pageHero = (kicker, h1, sub) => `<section class="page-hero"><div class="pa
 <h1>${h1}</h1>${sub ? `<p class="lead">${sub}</p>` : ''}</div></section>`;
 
 const ctaBox = `<aside class="cta-box cta-form"><div class="cta-copy"><h3>Get the free New Puppy Survival Guide</h3><p>Checklists, routines and a 14-day plan for your puppy's first days at home. Free, no spam.</p></div><form class="cta-signup" method="POST" enctype="multipart/form-data" action="https://n8n.satinher.com/webhook/pupyguido-lead" onsubmit="return pgSend(event)"><input name="Full name" type="text" placeholder="Your first name" autocomplete="name" required aria-label="Your name"><input name="Email address" type="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address"><div aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden"><input name="website" type="text" tabindex="-1" autocomplete="off"></div><button class="btn btn-gold" type="submit">Send me the guide</button><p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form><script>function pgSend(e){e.preventDefault();var f=e.target,b=f.querySelector('button'),er=f.querySelector('.cta-err');er.hidden=true;var d=new FormData(f);if(d.get('website')){location.href='/thank-you.html';return false}d.delete('website');b.disabled=true;var t=b.textContent;b.textContent='Sending...';fetch(f.action,{method:'POST',body:d}).then(function(r){if(!r.ok)throw 0;location.href='/thank-you.html'}).catch(function(){b.disabled=false;b.textContent=t;er.textContent='Sorry, something went wrong. Please try again or email hello@puppyguido.com.';er.hidden=false});return false}</script></aside>`;
+const authorBox = (p) => '<aside class="author-box"><strong>Written by the PuppyGuido editorial team</strong><span>' + (p.updated ? 'Last updated ' + fmtDate(p.updated) : 'Published ' + fmtDate(p.date)) + ' &middot; <a href="/how-we-write/">How we write and update our guides</a></span></aside>';
 const disclaimer = `<p class="disc"><b>Disclaimer.</b> PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>`;
 
 
@@ -217,6 +218,7 @@ ${quickBox(p)}<div class="prose">${withMidAd(withMidImage(p.html, p))}${faqHtml(
 ${adSlot('articleEnd')}
 ${gearBox(p)}
 ${ctaBox}
+${authorBox(p)}
 ${disclaimer}
 </div>
 ${related.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h">Keep reading</h2><div class="cards3">${related.map(card).join('')}</div></div></section>` : ''}
@@ -300,10 +302,39 @@ const pages = {
 <li><strong>Positive first.</strong> We teach with patience, consistency and rewards. No punishment-based advice.</li>
 <li><strong>Practical beats perfect.</strong> Small daily steps build calm, confident puppies and owners.</li>
 <li><strong>Beginner-friendly.</strong> No jargon, no judgment.</li>
-<li><strong>Honest about limits.</strong> We share general educational information. We do not replace your veterinarian or a professional trainer.</li>
+<li><strong>Honest about limits.</strong> We share general educational information. We do not replace your veterinarian or a professional trainer. Read <a href="/how-we-write/">how we write and update our guides</a>.</li>
 </ul>
 <h2>What we offer</h2>
 <p>Right now that is the free <strong>New Puppy Survival Guide</strong>, plus the articles on this blog and a short list of puppy essentials in the shop.</p>
+<p><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p>
+</div></div></section>` }),
+
+  'how-we-write': () => layout({
+    title: 'How We Write and Update Our Puppy Guides | PuppyGuido',
+    description: 'How PuppyGuido researches, writes, checks and updates its puppy guides: positive methods, honest limits, clear sources and regular updates.',
+    urlPath: '/how-we-write/',
+    body: `${pageHero('Editorial standards', 'How we <span class="hl white">write</span> our guides', 'What you can expect from every PuppyGuido article.')}
+<section class="sec"><div class="wrap narrow"><div class="prose">
+<h2>Our promise</h2>
+<p>PuppyGuido is written for first-time puppy parents in the US, UK, Australia and New Zealand. Every guide aims to be practical, kind to puppies and honest about what is normal and what needs a professional.</p>
+<h2>How an article is made</h2>
+<ol>
+<li><strong>We start with real questions.</strong> We look at what new puppy owners actually ask: potty training, crying at night, biting, crates, routines.</li>
+<li><strong>We draft with clear structure.</strong> A quick answer first, then step-by-step help, tables by age or time, and common mistakes. Some drafting is supported by software tools.</li>
+<li><strong>We run an editorial checklist.</strong> Every guide is checked for positive, reward-based methods only, no punishment advice, no invented statistics or medical claims, and clear limits.</li>
+<li><strong>We update.</strong> When we improve a guide, we show the update date at the top of the page.</li>
+</ol>
+<h2>What we do not do</h2>
+<ul>
+<li>We do not give veterinary diagnoses or medication advice. For health concerns, please contact your veterinarian.</li>
+<li>We do not recommend punishment, scolding or aversive tools.</li>
+<li>We do not accept payment to say a product is good.</li>
+</ul>
+<h2>Affiliate links</h2>
+<p>Some pages include links to products on other stores, such as Amazon. If you buy through them we may earn a small commission at no extra cost to you. Products are chosen because they fit a real need in the guide. Always check that a product suits your puppy's size and age.</p>
+<h2>Corrections and feedback</h2>
+<p>If you spot a mistake or have a suggestion, write to <a href="mailto:${EMAIL}">${EMAIL}</a>. We read every message.</p>
+<p>General information only: our guides do not replace advice from a qualified veterinarian or professional trainer.</p>
 <p><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p>
 </div></div></section>` }),
 
@@ -418,7 +449,7 @@ function write(rel, content) {
 }
 
 function sitemap(all) {
-  const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/contact/'], ['/privacy/'], ['/terms/'],
+  const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/how-we-write/'], ['/contact/'], ['/privacy/'], ['/terms/'],
     ...all.map(p => [`/blog/${p.slug}/`, p.date]), ...products.filter(p => !isAffiliate(p)).map(p => [`/shop/${p.slug}/`])];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
 }

@@ -427,3 +427,7 @@ footer a:hover{color:#fff}
 .quick-answer strong{color:var(--navy);text-transform:uppercase;letter-spacing:.08em;font-size:13px}
 .quick-answer p{margin:6px 0 0;font-size:17px}
 .prose h3{margin-top:22px}
+
+.author-box{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 2px;margin:26px 0;color:var(--muted);font-size:15px}
+.author-box strong{color:var(--navy)}
+.author-box a{color:var(--navy);text-decoration:underline}

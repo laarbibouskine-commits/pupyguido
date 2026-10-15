@@ -93,6 +93,7 @@ ${adsLoader}
 <meta name="impact-site-verification" value="e4d04c44-ca0f-45e3-8818-d25fcf41c141">
 <meta name="impact-site-verification" value="4f01f581-f1da-4e9f-9366-ce099aaa906e">
 <script defer src="/amz.js"></script>
+<script defer src="/chat.js"></script>
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -203,7 +204,7 @@ function printableBox(p) {
     '<input type="hidden" name="printable" value="' + esc(it.id) + '">' +
     '<div aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
     '<button class="btn btn-gold" type="submit">Email me the PDF</button>' +
-    '<p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form></aside>';
+    '<p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form>' + ctaBox.slice(ctaBox.indexOf('<script>'), ctaBox.indexOf('</script>') + 9) + '</aside>';
 }
 
 function renderPost(p, all) {
@@ -235,8 +236,7 @@ ${adSlot('articleTop')}
 ${quickBox(p)}<div class="prose">${withMidAd(withMidImage(p.html, p))}${faqHtml(p)}</div>
 ${adSlot('articleEnd')}
 ${gearBox(p)}
-${printableBox(p)}
-${ctaBox}
+${printableBox(p) || ctaBox}
 ${authorBox(p)}
 ${disclaimer}
 </div>

@@ -431,3 +431,19 @@ footer a:hover{color:#fff}
 .author-box{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 2px;margin:26px 0;color:var(--muted);font-size:15px}
 .author-box strong{color:var(--navy)}
 .author-box a{color:var(--navy);text-decoration:underline}
+
+/* compact signup boxes */
+.cta-box{margin:30px 0 18px;padding:20px 24px;border-radius:18px;gap:14px}
+.cta-box h3{font-size:19px;margin-bottom:4px;letter-spacing:.01em}
+.cta-box p{font-size:15px;line-height:1.5}
+.cta-form .cta-copy{margin-bottom:12px}
+.cta-signup input{padding:11px 13px;font-size:15px;border-radius:10px}
+.cta-signup .btn{padding:11px 18px;font-size:14px}
+.cta-fine{font-size:12px}
+.gear-box{padding:14px 18px;margin:22px 0}
+.gear-box h3{font-size:17px;margin-bottom:6px}
+.gear-box li{margin:0 0 8px}
+.gear-box li span{font-size:13.5px}
+.author-box{margin:18px 0;font-size:14px}
+.quick-answer{padding:12px 16px;margin:0 0 20px}
+@media (max-width:760px){.cta-box{padding:16px 16px}.cta-box h3{font-size:17px}.cta-signup{gap:10px}}

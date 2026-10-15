@@ -30,3 +30,23 @@ Audience: first-time puppy parents in US, UK, Australia, New Zealand. Owner has 
 - Social assets: C:\Users\user\Downloads\PuppyGuido_Instagram (posts, reels, avatar, linkedin/facebook banners, CAPTIONS.txt).
 - Ebook: C:\Users\user\Downloads\PuppyGuido_Ebook. Pinterest pins: C:\Users\user\Downloads\PuppyGuido_Pinterest.
 - Memory notes: C:\Users\user\.claude\projects\C--Users-user\memory\pupyguido-content-system.md
+
+## Update 2026-10-15 (evening)
+- Reels: 20 reels (12 designed + 8 Pexels-clip reels pxreel01-08, all with original synth background music) in site/assets/social; n8n Hc1P36jBSPnHmXne posts every other day 18:00 UTC.
+- Facebook cross-post: n8n F2T5cPuGVCYwRSKl (called by the IG image + reels workflows via Execute Workflow). Credential "PuppyGuido Facebook" (facebookGraphApi, long-lived USER token, expires ~2026-12-14; renew ~Dec 10 via Graph API Explorer app "PuppyGuido Poster" 1086480780806274, Page id 1337844736084804). Page token is fetched at runtime from /{pageId}?fields=access_token. First test reel 2026-10-15 posted OK.
+- Lead follow-up emails: n8n VhItVIA5DTYm7qjG ACTIVE, daily 09:30 UTC, day 2/5/9, skips Gmail replies containing "unsubscribe", credential Gmail "n8n Gmailpuppy".
+- Analytics: Vercel Web Analytics enabled (cookieless), script in build.js layout + site/index.html; privacy page mentions it.
+- Amazon Associates US: tag bouskine-20 (tax info still to be submitted by user). 10 Amazon picks in content/picks (search links with tag), "Helpful gear" boxes under articles (content/gear.json, gearBox() in build.js), disclosure in shop note.
+- Pinterest: batch 5 (pin56-84) added; Make scenario 7980682 now 83 pins, ends ~2027-01-05. Local: C:\Users\user\Downloads\PuppyGuido_Pinterest (make-batch5.js, make-blueprint-all.js).
+- Pexels clips + reels scripts: C:\Users\user\Downloads\PuppyGuido_Pexels (make-px-reels.js, make-music.js, mix-music.js).
+- Reminders: FB token ~Dec 10, IG token early Dec, Make ops reset ~Nov 10, Amazon 3 sales in 180 days, Instagram bio link done.
+
+## Update 2026-10-15 (late)
+- Printables: 3 PDFs in site/assets/printables/, content/printables.json, printableBox() in build.js, n8n 20bHvl1woCWY7EX2 (webhook /webhook/pupyguido-printable).
+- One compact signup box per article (printableBox || ctaBox); smaller gear/quick/author boxes.
+- Editorial: /how-we-write/ page, author box, post fields quick / faq / updated.
+- Auto blog IONrEmueIdUQc1qF: 1,500-2,200 words, quick answer, FAQ, gate checks, gear topics interleaved. Next topic puppy-wont-pee-outside.
+- Chatbot: n8n brzcKL4IXCOD97z0 (webhook /webhook/pupyguido-chat), widget site/chat.js (small round icon button). Uses credential "lapland content ai" (TaWMcLmDpL9GgfXU); "OpenRouter account" expired. TODO: user creates new OpenRouter key "PuppyGuido" ($5 limit) in n8n, then switch workflow to it.
+- Amazon: US tag bouskine-20, UK puppyguido201-21 (amz.js rewrites for UK visitors); AU TAGS.au empty (user later).
+- Impact application declined; CJ ignored (do not bring up). AdSense on hold (ads.json enabled=false) until 20-30 articles.
+- Reminders: Facebook token renew ~Dec 10, Instagram token early Dec, Make ops reset ~Nov 10, Pinterest pins end ~Jan 5, check Search Console/Analytics in 7-10 days.

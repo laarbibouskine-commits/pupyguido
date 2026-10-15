@@ -209,7 +209,7 @@ const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></scri
 const isAffiliate = p => !!p.url && !p.gumroadUrl;
 const arrow = '<svg class="ico"><use href="#i-arrow"/></svg>';
 const buyBtn = (p, label) => isAffiliate(p)
-  ? `<a class="btn btn-gold" href="/go/${p.slug}/" target="_blank" rel="sponsored nofollow noopener">${esc(p.cta || label || 'Buy here')} ${arrow}</a>`
+  ? `<a class="btn btn-gold" href="${p.merchant === 'Amazon' ? esc(p.url) : '/go/' + p.slug + '/'}" target="_blank" rel="sponsored nofollow noopener">${esc(p.cta || label || 'Buy here')} ${arrow}</a>`
   : `<a class="btn btn-gold" href="${esc(p.gumroadUrl || '#')}" data-gumroad-overlay-checkout="true" target="_blank" rel="noopener">${esc(label || 'Buy now')} ${arrow}</a>`;
 const productImg = p => p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" width="600" height="600" loading="lazy">` : '<div class="ph">Photo coming soon</div>';
 
@@ -217,7 +217,7 @@ function productCard(p) {
   return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p><div class="prod-foot">${p.price ? `<strong class="price">${esc(p.price)}</strong>` : '<span></span>'}${buyBtn(p, 'Buy here')}</div></div></article>`;
 }
 
-const SHOP_NOTE = '<b>Heads up.</b> Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
+const SHOP_NOTE = '<b>Heads up.</b> As an Amazon Associate we earn from qualifying purchases. Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
 
 function renderShop() {
   const cats = [...new Set(products.map(p => p.category || 'Puppy essentials'))];

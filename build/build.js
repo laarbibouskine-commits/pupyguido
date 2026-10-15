@@ -89,6 +89,7 @@ function layout({ title, description, urlPath, body, extraHead = '', ogImage = '
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
 <meta name="theme-color" content="#0B1F44">
 ${adsLoader}
+<script defer src="/_vercel/insights/script.js"></script>
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -306,6 +307,7 @@ const pages = {
 <li><strong>Information you give us.</strong> When you request the free guide we collect your name and email address.</li>
 <li><strong>Messages.</strong> If you email us, we keep your message and address so we can reply.</li>
 <li><strong>Technical data.</strong> Our hosting provider may log basic technical data such as IP address, browser type and pages requested, for security and reliability.</li>
+<li><strong>Anonymous analytics.</strong> We use Vercel Web Analytics to count page views. It does not use cookies and does not track you across websites.</li>
 </ul>
 <h2>How we use it</h2>
 <ul>

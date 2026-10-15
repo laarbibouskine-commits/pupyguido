@@ -188,6 +188,24 @@ function faqLd(p) {
   return { '@type': 'FAQPage', mainEntity: p.faq.map(x => ({ '@type': 'Question', name: x.q, acceptedAnswer: { '@type': 'Answer', text: String(x.a).replace(/<[^>]+>/g, '') } })) };
 }
 
+
+// "Free printable" box: PDF by email (content/printables.json maps slugs and categories to a printable).
+const PRINT_FILE = path.join(ROOT, 'content', 'printables.json');
+const PRINT = fs.existsSync(PRINT_FILE) ? JSON.parse(fs.readFileSync(PRINT_FILE, 'utf8')) : { printables: {}, slugs: {}, categories: {} };
+function printableBox(p) {
+  const key = (PRINT.slugs && PRINT.slugs[p.slug]) || (PRINT.categories && PRINT.categories[p.category]);
+  const it = key && PRINT.printables[key];
+  if (!it) return '';
+  return '<aside class="cta-box cta-form printable-box"><div class="cta-copy"><h3>Free printable: ' + esc(it.title) + '</h3><p>' + esc(it.blurb) + ' We will email you the PDF.</p></div>' +
+    '<form class="cta-signup" method="POST" enctype="multipart/form-data" action="https://n8n.satinher.com/webhook/pupyguido-printable" onsubmit="return pgSend(event)">' +
+    '<input name="Full name" type="text" placeholder="Your first name" autocomplete="name" required aria-label="Your name">' +
+    '<input name="Email address" type="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">' +
+    '<input type="hidden" name="printable" value="' + esc(it.id) + '">' +
+    '<div aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
+    '<button class="btn btn-gold" type="submit">Email me the PDF</button>' +
+    '<p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form></aside>';
+}
+
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
   const related = all.filter(x => x.slug !== p.slug).slice(0, 3);
@@ -217,6 +235,7 @@ ${adSlot('articleTop')}
 ${quickBox(p)}<div class="prose">${withMidAd(withMidImage(p.html, p))}${faqHtml(p)}</div>
 ${adSlot('articleEnd')}
 ${gearBox(p)}
+${printableBox(p)}
 ${ctaBox}
 ${authorBox(p)}
 ${disclaimer}

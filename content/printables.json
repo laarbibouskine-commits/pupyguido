@@ -1,0 +1,56 @@
+{
+  "printables": {
+    "potty": {
+      "id": "puppy-potty-training-schedule-by-age",
+      "title": "Puppy Potty Training Schedule by Age",
+      "blurb": "One-page schedule by age, a sample day and a weekly log you can stick on the fridge."
+    },
+    "crate": {
+      "id": "crate-training-checklist",
+      "title": "Crate Training Checklist",
+      "blurb": "A 7-step checklist, crate time by age and a simple do and don't list."
+    },
+    "week": {
+      "id": "first-week-with-your-puppy-checklist",
+      "title": "Your Puppy First Week: Day by Day",
+      "blurb": "A day-by-day checklist for the first 7 days, plus a night routine."
+    }
+  },
+  "slugs": {
+    "puppy-potty-training-schedule": "potty",
+    "puppy-potty-training-timeline": "potty",
+    "puppy-wont-pee-outside": "potty",
+    "how-often-to-take-a-puppy-outside": "potty",
+    "are-puppy-pads-a-good-idea": "potty",
+    "puppy-training-pads-do-they-work": "potty",
+    "how-to-clean-puppy-accidents": "potty",
+    "how-to-potty-train-a-puppy-in-an-apartment": "potty",
+    "puppy-pees-right-after-coming-inside": "potty",
+    "puppy-potty-training-in-rain-or-cold": "potty",
+    "crate-training-a-puppy": "crate",
+    "best-crate-size-for-a-puppy": "crate",
+    "how-to-crate-train-a-puppy-during-the-day": "crate",
+    "puppy-wont-stop-barking-in-crate": "crate",
+    "puppy-crate-bedding-what-is-safe": "crate",
+    "should-i-put-a-blanket-over-the-puppy-crate": "crate",
+    "puppy-crying-in-crate-first-night": "crate",
+    "puppy-playpen-do-you-need-one": "crate",
+    "puppy-first-night-home": "week",
+    "puppy-crying-at-night": "week",
+    "first-week-with-puppy-what-to-do": "week",
+    "new-puppy-checklist": "week",
+    "how-to-prepare-for-a-puppy-checklist": "week",
+    "puppy-first-day-home-what-to-expect": "week",
+    "puppy-first-week-gear-list": "week",
+    "where-should-a-puppy-sleep-the-first-night": "week",
+    "puppy-whining-at-night-what-to-do": "week",
+    "what-age-do-puppies-sleep-through-the-night": "week",
+    "puppy-schedule-when-working-full-time": "week",
+    "puppy-blues-regret-getting-a-puppy": "week"
+  },
+  "categories": {
+    "Potty Training": "potty",
+    "Sleep & Crate": "crate",
+    "Preparation": "week"
+  }
+}

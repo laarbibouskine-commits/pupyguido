@@ -159,6 +159,18 @@ const pageHero = (kicker, h1, sub) => `<section class="page-hero"><div class="pa
 const ctaBox = `<aside class="cta-box"><div><h3>Get the free New Puppy Survival Guide</h3><p>Checklists, routines and a 14-day plan for your puppy's first days at home.</p></div><a class="btn btn-gold" href="/#signup">Get it free <svg class="ico"><use href="#i-arrow"/></svg></a></aside>`;
 const disclaimer = `<p class="disc"><b>Disclaimer.</b> PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>`;
 
+
+// "Helpful gear" box: 1-2 Amazon picks under an article (mapping in content/gear.json; falls back to the post category).
+const GEAR_FILE = path.join(ROOT, 'content', 'gear.json');
+const GEAR = fs.existsSync(GEAR_FILE) ? JSON.parse(fs.readFileSync(GEAR_FILE, 'utf8')) : { slugs: {}, categories: {} };
+function gearBox(p) {
+  const slugs = (GEAR.slugs && GEAR.slugs[p.slug]) || (GEAR.categories && GEAR.categories[p.category]) || [];
+  const picks = slugs.map(s => products.find(x => x.slug === s)).filter(x => x && !x.hidden && x.url);
+  if (!picks.length) return '';
+  const items = picks.map(x => '<li><a href="' + esc(x.url) + '" target="_blank" rel="sponsored nofollow noopener"><strong>' + esc(x.title) + '</strong></a><span>' + esc(x.short || '') + '</span></li>').join('');
+  return '<aside class="gear-box"><h3>Helpful gear</h3><ul>' + items + '</ul><p class="gear-note">As an Amazon Associate we earn from qualifying purchases. Always check that an item suits your puppy\'s size and age.</p></aside>';
+}
+
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
   const related = all.filter(x => x.slug !== p.slug).slice(0, 3);
@@ -186,6 +198,7 @@ function renderPost(p, all) {
 ${adSlot('articleTop')}
 <div class="prose">${withMidAd(withMidImage(p.html, p))}</div>
 ${adSlot('articleEnd')}
+${gearBox(p)}
 ${ctaBox}
 ${disclaimer}
 </div>

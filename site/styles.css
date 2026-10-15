@@ -412,3 +412,13 @@ footer a:hover{color:#fff}
 .gear-box li a{color:var(--navy);text-decoration:underline}
 .gear-box li span{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
 .gear-note{font-size:13px;color:var(--muted);margin:10px 0 0}
+
+.cta-form{display:block}
+.cta-form .cta-copy{margin-bottom:16px}
+.cta-signup{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:start;position:relative}
+.cta-signup input{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:2px solid transparent;border-radius:12px;background:#fff;color:var(--ink)}
+.cta-signup .btn{white-space:nowrap}
+.cta-fine,.cta-err{grid-column:1/-1;font-size:13px;color:#c8d6ee;margin:2px 0 0}
+.cta-fine a{color:#F6C431}
+.cta-err{color:#ffd6d6;font-weight:700}
+@media (max-width:760px){.cta-signup{grid-template-columns:1fr}}

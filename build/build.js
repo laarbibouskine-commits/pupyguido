@@ -90,6 +90,7 @@ ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robot
 <meta name="theme-color" content="#0B1F44">
 ${adsLoader}
 <script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/amz.js"></script>
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">

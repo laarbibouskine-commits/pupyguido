@@ -91,6 +91,7 @@ ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robot
 ${adsLoader}
 <script defer src="/_vercel/insights/script.js"></script>
 <meta name="impact-site-verification" value="e4d04c44-ca0f-45e3-8818-d25fcf41c141">
+<meta name="impact-site-verification" value="4f01f581-f1da-4e9f-9366-ce099aaa906e">
 <script defer src="/amz.js"></script>
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">

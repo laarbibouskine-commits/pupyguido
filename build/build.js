@@ -94,6 +94,7 @@ ${adsLoader}
 <meta name="impact-site-verification" value="4f01f581-f1da-4e9f-9366-ce099aaa906e">
 <script defer src="/amz.js"></script>
 <script defer src="/chat.js"></script>
+<script defer src="/consent.js"></script>
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -482,7 +483,7 @@ ${cards}
 <h2>Who processes your data</h2>
 <p>We use service providers to run the site and handle sign-ups: a hosting provider, a self-hosted n8n automation server that receives the sign-up form, Google Sheets (to store the sign-up list), and Gmail and Google Drive (to send you the guide). They process data on our behalf and only for those purposes.</p>
 <h2>Cookies and analytics</h2>
-<p>At the time of writing the site does not use advertising cookies. If we add analytics or advertising tools, such as a Pinterest tag, we will update this policy and, where required, ask for your consent.</p>
+<p>With your consent (the Accept button in the cookie banner) we load the Meta (Facebook) Pixel. It uses cookies to measure how our ads perform and to show our ads to people who may be interested. If you decline, it is not loaded. You can change your mind by clearing this site's data in your browser. We do not use other advertising cookies.</p>
 <h2>Affiliate links</h2>
 <p>Some pages may contain affiliate links. If you buy through them we may earn a commission at no extra cost to you. Third-party sites have their own privacy policies.</p>
 <h2>Your rights</h2>

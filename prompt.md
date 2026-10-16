@@ -50,3 +50,11 @@ Audience: first-time puppy parents in US, UK, Australia, New Zealand. Owner has 
 - Amazon: US tag bouskine-20, UK puppyguido201-21 (amz.js rewrites for UK visitors); AU TAGS.au empty (user later).
 - Impact application declined; CJ ignored (do not bring up). AdSense on hold (ads.json enabled=false) until 20-30 articles.
 - Reminders: Facebook token renew ~Dec 10, Instagram token early Dec, Make ops reset ~Nov 10, Pinterest pins end ~Jan 5, check Search Console/Analytics in 7-10 days.
+
+## Update 2026-10-16
+- Email sending moved from Gmail OAuth to SMTP credential "SMTP account" (w4aiSB6lu6V7aZ3E): lead 1mc5qQxVmzLURVKT, printable 20bHvl1woCWY7EX2, follow-up VhItVIA5DTYm7qjG. Unsubscribe link -> n8n 0OWa8JC1FGExNNNr, column pupyguido_leads.unsubscribed.
+- Chatbot now uses credential "PuppyGuido OpenRouter" (WmyiekPONXm5bWLD). Chat button is a small round icon.
+- Offer: Lemon Squeezy (test mode, approval pending): Kit $17, Tracker $7, Bundle $22, Playbook $37 (KITBUYER -$10). Pages /starter-kit/ and /thank-you-kit/ (noindex). content/offers.json holds checkout URLs (empty until live).
+- Products PDFs: C:\Users\user\Downloads\PuppyGuido_Products (made by PuppyGuido_Pexels/make-kit.js, make-playbook.js).
+- 26 shop picks incl. 7 premium/budget Amazon (US tag bouskine-20; UK rewrite in amz.js).
+- Reports: Facebook-competitor-report.md, Marketplace-listing-pack.md (ClickBank/Digistore24: user creates vendor account).

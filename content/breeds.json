@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "labrador-puppy-guide",
+    "name": "Labrador",
+    "plural": "Labrador puppies",
+    "lead": "Friendly, food-loving and full of energy. Labrador puppies are a joy, and they chew, pull and jump a lot. Here is a calm 12-week plan.",
+    "expect": [
+      "Very mouthy and chewy, especially while teething",
+      "Food-motivated, so treat training works very well",
+      "Strong and bouncy: jumping and pulling on the lead are common",
+      "Grow big, so good habits matter early",
+      "Love people and play, and dislike being left alone for long"
+    ],
+    "notes": "Labradors love food and love to chew. Use small treats and part of daily meals as rewards, keep an eye on portions (ask your vet how much to feed), and give plenty of approved chews. They can be strong pullers, so start loose lead practice early and keep it fun. Ask your vet how much exercise is right while your puppy is growing."
+  },
+  {
+    "slug": "french-bulldog-puppy-guide",
+    "name": "French Bulldog",
+    "plural": "French Bulldog puppies",
+    "lead": "Charming, clownish and a little stubborn. French Bulldog puppies need patience, short sessions and extra care with heat and exercise. Here is a calm 12-week plan.",
+    "expect": [
+      "Potty training can take patience and a steady routine",
+      "Smart but can be stubborn: short, happy sessions work best",
+      "Flat-faced breed: keep play and walks gentle, and avoid heat",
+      "Love company and can struggle when left alone",
+      "Often best with a harness rather than a collar on the neck"
+    ],
+    "notes": "French Bulldogs have short noses, so they can tire or overheat more easily than other breeds. Keep walks and play gentle, avoid hot weather and ask your vet what is normal for your puppy and when to worry. Use short training sessions with tasty rewards, a harness for walks, and a steady potty routine. They love company, so build alone time slowly."
+  },
+  {
+    "slug": "golden-retriever-puppy-guide",
+    "name": "Golden Retriever",
+    "plural": "Golden Retriever puppies",
+    "lead": "Gentle, eager to please and very social. Golden Retriever puppies love to learn, and they also mouth, chew and carry everything. Here is a calm 12-week plan.",
+    "expect": [
+      "Eager to please, so positive training works very well",
+      "Mouthy: they love to carry and chew things",
+      "Very social and can get anxious when left alone",
+      "Sensitive to harsh handling: gentle methods are best",
+      "Stay playful and puppy-like for a long time"
+    ],
+    "notes": "Golden Retrievers are gentle and eager to please, so reward-based training suits them well. They love to carry and chew, so keep toys handy and swap, never snatch. They are very social, so build short alone times early and keep greetings calm. Ask your vet how much exercise is right while your puppy is growing."
+  }
+]

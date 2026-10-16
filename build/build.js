@@ -207,6 +207,43 @@ function printableBox(p) {
     '<p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form>' + ctaBox.slice(ctaBox.indexOf('<script>'), ctaBox.indexOf('</script>') + 9) + '</aside>';
 }
 
+
+// Ad landing pages per breed (content/breeds.json). Noindex: used only for ads.
+const BREEDS = fs.existsSync(path.join(ROOT, 'content', 'breeds.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'breeds.json'), 'utf8')) : [];
+function breedPage(br) {
+  const PB = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')).playbook;
+  const buy = PB.checkoutUrl ? '<a class="btn btn-gold" href="' + PB.checkoutUrl + '">Get the Playbook - $' + PB.price + ' ' + arrow + '</a>' : '<a class="btn btn-gold" href="/#signup">Notify me when it opens ' + arrow + '</a>';
+  const li = br.expect.map(x => '<li>' + esc(x) + '</li>').join('');
+  return layout({
+    title: br.name + ' Puppy Training Playbook | PuppyGuido',
+    description: 'A calm, positive 12-week plan for ' + br.name + ' puppy parents: potty training, crate and alone time, biting, sleep, socialization and 8 first cues.',
+    urlPath: '/' + br.slug + '/', noindex: true,
+    body: '<section class="lp-hero"><div class="wrap lp-grid"><div>' +
+      '<span class="eyebrow"><svg class="ico fill"><use href="#i-paw"/></svg> For ' + esc(br.name) + ' puppy parents</span>' +
+      '<h1>Raising a ' + esc(br.name) + ' puppy? <span class="hl">Your 12-week plan</span></h1>' +
+      '<p class="lead">' + esc(br.lead) + '</p>' +
+      '<p class="lp-cta">' + buy + '</p>' +
+      '<p class="lp-fine">Instant PDF download &middot; positive methods only &middot; 30-day money-back guarantee</p></div>' +
+      '<div class="lp-card" aria-hidden="true"><img src="/assets/mascot.png" alt="" width="120" height="120"><div class="lp-card-k">The Puppy Training Playbook</div><div class="lp-card-t">+ ' + esc(br.name) + ' notes</div><div class="lp-card-p">$' + PB.price + '</div></div></div></section>' +
+      '<section class="sec"><div class="wrap narrow"><div class="prose">' +
+      '<h2>What to expect from ' + esc(br.plural) + '</h2><ul>' + li + '</ul>' +
+      '<h2>The 3 things new owners ask about most</h2><ul><li><strong>Crying at night.</strong> A simple night routine and what to do when your puppy wakes.</li><li><strong>Potty accidents.</strong> A schedule by age, with a plan for slip-ups.</li><li><strong>Biting and chewing.</strong> Why it happens and how to redirect it kindly.</li></ul>' +
+      '<p class="lp-cta">' + buy + '</p>' +
+      '<h2>What is inside the Playbook</h2><ul>' +
+      '<li>How puppies learn, and a daily routine that works</li><li>Potty training, crate and alone time, biting, sleep</li><li>Socialization and 8 first cues, step by step</li><li>A 12-week roadmap, 20 brain games, cue cards and trackers</li><li>A gear guide with budget, best value and premium picks</li><li><strong>Breed notes for ' + esc(br.plural) + '</strong></li></ul>' +
+      '<h2>Breed notes: ' + esc(br.name) + '</h2><p>' + esc(br.notes) + '</p>' +
+      '<h2>30-day money-back guarantee</h2><p>If the Playbook is not useful to you, email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a> within 30 days and we will refund you.</p>' +
+      '<h2>Questions</h2>' +
+      '<h3>Is it only for ' + esc(br.plural) + '?</h3><p>No. The 12-week plan works for any puppy. The breed notes cover Labrador, French Bulldog and Golden Retriever puppies.</p>' +
+      '<h3>Do you use punishment or shouting?</h3><p>Never. Every method is positive and reward-based.</p>' +
+      '<h3>Is this veterinary advice?</h3><p>No. It is general educational information. Please ask your vet about health, vaccines, food and exercise for your puppy.</p>' +
+      '<h3>How do I get it?</h3><p>It is a PDF. You get a download link right after payment, by email.</p>' +
+      '<p class="lp-cta">' + buy + '</p>' +
+      '<p class="lp-fine">Prefer to try first? <a href="/#signup">Get the free New Puppy Survival Guide</a>.</p>' +
+      '</div></div></section>'
+  });
+}
+
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
   const related = all.filter(x => x.slug !== p.slug).slice(0, 3);
@@ -398,7 +435,7 @@ ${cards}
 <p>New customers can add <strong>The Puppy Training Playbook</strong> for <strong>$${PB.salePrice}</strong> instead of $${PB.price}. This price is only for people who just ordered the kit.</p>
 <ul><li>How puppies learn, and a daily routine that works</li><li>Potty training, crate and alone time, biting, sleep</li><li>Socialization and 8 first cues, step by step</li><li>A 12-week roadmap, 20 brain games, cue cards and trackers</li><li>A gear guide: budget, best value and premium picks</li></ul>
 <p class="lp-cta">${pbBtn}</p>
-<p class="lp-fine">32-page PDF &middot; instant download &middot; 30-day money-back guarantee. Not now? No problem, your kit is already yours.</p>
+<p class="lp-fine">34-page PDF &middot; instant download &middot; 30-day money-back guarantee. Not now? No problem, your kit is already yours.</p>
 <h2>Helpful gear for week one</h2>
 <ul><li><a href="/shop/">See our recommended puppy gear</a></li><li><a href="/blog/puppy-first-night-home/">Read: your puppy's first night home</a></li><li><a href="/blog/puppy-potty-training-schedule/">Read: potty training schedule by age</a></li></ul>
 </div></div></section>` }); },
@@ -557,6 +594,7 @@ if (require.main === module) {
     fs.writeFileSync(p, fs.readFileSync(p, 'utf8').split('{{SITE}}').join(SITE));
   }
   for (const [name, fn] of Object.entries(pages)) write(`${name}/index.html`, fn());
+  for (const br of BREEDS) write(`${br.slug}/index.html`, breedPage(br));
   write('blog/index.html', renderBlogIndex(posts));
   write('blog/rss.xml', rssFeed(posts));
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));

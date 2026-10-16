@@ -65,6 +65,16 @@
       "permanent": false
     },
     {
+      "source": "/go/furbo-360-dog-camera",
+      "destination": "https://www.amazon.com/s?k=Furbo+360+dog+camera&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/furbo-360-dog-camera/",
+      "destination": "https://www.amazon.com/s?k=Furbo+360+dog+camera&tag=bouskine-20",
+      "permanent": false
+    },
+    {
       "source": "/go/all-season-washable-dog-bed",
       "destination": "https://temu.to/k/eymwfyg7a88",
       "permanent": false
@@ -72,6 +82,26 @@
     {
       "source": "/go/all-season-washable-dog-bed/",
       "destination": "https://temu.to/k/eymwfyg7a88",
+      "permanent": false
+    },
+    {
+      "source": "/go/midwest-icrate-folding-dog-crate",
+      "destination": "https://www.amazon.com/s?k=MidWest+iCrate+double+door+folding+dog+crate+divider&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/midwest-icrate-folding-dog-crate/",
+      "destination": "https://www.amazon.com/s?k=MidWest+iCrate+double+door+folding+dog+crate+divider&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/bissell-little-green-pet-carpet-cleaner",
+      "destination": "https://www.amazon.com/s?k=BISSELL+Little+Green+Pet+portable+carpet+cleaner&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/bissell-little-green-pet-carpet-cleaner/",
+      "destination": "https://www.amazon.com/s?k=BISSELL+Little+Green+Pet+portable+carpet+cleaner&tag=bouskine-20",
       "permanent": false
     },
     {
@@ -92,6 +122,146 @@
     {
       "source": "/go/silicone-slow-feeder-dog-bowl/",
       "destination": "https://temu.to/k/ez6kkhcomsw",
+      "permanent": false
+    },
+    {
+      "source": "/go/tractive-gps-dog-tracker",
+      "destination": "https://www.amazon.com/s?k=Tractive+GPS+dog+tracker&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/tractive-gps-dog-tracker/",
+      "destination": "https://www.amazon.com/s?k=Tractive+GPS+dog+tracker&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/orthopedic-memory-foam-dog-bed-washable",
+      "destination": "https://www.amazon.com/s?k=orthopedic+memory+foam+dog+bed+washable+cover&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/orthopedic-memory-foam-dog-bed-washable/",
+      "destination": "https://www.amazon.com/s?k=orthopedic+memory+foam+dog+bed+washable+cover&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/petmate-sky-kennel-travel-crate",
+      "destination": "https://www.amazon.com/s?k=Petmate+Sky+Kennel&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/petmate-sky-kennel-travel-crate/",
+      "destination": "https://www.amazon.com/s?k=Petmate+Sky+Kennel&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/dog-car-seat-belt",
+      "destination": "https://www.amazon.com/s?k=dog+car+seat+belt+harness+tether&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/dog-car-seat-belt/",
+      "destination": "https://www.amazon.com/s?k=dog+car+seat+belt+harness+tether&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/wire-puppy-crate-with-divider",
+      "destination": "https://www.amazon.com/s?k=puppy+wire+crate+with+divider&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/wire-puppy-crate-with-divider/",
+      "destination": "https://www.amazon.com/s?k=puppy+wire+crate+with+divider&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/washable-puppy-crate-bed",
+      "destination": "https://www.amazon.com/s?k=washable+puppy+crate+bed&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/washable-puppy-crate-bed/",
+      "destination": "https://www.amazon.com/s?k=washable+puppy+crate+bed&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-heartbeat-comfort-toy",
+      "destination": "https://www.amazon.com/s?k=puppy+heartbeat+toy+for+sleep&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-heartbeat-comfort-toy/",
+      "destination": "https://www.amazon.com/s?k=puppy+heartbeat+toy+for+sleep&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/enzymatic-pet-stain-cleaner",
+      "destination": "https://www.amazon.com/s?k=enzyme+cleaner+pet+urine&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/enzymatic-pet-stain-cleaner/",
+      "destination": "https://www.amazon.com/s?k=enzyme+cleaner+pet+urine&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-training-pads",
+      "destination": "https://www.amazon.com/s?k=puppy+training+pads&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-training-pads/",
+      "destination": "https://www.amazon.com/s?k=puppy+training+pads&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/rubber-puppy-teething-chews",
+      "destination": "https://www.amazon.com/s?k=puppy+teething+chew+toys+rubber&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/rubber-puppy-teething-chews/",
+      "destination": "https://www.amazon.com/s?k=puppy+teething+chew+toys+rubber&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/soft-puppy-training-treats",
+      "destination": "https://www.amazon.com/s?k=puppy+training+treats+small+soft&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/soft-puppy-training-treats/",
+      "destination": "https://www.amazon.com/s?k=puppy+training+treats+small+soft&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-harness-and-leash-set",
+      "destination": "https://www.amazon.com/s?k=puppy+harness+and+leash+set&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-harness-and-leash-set/",
+      "destination": "https://www.amazon.com/s?k=puppy+harness+and+leash+set&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-slow-feeder-bowl",
+      "destination": "https://www.amazon.com/s?k=puppy+slow+feeder+bowl&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-slow-feeder-bowl/",
+      "destination": "https://www.amazon.com/s?k=puppy+slow+feeder+bowl&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-exercise-pen-playpen",
+      "destination": "https://www.amazon.com/s?k=puppy+exercise+pen+playpen&tag=bouskine-20",
+      "permanent": false
+    },
+    {
+      "source": "/go/puppy-exercise-pen-playpen/",
+      "destination": "https://www.amazon.com/s?k=puppy+exercise+pen+playpen&tag=bouskine-20",
       "permanent": false
     }
   ],

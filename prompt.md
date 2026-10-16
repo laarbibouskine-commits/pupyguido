@@ -58,3 +58,11 @@ Audience: first-time puppy parents in US, UK, Australia, New Zealand. Owner has 
 - Products PDFs: C:\Users\user\Downloads\PuppyGuido_Products (made by PuppyGuido_Pexels/make-kit.js, make-playbook.js).
 - 26 shop picks incl. 7 premium/budget Amazon (US tag bouskine-20; UK rewrite in amz.js).
 - Reports: Facebook-competitor-report.md, Marketplace-listing-pack.md (ClickBank/Digistore24: user creates vendor account).
+
+## Update 2026-10-16 (evening)
+- Breed ad landing pages (noindex): /labrador-puppy-guide/, /french-bulldog-puppy-guide/, /golden-retriever-puppy-guide/ (content/breeds.json, breedPage() in build/build.js). Ads-copy-breeds.md has copy/targeting.
+- Ad creatives: C:\Users\user\Downloads\PuppyGuido_Ads (9 videos, 9 images, 15 carousel slides); generator PuppyGuido_Pexels\ads\make-ads.js. Do not run ads before live LS checkout.
+- Meta Pixel ID 1092514180372785 via site/consent.js (cookie banner, loads after Accept; PageView/ViewContent/InitiateCheckout). Purchase event TODO after LS live.
+- Weekly newsletter n8n kYRz6Aod7cUrRP1i ACTIVE (Thu 10:00 UTC; tip + newest + rotating post; SMTP; skips unsubscribed).
+- vercel.json: /go/ redirects for the 7 new shop picks (were uncommitted, 404 live until pushed).
+- Waiting on Lemon Squeezy approval (demo video sent). Then: live products, offers.json checkout URLs, KITBUYER, 34-page Playbook upload, Purchase event, ads.

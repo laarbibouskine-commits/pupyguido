@@ -1,0 +1,14 @@
+{
+  "merchant": "Amazon",
+  "hidden": false,
+  "slug": "tractive-gps-dog-tracker",
+  "title": "Tractive GPS Dog Tracker",
+  "category": "Puppy Essentials",
+  "short": "A small GPS tracker that clips to a collar or harness so you can see where your dog is.",
+  "why": "Peace of mind for walks and travel as your puppy grows. A subscription is required for tracking, so check the plan first.",
+  "url": "https://www.amazon.com/s?k=Tractive+GPS+dog+tracker&tag=bouskine-20",
+  "cta": "See options on Amazon",
+  "image": "/assets/collar.jpg",
+  "imageAlt": "Tractive GPS Dog Tracker",
+  "order": 8
+}

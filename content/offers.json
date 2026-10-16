@@ -2,5 +2,15 @@
   "starterKit": {
     "price": "17",
     "checkoutUrl": ""
+  },
+  "bundle": {
+    "price": "22",
+    "checkoutUrl": ""
+  },
+  "playbook": {
+    "price": "37",
+    "salePrice": "27",
+    "checkoutUrl": "",
+    "saleCheckoutUrl": ""
   }
 }

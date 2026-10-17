@@ -37,5 +37,22 @@
       "a": "Some puppies find them comforting, but they work best together with a routine and a potty trip. Supervise at first and remove any toy your puppy chews apart."
     }
   ],
-  "updated": "2026-10-15"
+  "updated": "2026-10-15",
+  "sources": [
+    {
+      "org": "PDSA",
+      "title": "Vet Q&A: why do puppies cry at night?",
+      "url": "https://www.pdsa.org.uk/what-we-do/blog/vet-qa-why-do-puppies-cry-at-night"
+    },
+    {
+      "org": "PDSA",
+      "title": "Your first day (and night) with a new puppy",
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/first-day-and-night-with-puppy"
+    },
+    {
+      "org": "Dogs Trust",
+      "title": "How to help your puppy get settled into your home",
+      "url": "https://www.dogstrust.org.uk/dog-advice/puppy/new-home"
+    }
+  ]
 }

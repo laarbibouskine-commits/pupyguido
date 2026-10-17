@@ -12,5 +12,22 @@
   "seoTitle": "Puppy Potty Training Timeline: How Long?",
   "excerpt": "A realistic week-by-week timeline for puppy potty training and what affects it.",
   "midImage": "/assets/garden.jpg",
-  "midImageAlt": "Golden retriever puppy among yellow flowers in a garden"
+  "midImageAlt": "Golden retriever puppy among yellow flowers in a garden",
+  "sources": [
+    {
+      "org": "Humane Society of the United States",
+      "title": "How to potty train a puppy",
+      "url": "https://www.humanesociety.org/resources/how-potty-train-your-dog-or-puppy"
+    },
+    {
+      "org": "Dogs Trust",
+      "title": "How to toilet train your puppy",
+      "url": "https://www.dogstrust.org.uk/dog-advice/training/basics/house-or-toilet-training"
+    },
+    {
+      "org": "RSPCA",
+      "title": "How to toilet train your puppy or dog",
+      "url": "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/training/toilettraining"
+    }
+  ]
 }

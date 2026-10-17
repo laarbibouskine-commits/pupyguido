@@ -76,7 +76,12 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 </svg>`;
 
-function layout({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/og-default.jpg', ogImageAlt = '', ogType = 'website', noindex = false }) {
+const addCurrent = (html, urlPath) => {
+  const m = ['/shop/', '/blog/', '/about/', '/contact/'].find(h => urlPath.startsWith(h));
+  return m ? html.replace('<a href="' + m + '">', '<a href="' + m + '" aria-current="page">') : html;
+};
+function layout(o) { return addCurrent(layoutRaw(o), o.urlPath); }
+function layoutRaw({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/og-default.jpg', ogImageAlt = '', ogType = 'website', noindex = false }) {
   const url = SITE + urlPath;
   return `<!doctype html>
 <html lang="en">
@@ -162,7 +167,10 @@ const pageHero = (kicker, h1, sub) => `<section class="page-hero"><div class="pa
 <h1>${h1}</h1>${sub ? `<p class="lead">${sub}</p>` : ''}</div></section>`;
 
 const ctaBox = `<aside class="cta-box cta-form"><div class="cta-copy"><h3>Get the free New Puppy Survival Guide</h3><p>Checklists, routines and a 14-day plan for your puppy's first days at home. Free, no spam.</p></div><form class="cta-signup" method="POST" enctype="multipart/form-data" action="https://n8n.satinher.com/webhook/pupyguido-lead" onsubmit="return pgSend(event)"><input name="Email address" type="email" placeholder="Your email" autocomplete="email" required aria-label="Email address"><div aria-hidden="true" style="position:absolute;left:-9999px;height:0;overflow:hidden"><input name="website" type="text" tabindex="-1" autocomplete="off"></div><button class="btn btn-gold" type="submit">Send me the free guide</button><p class="cta-fine">No spam. By signing up you agree to our <a href="/privacy/">Privacy Policy</a>.</p><p class="cta-err" role="alert" hidden></p></form><script>function pgSend(e){e.preventDefault();var f=e.target,b=f.querySelector('button'),er=f.querySelector('.cta-err');er.hidden=true;var d=new FormData(f);if(d.get('website')){location.href='/thank-you.html';return false}d.delete('website');d.set('source',location.pathname);b.disabled=true;var t=b.textContent;b.textContent='Sending...';fetch(f.action,{method:'POST',body:d}).then(function(r){if(!r.ok)throw 0;location.href='/thank-you.html'}).catch(function(){b.disabled=false;b.textContent=t;er.textContent='Sorry, something went wrong. Please try again or email hello@puppyguido.com.';er.hidden=false});return false}</script></aside>`;
-const authorBox = (p) => '<aside class="author-box"><strong>Written by the PuppyGuido editorial team</strong><span>' + (p.updated ? 'Last updated ' + fmtDate(p.updated) : 'Published ' + fmtDate(p.date)) + ' &middot; <a href="/how-we-write/">How we write and update our guides</a></span></aside>';
+const authorBox = (p) => '<aside class="author-box"><strong>By the PuppyGuido editorial team</strong><span>Last reviewed ' + fmtDate(p.updated || p.date) + ' &middot; <a href="/how-we-write/">How we write, check and update our guides</a></span><span>We are not veterinarians. This article is general educational information.</span></aside>';
+const sourcesBox = (p) => (p.sources && p.sources.length)
+  ? '<aside class="sources" aria-labelledby="sources-h"><h2 id="sources-h">Sources and further reading</h2><p>Reputable animal-welfare organisations and published research on the same topic. Use them to double-check advice and for more detail.</p><ul>' + p.sources.map(s => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.org) + ': ' + esc(s.title) + '</a></li>').join('') + '</ul></aside>'
+  : '';
 const disclaimer = `<p class="disc"><b>Disclaimer.</b> PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.</p>`;
 
 
@@ -247,13 +255,16 @@ function breedPage(br) {
 
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
-  const related = all.filter(x => x.slug !== p.slug).slice(0, 3);
+  const related = all.filter(x => x.slug !== p.slug)
+    .map((x, i) => ({ x, i, s: (x.category === p.category ? 0 : 1) }))
+    .sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 3);
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Article', headline: p.title, description: p.description, datePublished: p.date, dateModified: p.updated || p.date,
         image: p.midImage ? [SITE + p.image, SITE + p.midImage] : SITE + p.image, mainEntityOfPage: SITE + url,
-        author: { '@type': 'Organization', name: 'PuppyGuido' },
+        author: { '@type': 'Organization', name: 'PuppyGuido', url: SITE + '/how-we-write/' },
+        ...(p.sources && p.sources.length ? { citation: p.sources.map(s => s.url) } : {}),
         publisher: { '@type': 'Organization', name: 'PuppyGuido', logo: { '@type': 'ImageObject', url: SITE + '/assets/icon-512.png' } } },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
@@ -266,7 +277,7 @@ function renderPost(p, all) {
 <div class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.category)}</span></nav>
 <h1>${esc(p.title)}</h1>
-<p class="meta"><span class="tag">${esc(p.category)}</span> <time datetime="${p.date}">${fmtDate(p.date)}</time> &middot; ${p.readMinutes} min read</p>
+<p class="meta"><span class="tag">${esc(p.category)}</span> By <a href="/how-we-write/">the PuppyGuido editorial team</a> &middot; <time datetime="${p.date}">${fmtDate(p.date)}</time>${p.updated ? ` &middot; Updated <time datetime="${p.updated}">${fmtDate(p.updated)}</time>` : ''} &middot; ${p.readMinutes} min read</p>
 </div></div>
 <div class="wrap narrow">
 <figure class="post-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="900" height="560" loading="eager"></figure>
@@ -275,6 +286,7 @@ ${quickBox(p)}<div class="prose">${withMidAd(withMidImage(p.html, p))}${faqHtml(
 ${adSlot('articleEnd')}
 ${gearBox(p)}
 ${printableBox(p) || ctaBox}
+${sourcesBox(p)}
 ${authorBox(p)}
 ${disclaimer}
 </div>
@@ -297,13 +309,18 @@ function renderBlogIndex(all) {
 const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></script>';
 const isAffiliate = p => !!p.url && !p.gumroadUrl;
 const arrow = '<svg class="ico"><use href="#i-arrow"/></svg>';
-const buyBtn = (p, label) => isAffiliate(p)
-  ? `<a class="btn btn-gold" href="${p.merchant === 'Amazon' ? esc(p.url) : '/go/' + p.slug + '/'}" target="_blank" rel="sponsored nofollow noopener">${esc(p.cta || label || 'Buy here')} ${arrow}</a>`
-  : `<a class="btn btn-gold" href="${esc(p.gumroadUrl || '#')}" data-gumroad-overlay-checkout="true" target="_blank" rel="noopener">${esc(label || 'Buy now')} ${arrow}</a>`;
+const buyBtn = (p, label) => {
+  if (isAffiliate(p)) {
+    const l = p.merchant === 'Amazon' ? 'See on Amazon' : p.merchant === 'Temu' ? 'View on Temu' : (p.cta || label || 'View product');
+    return `<a class="btn btn-gold" href="${p.merchant === 'Amazon' ? esc(p.url) : '/go/' + p.slug + '/'}" target="_blank" rel="sponsored nofollow noopener" aria-label="${esc(l)}: ${esc(p.title)} (affiliate link, opens in a new tab)">${esc(l)} ${arrow}</a>`;
+  }
+  const l = label || 'Buy now';
+  return `<a class="btn btn-gold" href="${esc(p.gumroadUrl || '#')}" data-gumroad-overlay-checkout="true" target="_blank" rel="noopener" aria-label="${esc(l)}: ${esc(p.title)} (opens secure checkout)">${esc(l)} ${arrow}</a>`;
+};
 const productImg = p => p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" width="600" height="600" loading="lazy">` : '<div class="ph">Photo coming soon</div>';
 
 function productCard(p) {
-  return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p><div class="prod-foot">${p.price ? `<strong class="price">${esc(p.price)}</strong>` : '<span></span>'}${buyBtn(p, 'Buy here')}</div></div></article>`;
+  return `<article class="prod-card"><a class="prod-img" href="/shop/${p.slug}/">${productImg(p)}${p.badge ? `<span class="badge-tag">${esc(p.badge)}</span>` : ''}</a><div class="prod-body"><span class="tag">${esc(p.category || 'Puppy essentials')}</span><h3><a href="/shop/${p.slug}/">${esc(p.title)}</a></h3><p>${esc(p.short || '')}</p>${p.bestFor ? `<p class="best"><b>Best for:</b> ${esc(p.bestFor)}</p>` : ''}<div class="prod-foot">${p.price ? `<strong class="price">${esc(p.price)}</strong>` : '<span></span>'}${buyBtn(p, p.price ? 'Get the plan, ' + p.price : 'Get it now')}</div></div></article>`;
 }
 
 const SHOP_NOTE = '<b>Heads up.</b> As an Amazon Associate we earn from qualifying purchases. Some links on this page are affiliate links: if you buy through them we may earn a commission at no extra cost to you. Items from partner stores are sold and shipped by the seller, and prices and availability can change. Always check that a product suits your puppy\'s size and age, and supervise play. PuppyGuido provides general educational information and does not replace advice from a qualified veterinarian or professional trainer.';
@@ -463,33 +480,50 @@ ${cards}
     title: 'Privacy Policy | PuppyGuido',
     description: 'How PuppyGuido collects, uses and protects your personal information, including the free guide sign-up, cookies and your rights.',
     urlPath: '/privacy/',
-    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 6, 2026')}
+    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 17, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
 <p>PuppyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
 <h2>Information we collect</h2>
 <ul>
-<li><strong>Information you give us.</strong> When you request the free guide we collect your name and email address.</li>
-<li><strong>Messages.</strong> If you email us, we keep your message and address so we can reply.</li>
+<li><strong>Sign-up details.</strong> When you request the free guide we collect your email address (and a name, if a form asks for one). We also record which page of the site you signed up from.</li>
+<li><strong>Messages.</strong> If you email us, we keep your message and address so we can reply. If you use the chat assistant, your messages are processed to produce a reply (see below). Please do not type sensitive personal information into the chat.</li>
 <li><strong>Technical data.</strong> Our hosting provider may log basic technical data such as IP address, browser type and pages requested, for security and reliability.</li>
-<li><strong>Anonymous analytics.</strong> We use Vercel Web Analytics to count page views. It does not use cookies and does not track you across websites.</li>
+<li><strong>Analytics.</strong> We use Vercel Web Analytics to count page views. According to Vercel it does not use cookies and does not track you across websites.</li>
+<li><strong>Your cookie choice.</strong> The cookie banner saves your choice (accept or decline) in your browser's local storage on your device, so we do not ask you again on every page.</li>
 </ul>
 <h2>How we use it</h2>
 <ul>
 <li>To deliver the free guide you requested.</li>
-<li>To send helpful puppy tips and updates about PuppyGuido. You can unsubscribe at any time.</li>
+<li>To send you our welcome emails and a weekly newsletter with puppy tips, new articles and, from time to time, our own products. Every email has an unsubscribe link.</li>
 <li>To answer your questions and improve the site.</li>
+<li>If you accept cookies: to measure how our ads perform and to show our ads to people who may be interested.</li>
 </ul>
 <p>We do not sell your personal information.</p>
-<h2>Who processes your data</h2>
-<p>We use service providers to run the site and handle sign-ups: a hosting provider, a self-hosted n8n automation server that receives the sign-up form, Google Sheets (to store the sign-up list), and Gmail and Google Drive (to send you the guide). They process data on our behalf and only for those purposes.</p>
-<h2>Cookies and analytics</h2>
-<p>With your consent (the Accept button in the cookie banner) we load the Meta (Facebook) Pixel. It uses cookies to measure how our ads perform and to show our ads to people who may be interested. If you decline, it is not loaded. You can change your mind by clearing this site's data in your browser. We do not use other advertising cookies.</p>
+<h2>Where your sign-up data goes</h2>
+<p>When you submit the sign-up form, your browser sends the details directly to our own automation server at <strong>n8n.satinher.com</strong> (a self-hosted n8n instance that we run). From there the details are:</p>
+<ul>
+<li>saved in our own database (a self-hosted Supabase database) as your entry on our email list;</li>
+<li>used to send you the guide and later emails from hello@puppyguido.com, through Gmail's email service (Google);</li>
+<li>shared in a private notification to the site owner (your email address and the page you signed up from).</li>
+</ul>
+<p>The unsubscribe link in our emails also goes to the same server and marks your address so that you receive no more emails.</p>
+<h2>Who else processes data</h2>
+<ul>
+<li><strong>Vercel</strong> hosts the site and provides the anonymous analytics.</li>
+<li><strong>Chat assistant.</strong> Messages you type are sent to our server and then to an AI language-model provider (OpenRouter and the model companies behind it) to generate a reply.</li>
+<li><strong>Google Fonts.</strong> Your browser loads fonts from Google, which means Google receives your IP address when a page loads.</li>
+<li><strong>Meta (Facebook).</strong> Only if you accept cookies: the Meta Pixel, described below.</li>
+<li><strong>Gumroad</strong> handles checkout and payment if you buy our paid guide. We do not see your card details.</li>
+</ul>
+<p>These providers may process data in countries outside your own, including the United States. They act on our behalf or under their own privacy policies.</p>
+<h2>Cookies and tracking</h2>
+<p>When you first visit, a banner asks whether you accept optional cookies. If you press <strong>Accept</strong>, we load the Meta (Facebook) Pixel. It sets cookies and sends information about your visit (for example the pages you view and button clicks) to Meta, to measure and improve our ads. If you press <strong>Decline</strong> or ignore the banner, the Pixel is not loaded. You can change your mind at any time by clearing this site's data in your browser; the banner will then appear again. We do not use other advertising cookies.</p>
 <h2>Affiliate links</h2>
-<p>Some pages may contain affiliate links. If you buy through them we may earn a commission at no extra cost to you. Third-party sites have their own privacy policies.</p>
+<p>Some pages contain affiliate links (for example to Amazon and Temu). If you buy through them we may earn a commission at no extra cost to you. When you click one you leave our site, and the store has its own privacy policy and cookies.</p>
 <h2>Your rights</h2>
-<p>Depending on where you live, you may have the right to access, correct, delete or export your personal data, and to object to or restrict certain processing. Email <a href="mailto:${EMAIL}">${EMAIL}</a> to make a request.</p>
+<p>Depending on where you live, you may have the right to access, correct, delete or export your personal data, and to object to or restrict certain processing, and to withdraw your consent (for example to cookies or emails). Email <a href="mailto:${EMAIL}">${EMAIL}</a> to make a request.</p>
 <h2>Data retention and security</h2>
-<p>We keep your name and email address until you unsubscribe or ask us to delete them. We keep other information only as long as needed for the purposes above. We take reasonable steps to protect it, but no online service is completely secure.</p>
+<p>We keep your email address (and name, if given) until you unsubscribe or ask us to delete them, and we then stop emailing you. We keep other information only as long as needed for the purposes above. We take reasonable steps to protect it, but no online service is completely secure.</p>
 <h2>Children</h2>
 <p>PuppyGuido is intended for adults. We do not knowingly collect information from children under 13.</p>
 <h2>Changes</h2>
@@ -552,8 +586,8 @@ function write(rel, content) {
 }
 
 function sitemap(all) {
-  const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/how-we-write/'], ['/contact/'], ['/privacy/'], ['/terms/'],
-    ...all.map(p => [`/blog/${p.slug}/`, p.date]), ...products.filter(p => !isAffiliate(p)).map(p => [`/shop/${p.slug}/`])];
+  const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/how-we-write/'], ['/contact/'], ['/privacy/', '2026-10-17'], ['/terms/'],
+    ...all.map(p => [`/blog/${p.slug}/`, p.updated || p.date]), ...products.filter(p => !isAffiliate(p)).map(p => [`/shop/${p.slug}/`])];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
 }
 

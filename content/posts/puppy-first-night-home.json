@@ -39,5 +39,22 @@
       "a": "Many owners remove water about an hour before bedtime to reduce night trips, but ask your vet what is right for your puppy's age and size."
     }
   ],
-  "updated": "2026-10-15"
+  "updated": "2026-10-15",
+  "sources": [
+    {
+      "org": "PDSA",
+      "title": "Your first day (and night) with a new puppy",
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/first-day-and-night-with-puppy"
+    },
+    {
+      "org": "Dogs Trust",
+      "title": "Day one with a new puppy",
+      "url": "https://www.dogstrust.org.uk/dog-advice/puppy/first-day"
+    },
+    {
+      "org": "Dogs Trust",
+      "title": "How to help your puppy get settled into your home",
+      "url": "https://www.dogstrust.org.uk/dog-advice/puppy/new-home"
+    }
+  ]
 }

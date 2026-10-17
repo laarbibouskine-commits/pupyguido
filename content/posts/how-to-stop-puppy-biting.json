@@ -37,5 +37,17 @@
       "a": "Most puppies become much gentler as they mature and as teething finishes, especially with steady training, enough rest and safe chews. Keep the routine going through the teething months."
     }
   ],
-  "updated": "2026-10-15"
+  "updated": "2026-10-15",
+  "sources": [
+    {
+      "org": "Dogs Trust",
+      "title": "Mouthing, nipping and puppy biting",
+      "url": "https://www.dogstrust.org.uk/dog-advice/training/unwanted-behaviours/mouthing-nipping-and-biting"
+    },
+    {
+      "org": "ASPCA",
+      "title": "Mouthing, nipping and biting in puppies",
+      "url": "https://www.aspca.org/pet-care/dog-care/common-dog-behavior-issues/mouthing-nipping-and-biting-puppies"
+    }
+  ]
 }

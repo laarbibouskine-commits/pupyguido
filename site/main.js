@@ -48,6 +48,7 @@
     var data = new FormData(form);
     if (data.get('website')) { window.location.href = '/thank-you.html'; return; } // honeypot: bots
     data.delete('website');
+    data.set('source', location.pathname === '/' ? 'home' : location.pathname);
     button.disabled = true;
     button.textContent = 'Sending…';
     fetch(form.action, { method: 'POST', body: data })

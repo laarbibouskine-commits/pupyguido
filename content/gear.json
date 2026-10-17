@@ -2,11 +2,13 @@
   "slugs": {
     "crate-training-a-puppy": [
       "wire-puppy-crate-with-divider",
-      "washable-puppy-crate-bed"
+      "washable-puppy-crate-bed",
+      "puppy-exercise-pen-playpen"
     ],
     "puppy-first-night-home": [
       "washable-puppy-crate-bed",
-      "puppy-heartbeat-comfort-toy"
+      "puppy-heartbeat-comfort-toy",
+      "wire-puppy-crate-with-divider"
     ],
     "puppy-crying-at-night": [
       "puppy-heartbeat-comfort-toy",
@@ -18,19 +20,23 @@
     ],
     "puppy-potty-training-schedule": [
       "enzymatic-pet-stain-cleaner",
-      "puppy-training-pads"
+      "puppy-training-pads",
+      "soft-puppy-training-treats"
     ],
     "puppy-potty-training-timeline": [
       "enzymatic-pet-stain-cleaner",
-      "soft-puppy-training-treats"
+      "soft-puppy-training-treats",
+      "puppy-training-pads"
     ],
     "new-puppy-checklist": [
       "puppy-harness-and-leash-set",
-      "puppy-slow-feeder-bowl"
+      "puppy-slow-feeder-bowl",
+      "wire-puppy-crate-with-divider"
     ],
     "how-to-prepare-for-a-puppy-checklist": [
       "puppy-exercise-pen-playpen",
-      "wire-puppy-crate-with-divider"
+      "wire-puppy-crate-with-divider",
+      "enzymatic-pet-stain-cleaner"
     ],
     "puppy-blues-regret-getting-a-puppy": [
       "puppy-heartbeat-comfort-toy",
@@ -87,6 +93,11 @@
     "puppy-essentials-list": [
       "puppy-harness-and-leash-set",
       "puppy-slow-feeder-bowl"
+    ],
+    "puppy-schedule-when-working-full-time": [
+      "puppy-exercise-pen-playpen",
+      "puppy-training-pads",
+      "furbo-360-dog-camera"
     ]
   },
   "categories": {
@@ -105,6 +116,102 @@
     "Preparation": [
       "puppy-harness-and-leash-set",
       "puppy-slow-feeder-bowl"
+    ]
+  },
+  "inline": {
+    "crate-training-a-puppy": [
+      [
+        "wire crate",
+        "wire-puppy-crate-with-divider"
+      ],
+      [
+        "crate mat",
+        "washable-puppy-crate-bed"
+      ]
+    ],
+    "how-to-prepare-for-a-puppy-checklist": [
+      [
+        "enzymatic cleaner",
+        "enzymatic-pet-stain-cleaner"
+      ],
+      [
+        "playpen",
+        "puppy-exercise-pen-playpen"
+      ]
+    ],
+    "how-to-stop-puppy-biting": [
+      [
+        "chew toy",
+        "rubber-puppy-teething-chews"
+      ]
+    ],
+    "new-puppy-checklist": [
+      [
+        "enzymatic cleaner",
+        "enzymatic-pet-stain-cleaner"
+      ],
+      [
+        "soft treats",
+        "soft-puppy-training-treats"
+      ],
+      [
+        "harness",
+        "puppy-harness-and-leash-set"
+      ]
+    ],
+    "puppy-blues-regret-getting-a-puppy": [
+      [
+        "playpen",
+        "puppy-exercise-pen-playpen"
+      ]
+    ],
+    "puppy-first-night-home": [
+      [
+        "enzymatic cleaner",
+        "enzymatic-pet-stain-cleaner"
+      ],
+      [
+        "comfort toy",
+        "puppy-heartbeat-comfort-toy"
+      ],
+      [
+        "playpen",
+        "puppy-exercise-pen-playpen"
+      ]
+    ],
+    "puppy-potty-training-schedule": [
+      [
+        "enzymatic cleaner",
+        "enzymatic-pet-stain-cleaner"
+      ],
+      [
+        "soft treats",
+        "soft-puppy-training-treats"
+      ]
+    ],
+    "puppy-potty-training-timeline": [
+      [
+        "puppy pads",
+        "puppy-training-pads"
+      ],
+      [
+        "enzymatic cleaner",
+        "enzymatic-pet-stain-cleaner"
+      ],
+      [
+        "playpen",
+        "puppy-exercise-pen-playpen"
+      ]
+    ],
+    "puppy-schedule-when-working-full-time": [
+      [
+        "puppy pads",
+        "puppy-training-pads"
+      ],
+      [
+        "playpen",
+        "puppy-exercise-pen-playpen"
+      ]
     ]
   }
 }

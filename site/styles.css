@@ -482,3 +482,4 @@ footer a:hover{color:#fff}
 .sources a{color:var(--navy);text-decoration:underline}
 .prod-card .best{font-size:14px;color:var(--muted);margin:6px 0 0}
 .meta a{color:inherit;text-decoration:underline}
+.aff-note{margin:0 0 18px;padding:10px 14px;border-radius:10px;background:var(--cream,#FFF9E5);color:var(--muted);font-size:14px}

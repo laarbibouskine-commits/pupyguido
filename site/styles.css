@@ -87,7 +87,7 @@ p{margin:0}
 .book .b-title span{display:block;color:var(--gold);font-size:19px}
 .book .b-img{flex:1;border-radius:10px;overflow:hidden;position:relative;margin-top:2px;border:2px solid rgba(246,196,49,.65)}
 .book .b-img img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
-.book .b-foot{display:flex;justify-content:space-around;margin-top:8px;font-size:7.5px;font-weight:800;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.book .b-foot{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 8px;text-align:center;margin-top:8px;font-size:7.5px;font-weight:800;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
 .hero .book{position:absolute;right:-30px;bottom:-70px;z-index:4;--w:190px}
 
 /* wave divider */

@@ -455,7 +455,7 @@ ${cards}
 <p class="lp-fine">Instant PDF download &middot; US Letter and A4 friendly &middot; 30-day money-back guarantee</p></div>
 <div class="lp-card" aria-hidden="true"><img src="/assets/mascot.png" alt="" width="120" height="120"><div class="lp-card-k">New Puppy Starter Kit</div><div class="lp-card-t">Your puppy's first 30 days</div><div class="lp-card-p">30-day plan</div></div></div></section>
 <section class="sec"><div class="wrap narrow"><div class="prose">
-<h2>Sound familiar?</h2><ul><li>Your puppy cries at night and you do not know what to do.</li><li>Accidents in the house, again.</li><li>You read 20 articles and now you are more confused.</li><li>You want a clear plan you can stick on the fridge.</li></ul>
+<h2>Sound familiar?</h2><ul><li>Your puppy cries at night and you do not know what to do.</li><li>Accidents in the house, again.</li><li>The first week is a blur and you are not sure you are doing it right.</li><li>You read 20 articles and now you are more confused.</li><li>You want a clear plan you can stick on the fridge.</li></ul>
 <h2>What you get</h2><ul>
 <li><strong>30-day plan.</strong> One simple focus for every day, in four weekly pages with check boxes.</li>
 <li><strong>Potty schedule by age</strong> with a sample day and a weekly log.</li>
@@ -470,6 +470,7 @@ ${cards}
 <h2>Questions</h2>
 <h3>Is this a physical product?</h3><p>No. It is a digital PDF you download and print yourself.</p>
 <h3>Does it work for any breed?</h3><p>Yes. The plan is general. Every puppy learns at their own speed, so adjust the days to your puppy.</p>
+<h3>Does it cover biting and the puppy blues?</h3><p>The kit focuses on the daily plan, potty, crate and the first week. For biting and for the feelings of overwhelm, read our free guides: <a href="/blog/how-to-stop-puppy-biting/">how to stop puppy biting</a> and <a href="/blog/puppy-blues-regret-getting-a-puppy/">puppy blues</a>.</p>
 <h3>Is this veterinary advice?</h3><p>No. It is general educational information. Please ask your vet about health, vaccines and food.</p>
 <h3>How do I get it?</h3><p>You get a download link on the thank-you page and by email right after payment.</p>
 <p class="lp-cta">${buy}</p>

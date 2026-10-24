@@ -513,7 +513,7 @@ ${cards}
     title: 'Privacy Policy | PuppyGuido',
     description: 'How PuppyGuido collects, uses and protects your personal information, including the free guide sign-up, cookies and your rights.',
     urlPath: '/privacy/',
-    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 17, 2026')}
+    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 24, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
 <p>PuppyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
 <h2>Information we collect</h2>
@@ -536,13 +536,14 @@ ${cards}
 <p>When you submit the sign-up form, your browser sends the details directly to our own automation server at <strong>n8n.satinher.com</strong> (a self-hosted n8n instance that we run). From there the details are:</p>
 <ul>
 <li>saved in our own database (a self-hosted Supabase database) as your entry on our email list;</li>
-<li>used to send you the guide and later emails from hello@puppyguido.com, through Gmail's email service (Google);</li>
+<li>used to send you the guide and later emails from hello@puppyguido.com, through the email service Brevo;</li>
 <li>shared in a private notification to the site owner (your email address and the page you signed up from).</li>
 </ul>
 <p>The unsubscribe link in our emails also goes to the same server and marks your address so that you receive no more emails.</p>
 <h2>Who else processes data</h2>
 <ul>
 <li><strong>Vercel</strong> hosts the site and provides the anonymous analytics.</li>
+<li><strong>Brevo</strong> sends our emails. It receives your email address, your first name and the message content, and it may record whether an email was delivered, opened or clicked.</li>
 <li><strong>Chat assistant.</strong> Messages you type are sent to our server and then to an AI language-model provider (OpenRouter and the model companies behind it) to generate a reply.</li>
 <li><strong>Google Fonts.</strong> Your browser loads fonts from Google, which means Google receives your IP address when a page loads.</li>
 <li><strong>Meta (Facebook).</strong> Only if you accept cookies: the Meta Pixel, described below.</li>

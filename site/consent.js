@@ -14,9 +14,37 @@
     fbq('init', PIXEL_ID);
     fbq('track', 'PageView');
     if (/-puppy-guide\/?$/.test(location.pathname)) fbq('track', 'ViewContent', { content_name: location.pathname.replace(/\//g, '') });
+    if (/^\/starter-kit\/?$/.test(location.pathname)) fbq('track', 'ViewContent', { content_name: 'Complete Puppy Bundle', content_ids: ['1474651'], content_type: 'product', value: 59, currency: 'USD' });
+    if (/^\/thank-you(\.html|\/)?$/.test(location.pathname)) fbq('track', 'Lead');
+    // Lemon Squeezy checkout links: product id and price per checkout uuid
+    var PRODUCTS = {
+      '41f6f105': { id: '1474480', value: 17, name: 'New Puppy Starter Kit' },
+      '947cce14': { id: '1474491', value: 27, name: 'Starter Kit + Puppy Health Tracker' },
+      '9ef17660': { id: '1474651', value: 59, name: 'The Complete Puppy Bundle' },
+      'c462fb32': { id: '1474497', value: 49, name: 'The Puppy Training Playbook' },
+      '5421bad0': { id: '1474513', value: 35, name: 'The Puppy Training Playbook (Kit Buyer Offer)' }
+    };
+    function cookie(n) { var m = document.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
+    function fbcValue() {
+      var c = cookie('_fbc'); if (c) return c;
+      var m = location.search.match(/[?&]fbclid=([^&]+)/);
+      return m ? 'fb.1.' + Date.now() + '.' + m[1] : '';
+    }
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest && ev.target.closest('a[href*="lemonsqueezy.com"]');
-      if (a) fbq('track', 'InitiateCheckout');
+      if (!a) return;
+      var m = a.href.match(/\/checkout\/buy\/([0-9a-f]{8})/), p = m && PRODUCTS[m[1]];
+      fbq('track', 'InitiateCheckout', p ? { content_ids: [p.id], content_name: p.name, content_type: 'product', value: p.value, currency: 'USD', num_items: 1 } : {});
+      // pass the visitor's Meta identifiers to the order, so the server-side Purchase can be matched
+      try {
+        var u = new URL(a.href);
+        u.searchParams.set('checkout[custom][consent]', '1');
+        var fbp = cookie('_fbp'), fbc = fbcValue();
+        if (fbp) u.searchParams.set('checkout[custom][fbp]', fbp);
+        if (fbc) u.searchParams.set('checkout[custom][fbc]', fbc);
+        u.searchParams.set('checkout[custom][ua]', navigator.userAgent.slice(0, 200));
+        a.href = u.toString();
+      } catch (e) {}
     }, true);
   }
 

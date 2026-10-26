@@ -568,3 +568,6 @@ footer a:hover{color:#fff}
 @media(max-width:900px){.lp-prev{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.lp-prev a{padding:6px}.lp-prev span{font-size:12px}.lp-show.rev .lp-show-img{order:0}.lp-for{min-height:0}}
 @media(max-width:760px){.lp-sticky div:first-child span{display:block}.lp-sticky .btn{padding:11px 16px}.lp-assure{font-size:13px}}
 @media(max-width:760px){body:has(.lp-sticky) #pgc-btn{bottom:86px}body:has(.lp-sticky) #pgc-panel{bottom:140px;max-height:calc(100vh - 170px)}}
+.lp-sticky-t{white-space:nowrap;line-height:1.25}.lp-sticky-l{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+@media(max-width:760px){.lp-sticky div.lp-sticky-t strong,.lp-sticky div.lp-sticky-t span{display:block}.lp-sticky div.lp-sticky-t span{font-size:15px;font-weight:800;color:var(--navy)}}
+@media(max-width:380px){.lp-sticky{padding:8px 10px;gap:8px}.lp-sticky-b{gap:8px}.lp-sticky-l{font-size:13px}.lp-sticky .btn{padding:11px 14px;font-size:14px}}

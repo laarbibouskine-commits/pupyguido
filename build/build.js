@@ -444,40 +444,56 @@ const pages = {
 <p><a class="btn btn-gold" href="/#signup">Get the free guide <svg class="ico"><use href="#i-arrow"/></svg></a></p>
 </div></div></section>` }),
 
-  'starter-kit': () => { const ALL = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const OFF = ALL.starterKit; const BUN = ALL.bundle; const btn = (o, label) => o.checkoutUrl ? `<a class="btn btn-gold" href="${o.checkoutUrl}">${label} ${arrow}</a>` : `<a class="btn btn-gold" href="/#signup">Notify me when it opens ${arrow}</a>`; const COM = ALL.complete; const cards = `<div class="lp-offers"><div class="lp-offer best wide"><div class="lp-badge">Best value</div><div class="lp-offer-t">The Complete Puppy Bundle</div><div class="lp-offer-p">$${COM.price} <s class="lp-was">$${COM.value}</s></div><p>The Starter Kit, the Puppy Health Tracker and The Puppy Training Playbook in one download. Everything for the first 30 days and beyond.</p>${btn(COM, 'Get the complete bundle')}</div><div class="lp-offer"><div class="lp-offer-t">Starter Kit</div><div class="lp-offer-p">$${OFF.price}</div><p>30-day plan, potty schedule, crate checklist, first week checklist, shopping list, vet checklist.</p>${btn(OFF, 'Get the Kit')}</div><div class="lp-offer"><div class="lp-offer-t">Kit + Health Tracker</div><div class="lp-offer-p">$${BUN.price}</div><p>Everything in the Kit plus the Puppy Health Tracker: vaccine log, weight log, vet visit notes.</p>${btn(BUN, 'Get the bundle')}</div></div>`; const buy = OFF.checkoutUrl ? `<a class="btn btn-gold" href="${OFF.checkoutUrl}">Get the Starter Kit - $${OFF.price} ${arrow}</a>` : `<a class="btn btn-gold" href="/#signup">Notify me when it opens ${arrow}</a>`; return layout({
+  'starter-kit': () => { const ALL = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const OFF = ALL.starterKit; const BUN = ALL.bundle; const COM = ALL.complete; const PB = ALL.playbook; let RP = {}; try { RP = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'products', 'puppy-blues-rescue-plan.json'), 'utf8')); } catch (e) {} const go = (o, label, cls) => o.checkoutUrl ? `<a class="btn ${cls || 'btn-gold'}" href="${o.checkoutUrl}">${label} ${arrow}</a>` : `<a class="btn ${cls || 'btn-gold'}" href="/#signup">Notify me when it opens ${arrow}</a>`; const tick = t => `<li><svg class="ico"><use href="#i-check"/></svg>${t}</li>`; const save = Number(COM.value) - Number(COM.price); return layout({
     title: 'New Puppy Starter Kit: Your Puppy\'s First 30 Days | PuppyGuido',
     description: 'A printable 30-day plan, potty schedule, crate checklist, first-week checklist and shopping list for first-time puppy parents. Instant download.',
     urlPath: '/starter-kit/', noindex: true,
     body: `<section class="lp-hero"><div class="wrap lp-grid"><div>
 <span class="eyebrow"><svg class="ico fill"><use href="#i-paw"/></svg> For first-time puppy parents</span>
 <h1>Your puppy's first 30 days, <span class="hl">planned day by day</span></h1>
-<p class="lead">A printable plan with potty schedule, crate checklist, first-week checklist and shopping list. Stop guessing. Know what to do today, tomorrow and next week.</p>
-${cards}
-<p class="lp-fine">Instant PDF download &middot; US Letter and A4 friendly &middot; 30-day money-back guarantee</p></div>
-<div class="lp-card" aria-hidden="true"><img src="/assets/mascot.png" alt="" width="120" height="120"><div class="lp-card-k">New Puppy Starter Kit</div><div class="lp-card-t">Your puppy's first 30 days</div><div class="lp-card-p">30-day plan</div></div></div></section>
-<section class="sec"><div class="wrap narrow"><div class="prose">
-<h2>Sound familiar?</h2><ul><li>Your puppy cries at night and you do not know what to do.</li><li>Accidents in the house, again.</li><li>The first week is a blur and you are not sure you are doing it right.</li><li>You read 20 articles and now you are more confused.</li><li>You want a clear plan you can stick on the fridge.</li></ul>
-<h2>What you get</h2><ul>
-<li><strong>30-day plan.</strong> One simple focus for every day, in four weekly pages with check boxes.</li>
-<li><strong>Potty schedule by age</strong> with a sample day and a weekly log.</li>
-<li><strong>Crate training checklist</strong> with 7 calm steps and crate time by age.</li>
-<li><strong>First week day-by-day checklist</strong> plus a night routine.</li>
-<li><strong>Shopping list and puppy-proofing walk-through.</strong> Must-have and nice-to-have.</li>
-<li><strong>First vet visit checklist</strong> with space for your questions.</li></ul>
-<p class="lp-cta">${buy}</p>
-<h2>How it works</h2><ol><li>Download the PDF right after checkout.</li><li>Print the pages you need, or use it on a tablet.</li><li>Follow one small step a day. Tick it off.</li></ol>
-<h2>Who it is for</h2><p>First-time puppy parents with a puppy of about 8 weeks to 6 months, in the US, UK, Australia and New Zealand. All methods are positive and reward-based.</p>
-<h2>30-day money-back guarantee</h2><p>If the kit is not useful to you, email <a href="mailto:${EMAIL}">${EMAIL}</a> within 30 days and we will refund you.</p>
-<h2>Questions</h2>
-<h3>Is this a physical product?</h3><p>No. It is a digital PDF you download and print yourself.</p>
-<h3>Does it work for any breed?</h3><p>Yes. The plan is general. Every puppy learns at their own speed, so adjust the days to your puppy.</p>
-<h3>Does it cover biting and the puppy blues?</h3><p>The kit focuses on the daily plan, potty, crate and the first week. For biting and for the feelings of overwhelm, read our free guides: <a href="/blog/how-to-stop-puppy-biting/">how to stop puppy biting</a> and <a href="/blog/puppy-blues-regret-getting-a-puppy/">puppy blues</a>.</p>
-<h3>Is this veterinary advice?</h3><p>No. It is general educational information. Please ask your vet about health, vaccines and food.</p>
-<h3>How do I get it?</h3><p>You get a download link on the thank-you page and by email right after payment.</p>
-<p class="lp-cta">${buy}</p>
-<p class="lp-fine">Prefer to try first? <a href="/#signup">Get the free New Puppy Survival Guide</a>.</p>
-</div></div></section>` }); },
+<p class="lead">A printable plan with a potty schedule, crate checklist, first-week checklist and shopping list. Stop guessing. Know what to do today, tomorrow and next week.</p>
+<p class="lp-cta"><a class="btn btn-gold" href="#plans">See the plans ${arrow}</a> <a class="btn btn-ghost" href="#inside">What is inside</a></p>
+<ul class="lp-trust"><li>Instant PDF download</li><li>US Letter and A4</li><li>30-day money-back guarantee</li><li>Secure checkout by Lemon Squeezy</li></ul></div>
+<div class="lp-hero-img"><img src="/assets/products/complete-cover.jpg" alt="The Complete Puppy Bundle by PuppyGuido: Starter Kit, Health Tracker and Training Playbook" width="900" height="675"></div></div></section>
 
+<section class="sec"><div class="wrap"><h2 class="lp-h">Sound familiar?</h2>
+<div class="lp-pain"><div>Your puppy cries at night and you are not sure what to do.</div><div>Accidents in the house, again.</div><div>The first week is a blur and you wonder if you are doing it right.</div><div>You read 20 articles and now you are more confused.</div><div>You want one clear plan you can stick on the fridge.</div></div>
+<p class="lp-center">You are not behind. You just need a calm order of steps. That is what this is.</p></div></section>
+
+<section class="sec tint" id="inside"><div class="wrap"><h2 class="lp-h">What is inside</h2>
+<div class="lp-show"><img src="/assets/products/starter-kit-cover.jpg" alt="Cover of the New Puppy Starter Kit" width="900" height="675" loading="lazy"><div><span class="ty-tag">Starter Kit</span><h3>Your puppy's first 30 days</h3><ul class="lp-checks">${tick('<strong>30-day plan.</strong> One simple focus for every day, in four weekly pages with check boxes.')}${tick('<strong>Potty schedule by age</strong> with a sample day and a weekly log.')}${tick('<strong>Crate training checklist</strong> with 7 calm steps and crate time by age.')}${tick('<strong>First week day-by-day checklist</strong> plus a night routine.')}${tick('<strong>Shopping list and puppy-proofing walk-through.</strong>')}${tick('<strong>First vet visit checklist</strong> with space for your questions.')}</ul></div></div>
+<div class="lp-show rev"><img src="/assets/products/bundle-cover.jpg" alt="Cover of the Starter Kit plus Puppy Health Tracker" width="900" height="675" loading="lazy"><div><span class="ty-tag">Health Tracker</span><h3>Keep the vet details in one place</h3><ul class="lp-checks">${tick('<strong>Vaccine log</strong> so you always know what is next.')}${tick('<strong>Weight log</strong> to follow growth week by week.')}${tick('<strong>Vet visit notes</strong> with room for questions and answers.')}</ul></div></div>
+<div class="lp-show"><img src="/assets/products/playbook-cover.jpg" alt="Cover of The Puppy Training Playbook" width="900" height="675" loading="lazy"><div><span class="ty-tag">Training Playbook</span><h3>Train with kindness, step by step</h3><ul class="lp-checks">${tick('How puppies learn, and a daily routine that works.')}${tick('Potty training, crate and alone time, biting and sleep.')}${tick('Socialization and 8 first cues, step by step.')}${tick('A 12-week roadmap, 20 brain games, cue cards and trackers.')}${tick('A gear guide: budget, best value and premium picks.')}</ul></div></div>
+</div></section>
+
+<section class="sec" id="plans"><div class="wrap"><h2 class="lp-h">Choose your plan</h2><p class="lp-center">Every plan is an instant PDF download. All training is positive and reward-based.</p>
+<div class="lp-plans">
+<div class="lp-plan"><div class="lp-plan-t">Starter Kit</div><div class="lp-plan-p">$${OFF.price}</div><ul class="lp-checks">${tick('30-day plan')}${tick('Potty schedule and log')}${tick('Crate and first-week checklists')}${tick('Shopping list and vet checklist')}</ul>${go(OFF, 'Get the Kit', 'btn-outline')}</div>
+<div class="lp-plan best"><div class="lp-badge">Best value</div><div class="lp-plan-t">The Complete Puppy Bundle</div><div class="lp-plan-p">$${COM.price} <s class="lp-was">$${COM.value}</s></div><p class="lp-save">You save $${save}</p><ul class="lp-checks">${tick('Everything in the Starter Kit')}${tick('Puppy Health Tracker')}${tick('The Puppy Training Playbook (34 pages)')}${tick('12-week roadmap and 20 brain games')}</ul>${go(COM, 'Get the complete bundle')}</div>
+<div class="lp-plan"><div class="lp-plan-t">Kit + Health Tracker</div><div class="lp-plan-p">$${BUN.price}</div><ul class="lp-checks">${tick('Everything in the Starter Kit')}${tick('Vaccine log')}${tick('Weight log')}${tick('Vet visit notes')}</ul>${go(BUN, 'Get the bundle', 'btn-outline')}</div>
+</div>
+<div class="lp-guarantee"><svg class="ico"><use href="#i-check"/></svg><div><strong>30-day money-back guarantee.</strong> If it is not useful to you, email <a href="mailto:${EMAIL}">${EMAIL}</a> within 30 days and we will refund you.</div></div></div></section>
+
+<section class="sec tint"><div class="wrap narrow"><h2 class="lp-h">Questions</h2><div class="lp-faq">
+<details><summary>Is this a physical product?</summary><p>No. It is a digital PDF you download and print yourself. You get the link on the thank-you page and by email right after payment.</p></details>
+<details><summary>Does it work for any breed?</summary><p>Yes. The plan is general. Every puppy learns at their own speed, so adjust the days to your puppy.</p></details>
+<details><summary>What age is it for?</summary><p>First-time puppy parents with a puppy of about 8 weeks to 6 months, in the US, UK, Australia and New Zealand.</p></details>
+<details><summary>Which plan should I pick?</summary><p>The Starter Kit covers the first 30 days. The Complete Bundle adds the Health Tracker and the Training Playbook, so you also have a step-by-step training routine for the months after.</p></details>
+<details><summary>Does it cover biting and the puppy blues?</summary><p>The Playbook covers biting. For the feelings of overwhelm, read our free guide on the <a href="/blog/puppy-blues-regret-getting-a-puppy/">puppy blues</a>.</p></details>
+<details><summary>Is this veterinary advice?</summary><p>No. It is general educational information. Please ask your vet about health, vaccines and food.</p></details>
+</div></div></section>
+
+<section class="sec"><div class="wrap"><div class="lp-free"><div><span class="ty-tag">Not ready yet?</span><h2>Start with the free survival guide</h2><p>A short guide to the first days with a new puppy, sent to your inbox. No card needed. You can buy the kit later.</p></div><a class="btn btn-gold" href="/#signup">Get the free guide ${arrow}</a></div></div></section>
+
+<section class="sec tint"><div class="wrap"><h2 class="lp-h">More from PuppyGuido</h2><div class="ty-more">
+${RP.gumroadUrl ? `<a class="ty-card" href="${RP.gumroadUrl}" target="_blank" rel="noopener"><img src="${RP.image}" alt="${RP.imageAlt || ''}" width="400" height="500" loading="lazy"><div><span class="ty-tag">${RP.price}</span><h3>The Puppy Blues Rescue Plan</h3><p>A calm 30-day plan with printable trackers for the tired, overwhelmed first weeks.</p><span class="ty-link">See the guide ${arrow}</span></div></a>` : ''}
+<a class="ty-card" href="/shop/"><div><span class="ty-tag">Free picks</span><h3>Gear we recommend for week one</h3><p>Crates, beds, chews and more, chosen for new puppy parents.</p><span class="ty-link">Browse the shop ${arrow}</span></div></a>
+<a class="ty-card" href="/golden-retriever-puppy-guide/"><div><span class="ty-tag">Breed guide</span><h3>Golden Retriever puppy guide</h3><p>What to expect, and how to plan the first months.</p><span class="ty-link">Read the guide ${arrow}</span></div></a>
+<a class="ty-card" href="/labrador-puppy-guide/"><div><span class="ty-tag">Breed guide</span><h3>Labrador puppy guide</h3><p>Energy, chewing and training, in plain language.</p><span class="ty-link">Read the guide ${arrow}</span></div></a>
+</div></div></section>
+
+<section class="lp-final"><div class="wrap"><h2>Give your puppy a calm start</h2><p>One plan. One small step a day.</p><p class="lp-cta">${go(COM, `Get the Complete Bundle for $${COM.price}`)} <a class="btn btn-ghost" href="#plans">Compare plans</a></p></div></section>
+<div class="lp-sticky" id="lp-sticky"><div><strong>Complete Puppy Bundle</strong> <span>$${COM.price} <s>$${COM.value}</s></span></div>${go(COM, 'Get it')}</div>` }); },
   'thank-you-kit': () => { const OFFERS = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const PB = OFFERS.playbook; let RP = {}; try { RP = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'products', 'puppy-blues-rescue-plan.json'), 'utf8')); } catch (e) {} const pbBtn = PB.saleCheckoutUrl ? `<a class="btn btn-gold" href="${PB.saleCheckoutUrl}">Add the Playbook for $${PB.salePrice} ${arrow}</a>` : `<a class="btn btn-gold" href="/blog/">Read our free guides ${arrow}</a>`; return layout({
     title: 'Thank you | PuppyGuido', description: 'Thank you for your order.', urlPath: '/thank-you-kit/', noindex: true,
     body: `${pageHero('Order confirmed', 'Thank you, <span class="hl white">your kit is on its way</span>', 'We have emailed your download link. It usually arrives within a minute.')}

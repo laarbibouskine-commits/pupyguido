@@ -478,18 +478,36 @@ ${cards}
 <p class="lp-fine">Prefer to try first? <a href="/#signup">Get the free New Puppy Survival Guide</a>.</p>
 </div></div></section>` }); },
 
-  'thank-you-kit': () => { const PB = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')).playbook; const pbBtn = PB.saleCheckoutUrl ? `<a class="btn btn-gold" href="${PB.saleCheckoutUrl}">Yes, add the Playbook for $${PB.salePrice} ${arrow}</a>` : `<a class="btn btn-gold" href="/blog/">Read our free guides ${arrow}</a>`; return layout({
+  'thank-you-kit': () => { const OFFERS = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const PB = OFFERS.playbook; let RP = {}; try { RP = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'products', 'puppy-blues-rescue-plan.json'), 'utf8')); } catch (e) {} const pbBtn = PB.saleCheckoutUrl ? `<a class="btn btn-gold" href="${PB.saleCheckoutUrl}">Add the Playbook for $${PB.salePrice} ${arrow}</a>` : `<a class="btn btn-gold" href="/blog/">Read our free guides ${arrow}</a>`; return layout({
     title: 'Thank you | PuppyGuido', description: 'Thank you for your order.', urlPath: '/thank-you-kit/', noindex: true,
-    body: `${pageHero('Thank you', 'Your kit is <span class="hl white">on its way</span>', 'Check your email for the download link. It can take a minute.')}
-<section class="sec"><div class="wrap narrow"><div class="prose">
-<h2>Before you go: one special offer</h2>
-<p>New customers can add <strong>The Puppy Training Playbook</strong> for <strong>$${PB.salePrice}</strong> instead of $${PB.price}. This price is only for people who just ordered the kit.</p>
+    body: `${pageHero('Order confirmed', 'Thank you, <span class="hl white">your kit is on its way</span>', 'We have emailed your download link. It usually arrives within a minute.')}
+<section class="sec"><div class="wrap">
+<div class="ty-steps">
+<div class="ty-step"><span class="ty-n">1</span><h3>Check your inbox</h3><p>Your receipt and PDF download link come from our payment partner, Lemon Squeezy, on behalf of PuppyGuido. Not there? Look in Spam or Promotions.</p></div>
+<div class="ty-step"><span class="ty-n">2</span><h3>Download and print</h3><p>Print the pages you need (US Letter, works on A4 too) or keep the PDF on your phone.</p></div>
+<div class="ty-step"><span class="ty-n">3</span><h3>Start with Week 1</h3><p>Open the Welcome page and follow the Week 1 plan. A calm routine beats a perfect one.</p></div>
+</div>
+
+<div class="ty-offer">
+<div class="ty-offer-img"><img src="/assets/products/playbook-cover.jpg" alt="Cover of The Puppy Training Playbook by PuppyGuido" width="900" height="675" loading="lazy"></div>
+<div class="ty-offer-body">
+<span class="ty-tag">Kit buyers only</span>
+<h2>Add The Puppy Training Playbook</h2>
+<p class="ty-price"><s>$${PB.price}</s> <strong>$${PB.salePrice}</strong></p>
 <ul><li>How puppies learn, and a daily routine that works</li><li>Potty training, crate and alone time, biting, sleep</li><li>Socialization and 8 first cues, step by step</li><li>A 12-week roadmap, 20 brain games, cue cards and trackers</li><li>A gear guide: budget, best value and premium picks</li></ul>
 <p class="lp-cta">${pbBtn}</p>
-<p class="lp-fine">34-page PDF &middot; instant download &middot; 30-day money-back guarantee. Not now? No problem, your kit is already yours.</p>
-<h2>Helpful gear for week one</h2>
-<ul><li><a href="/shop/">See our recommended puppy gear</a></li><li><a href="/blog/puppy-first-night-home/">Read: your puppy's first night home</a></li><li><a href="/blog/puppy-potty-training-schedule/">Read: potty training schedule by age</a></li></ul>
-</div></div></section>` }); },
+<p class="lp-fine">34-page PDF &middot; instant download &middot; secure checkout by Lemon Squeezy &middot; 30-day money-back guarantee. Not now? Your kit is already yours.</p>
+</div></div>
+
+<h2 class="ty-h">More from PuppyGuido</h2>
+<div class="ty-more">
+${RP.gumroadUrl ? `<a class="ty-card" href="${RP.gumroadUrl}" target="_blank" rel="noopener"><img src="${RP.image}" alt="${RP.imageAlt || ''}" width="400" height="500" loading="lazy"><div><span class="ty-tag">${RP.price}</span><h3>The Puppy Blues Rescue Plan</h3><p>A calm 30-day plan with printable trackers for the tired, overwhelmed first weeks.</p><span class="ty-link">See the guide ${arrow}</span></div></a>` : ''}
+<a class="ty-card" href="/shop/"><div><span class="ty-tag">Free picks</span><h3>Gear we recommend for week one</h3><p>Crates, beds, chews and more, chosen for new puppy parents.</p><span class="ty-link">Browse the shop ${arrow}</span></div></a>
+<a class="ty-card" href="/blog/puppy-first-night-home/"><div><span class="ty-tag">Free guide</span><h3>Your puppy's first night home</h3><p>What to expect and how to get everyone some sleep.</p><span class="ty-link">Read the guide ${arrow}</span></div></a>
+<a class="ty-card" href="/blog/puppy-potty-training-schedule/"><div><span class="ty-tag">Free guide</span><h3>Potty training schedule by age</h3><p>A simple timetable you can follow from day one.</p><span class="ty-link">Read the guide ${arrow}</span></div></a>
+</div>
+<p class="lp-fine" style="text-align:center;margin-top:28px">Questions about your order? Email <a href="mailto:hello@puppyguido.com">hello@puppyguido.com</a> and we will help.</p>
+</div></section>` }); },
 
   contact: () => layout({
     title: 'Contact PuppyGuido | Questions, Feedback, Partnerships',

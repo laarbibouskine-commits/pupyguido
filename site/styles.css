@@ -483,3 +483,21 @@ footer a:hover{color:#fff}
 .prod-card .best{font-size:14px;color:var(--muted);margin:6px 0 0}
 .meta a{color:inherit;text-decoration:underline}
 .aff-note{margin:0 0 18px;padding:10px 14px;border-radius:10px;background:var(--cream,#FFF9E5);color:var(--muted);font-size:14px}
+
+/* thank-you-kit */
+.ty-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 40px}
+.ty-step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 24px rgba(11,31,68,.06)}
+.ty-step h3{margin:10px 0 6px;font-size:18px}.ty-step p{margin:0;font-size:15px;color:var(--muted)}
+.ty-n{display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:900;align-items:center;justify-content:center}
+.ty-offer{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:0;background:#fff;border:3px solid var(--gold);border-radius:24px;overflow:hidden;box-shadow:0 18px 46px rgba(11,31,68,.14)}
+.ty-offer-img{background:var(--navy);display:flex;align-items:center}.ty-offer-img img{display:block;width:100%;height:auto}
+.ty-offer-body{padding:30px}.ty-offer-body h2{margin:8px 0 6px;font-size:28px;line-height:1.15}
+.ty-offer-body ul{margin:12px 0 4px;padding-left:20px;font-size:15px}.ty-offer-body li{margin:4px 0}
+.ty-price{font-size:32px;margin:0}.ty-price s{color:var(--muted);font-size:22px;margin-right:8px}.ty-price strong{font-weight:900;color:var(--navy)}
+.ty-tag{display:inline-block;background:var(--gold-soft);color:#8a5d00;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:20px}
+.ty-h{margin:48px 0 18px;font-size:26px}
+.ty-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ty-card{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:0 8px 24px rgba(11,31,68,.06);transition:transform .15s}
+.ty-card:hover{transform:translateY(-2px)}.ty-card img{width:96px;height:120px;object-fit:cover;border-radius:10px;flex:none}
+.ty-card h3{margin:8px 0 4px;font-size:17px}.ty-card p{margin:0 0 8px;font-size:14px;color:var(--muted)}.ty-link{font-weight:800;font-size:14px;color:var(--navy)}
+@media(max-width:760px){.ty-steps,.ty-more{grid-template-columns:minmax(0,1fr)}.ty-offer{grid-template-columns:minmax(0,1fr)}.ty-offer-body{padding:22px}}

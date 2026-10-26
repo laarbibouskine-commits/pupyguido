@@ -513,7 +513,7 @@ ${cards}
     title: 'Privacy Policy | PuppyGuido',
     description: 'How PuppyGuido collects, uses and protects your personal information, including the free guide sign-up, cookies and your rights.',
     urlPath: '/privacy/',
-    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 24, 2026')}
+    body: `${pageHero('Legal', 'Privacy <span class="hl white">policy</span>', 'Last updated: October 26, 2026')}
 <section class="sec"><div class="wrap narrow"><div class="prose">
 <p>PuppyGuido ("we", "us") respects your privacy. This policy explains what we collect when you visit ${SITE.replace('https://', '')} and how we use it.</p>
 <h2>Information we collect</h2>
@@ -547,6 +547,7 @@ ${cards}
 <li><strong>Chat assistant.</strong> Messages you type are sent to our server and then to an AI language-model provider (OpenRouter and the model companies behind it) to generate a reply.</li>
 <li><strong>Google Fonts.</strong> Your browser loads fonts from Google, which means Google receives your IP address when a page loads.</li>
 <li><strong>Meta (Facebook).</strong> Only if you accept cookies: the Meta Pixel, described below.</li>
+<li><strong>Lemon Squeezy</strong> is the seller of record and handles checkout, payment and sales tax when you buy the Starter Kit, the bundle or the Playbook. It receives your name, email address, billing country and payment details. We do not see your card details.</li>
 <li><strong>Gumroad</strong> handles checkout and payment if you buy our paid guide. We do not see your card details.</li>
 </ul>
 <p>These providers may process data in countries outside your own, including the United States. They act on our behalf or under their own privacy policies.</p>

@@ -4,13 +4,18 @@
     "checkoutUrl": "https://puppyguido.lemonsqueezy.com/checkout/buy/41f6f105-0d05-4c8c-8a33-1d01ba3d628c"
   },
   "bundle": {
-    "price": "22",
+    "price": "27",
     "checkoutUrl": "https://puppyguido.lemonsqueezy.com/checkout/buy/947cce14-840e-419b-8875-dbf0043d926b"
   },
   "playbook": {
-    "price": "37",
-    "salePrice": "27",
+    "price": "49",
+    "salePrice": "35",
     "checkoutUrl": "https://puppyguido.lemonsqueezy.com/checkout/buy/c462fb32-5272-4e93-ba76-4a48d9fce0ed",
     "saleCheckoutUrl": "https://puppyguido.lemonsqueezy.com/checkout/buy/5421bad0-c520-4dd1-b77d-de697b2cf3e0"
+  },
+  "complete": {
+    "price": "59",
+    "value": "76",
+    "checkoutUrl": "https://puppyguido.lemonsqueezy.com/checkout/buy/9ef17660-b565-4a07-a5e1-2df2a1845f3a"
   }
 }

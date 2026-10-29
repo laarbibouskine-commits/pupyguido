@@ -22,3 +22,4 @@ The other eight covers use the site's own puppy photos (`site/assets/*.jpg`).
 
 To add a new article cover: save the photo, add it to the PHOTOS table in the cover script, set `coverPhoto` and `coverAlt` in the post JSON, rebuild.
 | puppy-feeding-schedule | 8434725 |
+| puppy-zoomies | 9863520 |

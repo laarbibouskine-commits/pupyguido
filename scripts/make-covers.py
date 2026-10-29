@@ -33,6 +33,7 @@ PHOTOS = {
  "puppy-potty-training-timeline": ("photos\\px-1346086", 0.52, 0.38),
  "puppy-socialization-checklist": ("photos\\px-12951463", 0.62, 0.45),
  "puppy-feeding-schedule": ("photos\\px-8434725", 0.50, 0.38),
+ "puppy-zoomies": ("photos\\px-9863520", 0.50, 0.38),
 }
 ART = json.load(open(ROOT + r"\build\cover-art.json", encoding="utf-8"))
 

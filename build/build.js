@@ -312,7 +312,7 @@ function renderPost(p, all) {
 <p class="meta"><span class="tag">${esc(p.category)}</span> By <a href="/how-we-write/">the PuppyGuido editorial team</a> &middot; <time datetime="${p.date}">${fmtDate(p.date)}</time>${p.updated ? ` &middot; Updated <time datetime="${p.updated}">${fmtDate(p.updated)}</time>` : ''} &middot; ${p.readMinutes} min read</p>
 </div></div>
 <div class="wrap narrow">
-<figure class="post-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="900" height="560" loading="eager"></figure>
+<figure class="cover-fig">${coverHtml(p, 'page')}</figure>
 ${adSlot('articleTop')}
 ${quickBox(p)}${(() => { const g = withInlineGear(p.html, p); p._inline = g.count; p._html = g.html; return ''; })()}${p._inline ? '<p class="aff-note"><b>Heads up.</b> Some links in this article are affiliate links. If you buy through them we may earn a commission at no extra cost to you. As an Amazon Associate we earn from qualifying purchases.</p>' : ''}<div class="prose">${withMidAd(withMidImage(p._html, p))}${faqHtml(p)}</div>
 ${adSlot('articleEnd')}
@@ -328,8 +328,20 @@ ${related.length ? `<section class="sec tint"><div class="wrap"><h2 class="rel-h
     extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` });
 }
 
+// Reusable blog cover: one photo with the title centred in a navy box (gold text). The title is real HTML text.
+// No coverPhoto (or a photo that fails to load) falls back to the branded paw pattern, never to a shared photo.
+const COVER_ART = JSON.parse(fs.readFileSync(path.join(__dirname, 'cover-art.json'), 'utf8'));
+function coverHtml(p, variant) {
+  const seed = [...p.slug].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  const photo = p.coverPhoto
+    ? `<img src="${p.coverPhoto}" alt="${esc(p.coverAlt || '')}" width="1600" height="900" loading="${variant === 'page' ? 'eager' : 'lazy'}"${variant === 'page' ? ' fetchpriority="high"' : ''} onerror="this.remove()">`
+    : `<div class="cover-ph" aria-hidden="true">${COVER_ART[p.coverArt] ? `<svg class="cover-art" viewBox="0 0 160 160">${COVER_ART[p.coverArt]}</svg>` : '<svg class="cover-art" viewBox="0 0 24 24"><use href="#i-paw"/></svg>'}</div>`;
+  const tag = variant === 'card' ? 'h3' : 'p';
+  return `<div class="cover cover-${variant}"><div class="cover-media" style="--ph:${seed}">${photo}<${tag} class="cover-title"><span>${esc(p.title)}</span></${tag}></div></div>`;
+}
+
 function card(p) {
-  return `<a class="post-card" href="/blog/${p.slug}/"><div class="pc-img"><img src="${p.image}" alt="${esc(p.imageAlt)}" width="600" height="380" loading="lazy"></div><div class="pc-body"><span class="tag">${esc(p.category)}</span><h3>${esc(p.title)}</h3><p>${esc(p.excerpt || p.description)}</p><span class="more">Read article <svg class="ico"><use href="#i-arrow"/></svg></span></div></a>`;
+  return `<a class="post-card" href="/blog/${p.slug}/">${coverHtml(p, 'card')}<div class="pc-body"><p>${esc(p.excerpt || p.description)}</p><span class="more">Read article <svg class="ico"><use href="#i-arrow"/></svg></span></div></a>`;
 }
 
 function renderBlogIndex(all) {

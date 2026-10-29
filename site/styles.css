@@ -571,3 +571,17 @@ footer a:hover{color:#fff}
 .lp-sticky-t{white-space:nowrap;line-height:1.25}.lp-sticky-l{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
 @media(max-width:760px){.lp-sticky div.lp-sticky-t strong,.lp-sticky div.lp-sticky-t span{display:block}.lp-sticky div.lp-sticky-t span{font-size:15px;font-weight:800;color:var(--navy)}}
 @media(max-width:380px){.lp-sticky{padding:8px 10px;gap:8px}.lp-sticky-b{gap:8px}.lp-sticky-l{font-size:13px}.lp-sticky .btn{padding:11px 14px;font-size:14px}}
+
+/* Blog cover: photo with the title centred in a navy box, title in gold (HTML text) */
+.cover-fig{margin:-36px 0 34px;position:relative;z-index:2}
+.cover{container-type:inline-size;background:var(--navy);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.cover-page{border:5px solid #fff;box-shadow:var(--shadow)}
+.cover-card{border-radius:0;box-shadow:none}
+.cover-media{position:relative;aspect-ratio:16/9;overflow:hidden;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23ffffff' fill-opacity='.07'%3E%3Cellipse cx='60' cy='70' rx='14' ry='11'/%3E%3Ccircle cx='42' cy='52' r='6'/%3E%3Ccircle cx='54' cy='44' r='6.5'/%3E%3Ccircle cx='67' cy='44' r='6.5'/%3E%3Ccircle cx='79' cy='52' r='6'/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(circle at 18% 22%,#1f4d96 0,transparent 55%),linear-gradient(135deg,#16336b,#0b1f44);background-position:calc(var(--ph) * 1px) calc(var(--ph) * .5px),0 0,0 0}
+.cover-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
+.cover-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max-content;max-width:86%;margin:0;text-align:center;text-transform:none;font-family:var(--f-display);font-weight:700;font-size:clamp(13px,4cqw,34px);line-height:1.2;color:var(--gold);text-wrap:balance}
+.cover-title span{display:inline-block;background:var(--navy);padding:.5em .8em;border-radius:.45em;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+@media (max-width:560px){.cover-fig{margin-top:-24px}}
+
+.cover-ph{position:absolute;inset:0}
+.cover-art{position:absolute;left:50%;top:4%;width:15%;height:auto;aspect-ratio:1;transform:translateX(-50%);color:var(--gold);fill:currentColor;filter:drop-shadow(0 6px 14px rgba(0,0,0,.28))}

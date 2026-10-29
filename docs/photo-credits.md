@@ -21,3 +21,4 @@ Photos from Pexels (free to use under the Pexels license, attribution not requir
 The other eight covers use the site's own puppy photos (`site/assets/*.jpg`).
 
 To add a new article cover: save the photo, add it to the PHOTOS table in the cover script, set `coverPhoto` and `coverAlt` in the post JSON, rebuild.
+| puppy-feeding-schedule | 8434725 |

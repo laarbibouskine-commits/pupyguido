@@ -191,6 +191,19 @@ function gearBox(p) {
 function quickBox(p) {
   return p.quick ? '<aside class="quick-answer"><strong>Quick answer</strong><p>' + p.quick + '</p></aside>' : '';
 }
+// Optional YouTube video per article (content/videos.json maps a video to slugs): embed under the quick answer + VideoObject schema.
+const VIDEO_FILE = path.join(ROOT, 'content', 'videos.json');
+const VIDEOS = fs.existsSync(VIDEO_FILE) ? Object.values(JSON.parse(fs.readFileSync(VIDEO_FILE, 'utf8'))) : [];
+const videoFor = (p) => VIDEOS.find(v => v.slugs.includes(p.slug));
+function videoBox(p) {
+  const v = videoFor(p);
+  if (!v) return '';
+  return '<figure class="video-embed"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '" title="' + esc(v.title) + '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><figcaption>Watch: ' + esc(v.title) + '</figcaption></figure>';
+}
+function videoLd(p) {
+  const v = videoFor(p);
+  return { '@type': 'VideoObject', name: v.title, description: v.description, thumbnailUrl: 'https://i.ytimg.com/vi/' + v.id + '/maxresdefault.jpg', uploadDate: v.uploadDate, duration: v.duration, contentUrl: 'https://www.youtube.com/watch?v=' + v.id, embedUrl: 'https://www.youtube.com/embed/' + v.id };
+}
 function faqHtml(p) {
   if (!p.faq || !p.faq.length) return '';
   return '<h2 id="faq">Frequently asked questions</h2>' + p.faq.map(x => '<h3>' + esc(x.q) + '</h3><p>' + x.a + '</p>').join('');
@@ -305,6 +318,7 @@ function renderPost(p, all) {
     ]
   };
   if (p.faq && p.faq.length) ld['@graph'].push(faqLd(p));
+  if (videoFor(p)) ld['@graph'].push(videoLd(p));
   const body = `<article class="post">
 <div class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.category)}</span></nav>
@@ -314,7 +328,7 @@ function renderPost(p, all) {
 <div class="wrap narrow">
 <figure class="cover-fig">${coverHtml(p, 'page')}</figure>
 ${adSlot('articleTop')}
-${quickBox(p)}${(() => { const g = withInlineGear(p.html, p); p._inline = g.count; p._html = g.html; return ''; })()}${p._inline ? '<p class="aff-note"><b>Heads up.</b> Some links in this article are affiliate links. If you buy through them we may earn a commission at no extra cost to you. As an Amazon Associate we earn from qualifying purchases.</p>' : ''}<div class="prose">${withMidAd(withMidImage(p._html, p))}${faqHtml(p)}</div>
+${quickBox(p)}${videoBox(p)}${(() => { const g = withInlineGear(p.html, p); p._inline = g.count; p._html = g.html; return ''; })()}${p._inline ? '<p class="aff-note"><b>Heads up.</b> Some links in this article are affiliate links. If you buy through them we may earn a commission at no extra cost to you. As an Amazon Associate we earn from qualifying purchases.</p>' : ''}<div class="prose">${withMidAd(withMidImage(p._html, p))}${faqHtml(p)}</div>
 ${adSlot('articleEnd')}
 ${gearBox(p)}
 ${printableBox(p) || ctaBox}

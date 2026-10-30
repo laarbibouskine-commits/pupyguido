@@ -31,6 +31,16 @@
       "org": "Dogs Trust",
       "title": "Day one with a new puppy",
       "url": "https://www.dogstrust.org.uk/dog-advice/puppy/first-day"
+    },
+    {
+      "org": "AKC",
+      "title": "New puppy checklist",
+      "url": "https://www.akc.org/expert-advice/puppy-information/new-puppy-checklist/"
+    },
+    {
+      "org": "ASPCA",
+      "title": "People foods to avoid feeding your pets",
+      "url": "https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets"
     }
   ]
 }

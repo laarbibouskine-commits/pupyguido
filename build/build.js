@@ -298,6 +298,11 @@ function withInlineGear(html, p) {
   return { html: parts.join(''), count };
 }
 
+// Category hubs: /blog/category/<slug>/ for every category in content/categories.json that has 2+ published posts.
+const CATEGORIES = fs.existsSync(path.join(ROOT, 'content', 'categories.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'categories.json'), 'utf8')) : {};
+const hubCats = all => Object.keys(CATEGORIES).filter(c => all.filter(x => x.category === c).length >= 2);
+const catUrl = (c, all) => (hubCats(all).includes(c) ? `/blog/category/${CATEGORIES[c].slug}/` : null);
+
 function renderPost(p, all) {
   const url = `/blog/${p.slug}/`;
   const related = all.filter(x => x.slug !== p.slug)
@@ -314,14 +319,15 @@ function renderPost(p, all) {
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' },
-        { '@type': 'ListItem', position: 3, name: p.title, item: SITE + url } ] }
+        ...(catUrl(p.category, all) ? [{ '@type': 'ListItem', position: 3, name: p.category, item: SITE + catUrl(p.category, all) }] : []),
+        { '@type': 'ListItem', position: catUrl(p.category, all) ? 4 : 3, name: p.title, item: SITE + url } ] }
     ]
   };
   if (p.faq && p.faq.length) ld['@graph'].push(faqLd(p));
   if (videoFor(p)) ld['@graph'].push(videoLd(p));
   const body = `<article class="post">
 <div class="post-head"><div class="paws" aria-hidden="true"></div><div class="wrap narrow">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(p.category)}</span></nav>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / ${catUrl(p.category, all) ? `<a href="${catUrl(p.category, all)}">${esc(p.category)}</a>` : `<span>${esc(p.category)}</span>`}</nav>
 <h1>${esc(p.title)}</h1>
 <p class="meta"><span class="tag">${esc(p.category)}</span> By <a href="/how-we-write/">the PuppyGuido editorial team</a> &middot; <time datetime="${p.date}">${fmtDate(p.date)}</time>${p.updated ? ` &middot; Updated <time datetime="${p.updated}">${fmtDate(p.updated)}</time>` : ''} &middot; ${p.readMinutes} min read</p>
 </div></div>
@@ -360,8 +366,26 @@ function card(p) {
 
 function renderBlogIndex(all) {
   const body = `${pageHero('PuppyGuido blog', 'Puppy tips, <span class="hl white">made simple.</span>', 'Practical, positive answers to the questions new puppy parents ask most.')}
-<section class="sec"><div class="wrap"><h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${adSlot('blogIndex')}${ctaBox}</div></section>`;
+<section class="sec"><div class="wrap">${hubCats(all).length ? `<nav class="cat-chips" aria-label="Blog categories">${hubCats(all).map(c => `<a href="${catUrl(c, all)}">${esc(c)} <span>${all.filter(x => x.category === c).length}</span></a>`).join('')}</nav>` : ''}<h2 class="rel-h">Latest articles</h2><div class="cards3">${all.map(card).join('')}</div>${adSlot('blogIndex')}${ctaBox}</div></section>`;
   return layout({ title: 'Puppy Blog: Training, Potty & Sleep Tips | PuppyGuido', description: 'Practical new puppy tips: potty training, crate and sleep, biting, checklists and routines. Positive, beginner-friendly advice from PuppyGuido.', urlPath: '/blog/', body });
+}
+
+function renderCategory(c, all) {
+  const k = CATEGORIES[c], list = all.filter(x => x.category === c);
+  const others = hubCats(all).filter(x => x !== c);
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'CollectionPage', name: k.title, description: k.intro, url: SITE + catUrl(c, all) },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + '/blog/' },
+      { '@type': 'ListItem', position: 3, name: c, item: SITE + catUrl(c, all) } ] } ] };
+  const body = `${pageHero('PuppyGuido blog', esc(k.title), esc(k.intro))}
+<section class="sec"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>${esc(c)}</span></nav>
+<div class="cards3">${list.map(card).join('')}</div>
+${others.length ? `<h2 class="rel-h">More puppy topics</h2><nav class="cat-chips" aria-label="Blog categories">${others.map(x => `<a href="${catUrl(x, all)}">${esc(x)} <span>${all.filter(y => y.category === x).length}</span></a>`).join('')}</nav>` : ''}
+${ctaBox}</div></section>`;
+  return layout({ title: `${k.seoTitle} | PuppyGuido`, description: k.intro.slice(0, 160), urlPath: catUrl(c, all), body,
+    extraHead: `<script type="application/ld+json">${JSON.stringify(ld)}</script>` });
 }
 
 const GUMROAD_JS = '<script src="https://gumroad.com/js/gumroad.js" async></script>';
@@ -694,11 +718,12 @@ function write(rel, content) {
 
 function sitemap(all) {
   const urls = [['/'], ['/blog/'], ['/shop/'], ['/about/'], ['/how-we-write/'], ['/contact/'], ['/privacy/', '2026-10-17'], ['/terms/'],
+    ...hubCats(all).map(c => [`/blog/category/${CATEGORIES[c].slug}/`]),
     ...all.map(p => [`/blog/${p.slug}/`, p.updated || p.date]), ...products.filter(p => !isAffiliate(p)).map(p => [`/shop/${p.slug}/`])];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${SITE}${u}</loc>${d ? `<lastmod>${d}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
 }
 
-module.exports = { layout, renderPost, renderBlogIndex, sitemap, esc };
+module.exports = { layout, renderPost, renderBlogIndex, renderCategory, sitemap, esc };
 
 function copyDir(from, to, skip = () => false) {
   fs.mkdirSync(to, { recursive: true });
@@ -740,6 +765,7 @@ if (require.main === module) {
   write('blog/index.html', renderBlogIndex(posts));
   write('blog/rss.xml', rssFeed(posts));
   for (const p of posts) write(`blog/${p.slug}/index.html`, renderPost(p, posts));
+  for (const c of hubCats(posts)) write(`blog/category/${CATEGORIES[c].slug}/index.html`, renderCategory(c, posts));
   write('shop/index.html', renderShop());
   for (const p of products) write(`shop/${p.slug}/index.html`, renderProduct(p));
   write('404.html', layout({ title: 'Page not found | PuppyGuido', description: 'This page could not be found.', urlPath: '/404.html', noindex: true,

@@ -81,7 +81,7 @@ const addCurrent = (html, urlPath) => {
   return m ? html.replace('<a href="' + m + '">', '<a href="' + m + '" aria-current="page">') : html;
 };
 function layout(o) { return addCurrent(layoutRaw(o), o.urlPath); }
-function layoutRaw({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/og-default.jpg', ogImageAlt = '', ogType = 'website', noindex = false }) {
+function layoutRaw({ title, description, urlPath, body, extraHead = '', ogImage = '/assets/og-default.jpg', ogImageAlt = '', ogType = 'website', noindex = false, navCta = { href: '/#signup', label: 'Free guide' } }) {
   const url = SITE + urlPath;
   return `<!doctype html>
 <html lang="en">
@@ -135,7 +135,7 @@ ${SPRITE}
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
     </nav>
-    <a class="btn btn-gold" href="/#signup">Free guide</a>
+    <a class="btn btn-gold" href="${navCta.href}">${navCta.label}</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu" id="menuBtn"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg></button>
   </div>
 </header>
@@ -473,7 +473,7 @@ const pages = {
   'starter-kit': () => { const ALL = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const OFF = ALL.starterKit; const BUN = ALL.bundle; const COM = ALL.complete; const PB = ALL.playbook; let RP = {}; try { RP = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'products', 'puppy-blues-rescue-plan.json'), 'utf8')); } catch (e) {} const go = (o, label, cls) => o.checkoutUrl ? `<a class="btn ${cls || 'btn-gold'}" href="${o.checkoutUrl}">${label} ${arrow}</a>` : `<a class="btn ${cls || 'btn-gold'}" href="/#signup">Notify me when it opens ${arrow}</a>`; const tick = t => `<li><svg class="ico"><use href="#i-check"/></svg>${t}</li>`; const save = Number(COM.value) - Number(COM.price); const assure = '<ul class="lp-assure"><li>Instant PDF download</li><li>Secure checkout by Lemon Squeezy</li><li>No shipping, digital only</li><li>30-day money-back guarantee</li></ul>'; const prev = (tag, items) => `<div class="lp-prev">${items.map(([n, cap]) => `<a href="/assets/products/prev-${tag}-${n}.jpg" target="_blank" rel="noopener"><img src="/assets/products/prev-${tag}-${n}.jpg" alt="Sample page: ${cap}" width="680" height="880" loading="lazy"><span>${cap}</span></a>`).join('')}</div>`; const next = (a, b) => `<p class="lp-next">${a} ${b}</p>`; return layout({
     title: 'New Puppy Starter Kit: Your Puppy\'s First 30 Days | PuppyGuido',
     description: 'A printable 30-day plan, potty schedule, crate checklist, first-week checklist and shopping list for first-time puppy parents. Instant download.',
-    urlPath: '/starter-kit/', noindex: true,
+    urlPath: '/starter-kit/', noindex: true, navCta: { href: '#plans', label: 'See plans' },
     body: `<section class="lp-hero"><div class="wrap lp-grid"><div>
 <span class="eyebrow"><svg class="ico fill"><use href="#i-paw"/></svg> For first-time puppy parents</span>
 <h1>Your puppy's first 30 days, <span class="hl">planned day by day</span></h1>

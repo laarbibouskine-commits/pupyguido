@@ -15,7 +15,7 @@
     var a = ev.target.closest && ev.target.closest('a[href*="lemonsqueezy.com/checkout"]');
     if (!a) return;
     var m = a.href.match(/\/checkout\/buy\/([0-9a-f]{8})/);
-    var s = a.closest('.lp-sticky') ? 'sticky' : a.closest('.lp-hero') ? 'hero' : a.closest('#plans') ? 'plans' : 'other';
+    var s = a.closest('header') ? 'nav' : a.closest('.lp-sticky') ? 'sticky' : a.closest('.lp-hero') ? 'hero' : a.closest('#plans') ? 'plans' : 'other';
     ping('buy_click', m && m[1], s);
   }, true);
 })();

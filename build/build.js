@@ -497,12 +497,13 @@ const pages = {
   'starter-kit': () => { const ALL = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')); const OFF = ALL.starterKit; const BUN = ALL.bundle; const COM = ALL.complete; const PB = ALL.playbook; let RP = {}; try { RP = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'products', 'puppy-blues-rescue-plan.json'), 'utf8')); } catch (e) {} const go = (o, label, cls) => o.checkoutUrl ? `<a class="btn ${cls || 'btn-gold'}" href="${o.checkoutUrl}">${label} ${arrow}</a>` : `<a class="btn ${cls || 'btn-gold'}" href="/#signup">Notify me when it opens ${arrow}</a>`; const tick = t => `<li><svg class="ico"><use href="#i-check"/></svg>${t}</li>`; const save = Number(COM.value) - Number(COM.price); const assure = '<ul class="lp-assure"><li>Instant PDF download</li><li>Secure checkout by Lemon Squeezy</li><li>No shipping, digital only</li><li>30-day money-back guarantee</li></ul>'; const prev = (tag, items) => `<div class="lp-prev">${items.map(([n, cap]) => `<a href="/assets/products/prev-${tag}-${n}.jpg" target="_blank" rel="noopener"><img src="/assets/products/prev-${tag}-${n}.jpg" alt="Sample page: ${cap}" width="680" height="880" loading="lazy"><span>${cap}</span></a>`).join('')}</div>`; const next = (a, b) => `<p class="lp-next">${a} ${b}</p>`; return layout({
     title: 'New Puppy Starter Kit: Your Puppy\'s First 30 Days | PuppyGuido',
     description: 'A printable 30-day plan, potty schedule, crate checklist, first-week checklist and shopping list for first-time puppy parents. Instant download.',
-    urlPath: '/starter-kit/', noindex: true, navCta: { href: '#plans', label: 'See plans' }, extraHead: '<script defer src="/track.js"></script>',
+    urlPath: '/starter-kit/', noindex: true, navCta: { href: (JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'offers.json'), 'utf8')).starterKit.checkoutUrl || '#plans'), label: 'Get the Kit' }, extraHead: '<script defer src="/track.js"></script>',
     body: `<section class="lp-hero"><div class="wrap lp-grid"><div>
 <span class="eyebrow"><svg class="ico fill"><use href="#i-paw"/></svg> For first-time puppy parents</span>
-<h1>Your puppy's first 30 days, <span class="hl">planned day by day</span></h1>
-<p class="lead">Know what to do today, tomorrow and next week. A printable plan with a potty schedule, crate checklist, first-week checklist and shopping list, so you are not guessing at 2am.</p>
-<p class="lp-cta">${go(OFF, `Get the Starter Kit &mdash; $${OFF.price}`)} <a class="btn btn-ghost" href="#plans">See the plans</a></p>
+<h1>The potty schedule and 30-day plan <span class="hl">for your first puppy</span></h1>
+<p class="lead">A printable potty schedule by age, plus a day-by-day 30-day plan, crate checklist, first-week checklist and shopping list. Know what to do today, so you are not guessing at 2am.</p>
+<p class="lp-cta">${go(OFF, `Get the Starter Kit &mdash; $${OFF.price}`)}</p>
+<p class="lp-risk"><strong>30-day money-back guarantee.</strong> Instant PDF, print at home.</p>
 ${assure}</div>
 <div class="lp-hero-img"><img src="/assets/products/starter-kit-cover.jpg" alt="Cover of the New Puppy Starter Kit by PuppyGuido" width="900" height="675"></div></div></section>
 

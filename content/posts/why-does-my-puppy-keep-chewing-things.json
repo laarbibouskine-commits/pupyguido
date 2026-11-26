@@ -1,5 +1,5 @@
 {
-  "draft": true,
+  "draft": false,
   "slug": "why-does-my-puppy-keep-chewing-things",
   "title": "Why Does My Puppy Keep Chewing Everything?",
   "description": "Wondering why your puppy chews everything in sight? Here is what drives it, how long it tends to last, and how to protect your home and your sanity.",
@@ -15,10 +15,10 @@
   ],
   "date": "2026-11-10",
   "readMinutes": 8,
-  "image": "/assets/bite.jpg",
-  "imageAlt": "Golden retriever puppy resting its head on its paws",
-  "midImage": "/assets/potty.jpg",
-  "midImageAlt": "Golden retriever puppy sitting on green grass",
+  "image": "/assets/blog/og-why-does-my-puppy-keep-chewing-things.jpg",
+  "imageAlt": "PuppyGuido article cover: Why Does My Puppy Keep Chewing Everything?",
+  "midImage": "/assets/blog/why-does-my-puppy-keep-chewing-things-infographic.jpg",
+  "midImageAlt": "Infographic: why puppies chew and what to do about it",
   "quick": "Puppies chew because they explore with their mouths, because teething makes their gums sore, and because boredom or extra energy builds up. It is normal and usually eases between six months and a year. Manage the space, offer safe chews, and calmly redirect your puppy to something they are allowed to chew.",
   "faq": [
     {
@@ -68,5 +68,7 @@
       "title": "How to help your dog get used to spending time alone",
       "url": "https://www.dogstrust.org.uk/dog-advice/training/home/time-alone"
     }
-  ]
+  ],
+  "coverPhoto": "/assets/blog/cover-why-does-my-puppy-keep-chewing-things.jpg",
+  "coverAlt": "Small puppy chewing on a stick while lying on a grey carpet"
 }

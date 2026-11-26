@@ -14,10 +14,10 @@
   ],
   "date": "2026-11-13",
   "readMinutes": 9,
-  "image": "/assets/play.jpg",
-  "imageAlt": "Golden retriever puppy sitting on a carpet",
-  "midImage": "/assets/garden.jpg",
-  "midImageAlt": "Golden retriever puppy among yellow flowers",
+  "image": "/assets/blog/og-puppy-playpen-do-you-need-one.jpg",
+  "imageAlt": "PuppyGuido article cover: Puppy Playpen: Do You Need One and How to Use It",
+  "midImage": "/assets/blog/puppy-playpen-do-you-need-one-infographic.jpg",
+  "midImageAlt": "Infographic: five rules for using a puppy playpen well",
   "quick": "A puppy playpen is a supervised play area that keeps your puppy safe while you cook, shower or take a call. It helps with short, planned sessions and can give a tired puppy somewhere quiet to rest. It should not be used for long hours or as a replacement for exercise, company and toilet breaks. Session length should match your puppy's age and temperament.",
   "faq": [
     {
@@ -62,5 +62,7 @@
       "title": "How to bring your new dog home and make them feel welcome",
       "url": "https://www.humanesociety.org/resources/bringing-your-new-dog-home"
     }
-  ]
+  ],
+  "coverPhoto": "/assets/blog/cover-puppy-playpen-do-you-need-one.jpg",
+  "coverAlt": "Golden retriever puppy standing indoors on a dark floor"
 }

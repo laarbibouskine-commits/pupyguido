@@ -2,7 +2,7 @@
   "draft": false,
   "slug": "how-to-stop-puppy-jumping-on-people",
   "title": "How to Stop Your Puppy From Jumping on People",
-  "description": "Four paws on the floor earns the attention, so here is how to greet guests calmly and stop the jump before it starts.",
+  "description": "Stop puppy jumping by rewarding four paws on the floor. How to manage the doorway, greet guests calmly and what to avoid, like pushing.",
   "excerpt": "Four paws on the floor earns the attention, so here is how to greet guests calmly and stop the jump before it starts.",
   "seoTitle": "How to Stop Your Puppy From Jumping on People",
   "category": "Behavior",
@@ -15,10 +15,10 @@
   ],
   "date": "2026-11-06",
   "readMinutes": 8,
-  "image": "/assets/play.jpg",
-  "imageAlt": "Golden retriever puppy sitting on a carpet",
-  "midImage": "/assets/garden.jpg",
-  "midImageAlt": "Golden retriever puppy among yellow flowers",
+  "image": "/assets/blog/og-how-to-stop-puppy-jumping-on-people.jpg",
+  "imageAlt": "PuppyGuido article cover: How to Stop Your Puppy From Jumping on People",
+  "midImage": "/assets/blog/how-to-stop-puppy-jumping-on-people-infographic.jpg",
+  "midImageAlt": "Infographic: five steps to stop a puppy jumping on people",
   "quick": "Stop puppy jumping by rewarding four paws on the floor and turning away or staying still when he jumps. Use a gate or a lead to manage the doorway, ask guests to wait for a sit before petting, and avoid pushing or using your knee. Most puppies improve within a few weeks of consistent greetings, though every puppy is different.",
   "faq": [
     {
@@ -63,5 +63,7 @@
       "title": "Caring for your puppy, 6 weeks to 12 months",
       "url": "https://www.rspca.org.uk/adviceandwelfare/pets/dogs/health/puppycare"
     }
-  ]
+  ],
+  "coverPhoto": "/assets/blog/cover-how-to-stop-puppy-jumping-on-people.jpg",
+  "coverAlt": "Golden retriever puppy sitting on green grass looking up at the camera"
 }

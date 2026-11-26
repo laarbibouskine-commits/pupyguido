@@ -2,9 +2,9 @@
   "draft": false,
   "slug": "when-can-a-puppy-go-outside",
   "title": "When Can a Puppy Go Outside? Safe Early Outings",
-  "description": "Wondering when a new puppy can go outside? Learn how vaccines, socialization and carrying fit together so your puppy meets the world safely.",
+  "description": "When can a puppy go outside? A rough timeline by age, how vaccines fit in, when to carry your puppy and safe places for the first outings.",
   "excerpt": "Your puppy is ready to meet the world, but not every sidewalk is safe yet, so here's how to balance both.",
-  "seoTitle": "When Can a Puppy Go Outside? Safe Early Outings",
+  "seoTitle": "When Can a Puppy Go Outside? A Safe Timeline",
   "category": "Health & Care",
   "tags": [
     "puppy outings",
@@ -15,10 +15,10 @@
   ],
   "date": "2026-11-17",
   "readMinutes": 8,
-  "image": "/assets/garden.jpg",
-  "imageAlt": "Golden retriever puppy among yellow flowers",
-  "midImage": "/assets/checklist.jpg",
-  "midImageAlt": "Golden retriever puppy walking across a floor at home",
+  "image": "/assets/blog/og-when-can-a-puppy-go-outside.jpg",
+  "imageAlt": "PuppyGuido article cover: When Can a Puppy Go Outside? Safe Early Outings",
+  "midImage": "/assets/blog/when-can-a-puppy-go-outside-infographic.jpg",
+  "midImageAlt": "Infographic: five steps for safe early outings with a new puppy",
   "quick": "Most puppies can start short, careful outings soon after coming home, but the timing depends on vaccines, location and your vet's advice. Carried trips and private yard time usually come first, while dog parks and shared grass wait until the vaccine series is further along. Ask your vet for a written plan.",
   "faq": [
     {
@@ -63,5 +63,7 @@
       "title": "New puppy checklist",
       "url": "https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/new-puppy-checklist"
     }
-  ]
+  ],
+  "coverPhoto": "/assets/blog/cover-when-can-a-puppy-go-outside.jpg",
+  "coverAlt": "Golden puppy sitting on a low wall on a leash held by a person"
 }

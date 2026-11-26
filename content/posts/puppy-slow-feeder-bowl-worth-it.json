@@ -14,10 +14,10 @@
   ],
   "date": "2026-11-24",
   "readMinutes": 8,
-  "image": "/assets/checklist.jpg",
-  "imageAlt": "Golden retriever puppy walking across a floor at home",
-  "midImage": "/assets/bite.jpg",
-  "midImageAlt": "Golden retriever puppy resting its head on its paws",
+  "image": "/assets/blog/og-puppy-slow-feeder-bowl-worth-it.jpg",
+  "imageAlt": "PuppyGuido article cover: Puppy Slow Feeder Bowls: Are They Worth It?",
+  "midImage": "/assets/blog/puppy-slow-feeder-bowl-worth-it-infographic.jpg",
+  "midImageAlt": "Infographic: five signs to think about before buying a slow feeder bowl for a puppy",
   "quick": "Not every puppy needs one. A slow feeder bowl helps puppies who inhale their food, race through every meal, or get frantic at mealtime, but many healthy puppies do fine with a regular bowl and a steady routine. If you try one, start with a shallow, easy design, watch how your puppy eats, and ask your vet how much to feed.",
   "faq": [
     {
@@ -62,5 +62,7 @@
       "title": "How to help your puppy get settled into your home",
       "url": "https://www.dogstrust.org.uk/dog-advice/puppy/new-home"
     }
-  ]
+  ],
+  "coverPhoto": "/assets/blog/cover-puppy-slow-feeder-bowl-worth-it.jpg",
+  "coverAlt": "Puppy eating from a metal bowl on a patterned tile floor"
 }

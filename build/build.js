@@ -37,11 +37,13 @@ function withMidImage(html, p) {
 const ADS_FILE = path.join(ROOT, 'content', 'ads.json');
 const ADS = fs.existsSync(ADS_FILE) ? JSON.parse(fs.readFileSync(ADS_FILE, 'utf8')) : { enabled: false, slots: {} };
 const ADS_ON = !!(ADS.enabled && /^ca-pub-\d{10,}$/.test(ADS.publisherId || ''));
-const adsLoader = ADS_ON ? '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADS.publisherId + '" crossorigin="anonymous"></script>' : '';
+// Consent-gated: consent.js loads AdSense only after the visitor presses Accept.
+const ADS_ID_OK = /^ca-pub-\d{10,}$/.test(ADS.publisherId || '');
+const adsLoader = ADS_ON ? '<script>window.PG_ADS="' + ADS.publisherId + '"</script>' : '';
 function adSlot(name) {
   const id = (ADS.slots || {})[name];
   if (!ADS_ON || !id) return '';
-  return '<aside class="ad-slot ad-' + name + '" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="' + ADS.publisherId + '" data-ad-slot="' + id + '" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></aside>';
+  return '<aside class="ad-slot ad-' + name + '" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="' + ADS.publisherId + '" data-ad-slot="' + id + '" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>';
 }
 function withMidAd(html) {
   const ad = adSlot('articleMiddle');
@@ -643,13 +645,13 @@ ${RP.gumroadUrl ? `<a class="ty-card" href="${RP.gumroadUrl}" target="_blank" re
 <li><strong>Brevo</strong> sends our emails. It receives your email address, your first name and the message content, and it may record whether an email was delivered, opened or clicked.</li>
 <li><strong>Chat assistant.</strong> Messages you type are sent to our server and then to an AI language-model provider (OpenRouter and the model companies behind it) to generate a reply.</li>
 <li><strong>Google Fonts.</strong> Your browser loads fonts from Google, which means Google receives your IP address when a page loads.</li>
-<li><strong>Meta (Facebook).</strong> Only if you accept cookies: the Meta Pixel, described below.</li>
+<li><strong>Meta (Facebook).</strong> Only if you accept cookies: the Meta Pixel, described below.</li>${ADS_ON ? '<li><strong>Google AdSense.</strong> Only if you accept cookies: Google may show ads on our articles and uses cookies and similar technologies to serve and measure them. Learn more in <a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">how Google uses data from sites that use its services</a>, and manage ad personalization in <a href="https://adssettings.google.com" rel="noopener" target="_blank">Google Ad Settings</a>.</li>' : ''}
 <li><strong>Lemon Squeezy</strong> is the seller of record and handles checkout, payment and sales tax when you buy the Starter Kit, the bundle or the Playbook. It receives your name, email address, billing country and payment details. We do not see your card details.</li>
 <li><strong>Gumroad</strong> handles checkout and payment if you buy our paid guide. We do not see your card details.</li>
 </ul>
 <p>These providers may process data in countries outside your own, including the United States. They act on our behalf or under their own privacy policies.</p>
 <h2>Cookies and tracking</h2>
-<p>When you first visit, a banner asks whether you accept optional cookies. If you press <strong>Accept</strong>, we load the Meta (Facebook) Pixel. It sets cookies and sends information about your visit (for example the pages you view and button clicks) to Meta, to measure and improve our ads. If you press <strong>Decline</strong> or ignore the banner, the Pixel is not loaded. You can change your mind at any time by clearing this site's data in your browser; the banner will then appear again. If you accepted and then buy something, we also send Meta the purchase (the product, the amount and a hashed, one-way version of your email address) from our server, so Meta can measure whether our ads led to a sale. We send this only if you accepted. We do not use other advertising cookies.</p>
+<p>When you first visit, a banner asks whether you accept optional cookies. If you press <strong>Accept</strong>, we load the Meta (Facebook) Pixel. It sets cookies and sends information about your visit (for example the pages you view and button clicks) to Meta, to measure and improve our ads. If you press <strong>Decline</strong> or ignore the banner, the Pixel is not loaded. You can change your mind at any time by clearing this site's data in your browser; the banner will then appear again. If you accepted and then buy something, we also send Meta the purchase (the product, the amount and a hashed, one-way version of your email address) from our server, so Meta can measure whether our ads led to a sale. We send this only if you accepted. ${ADS_ON ? 'If you press <strong>Accept</strong>, we also load Google AdSense, which may show ads and set advertising cookies. If you decline, AdSense is not loaded and no ads are shown.' : 'We do not use other advertising cookies.'}</p>
 <h2>Affiliate links</h2>
 <p>Some pages contain affiliate links (for example to Amazon and Temu). If you buy through them we may earn a commission at no extra cost to you. When you click one you leave our site, and the store has its own privacy policy and cookies.</p>
 <h2>Your rights</h2>
@@ -803,7 +805,7 @@ if (require.main === module) {
   };
   fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
   write('sitemap.xml', sitemap(posts));
-  if (ADS_ON) write('ads.txt', 'google.com, ' + ADS.publisherId.replace('ca-', '') + ', DIRECT, f08c47fec0942fa0\n');
+  if (ADS_ID_OK) write('ads.txt', 'google.com, ' + ADS.publisherId.replace('ca-', '') + ', DIRECT, f08c47fec0942fa0\n');
   if (ADS_ON) { const hp = path.join(DIST, 'index.html'); if (fs.existsSync(hp)) fs.writeFileSync(hp, fs.readFileSync(hp, 'utf8').replace('</head>', adsLoader + '\n</head>')); }
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
   verifyDist();

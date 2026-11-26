@@ -4,6 +4,17 @@
   function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
 
+  // Google AdSense: only loaded after the visitor accepts (window.PG_ADS is set by the build only when ads are switched on)
+  function loadAds() {
+    if (!window.PG_ADS || window.__pgAds) return;
+    window.__pgAds = 1;
+    var sc = document.createElement('script'); sc.async = true; sc.crossOrigin = 'anonymous';
+    sc.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + window.PG_ADS;
+    document.head.appendChild(sc);
+    var ins = document.querySelectorAll('ins.adsbygoogle');
+    for (var i = 0; i < ins.length; i++) { try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {} }
+  }
+
   function loadPixel() {
     if (window.fbq) return;
     !function (f, b, e, v, n, t, s) {
@@ -54,14 +65,14 @@
     document.head.appendChild(st);
     var d = document.createElement('div');
     d.className = 'pg-cc'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Cookie consent');
-    d.innerHTML = '<p>We use optional cookies (Meta Pixel) to measure our ads and show them to the right people. Essential site features work without them. <a href="/privacy/">Privacy</a></p><button class="y" type="button">Accept</button><button class="n" type="button">Decline</button>';
-    d.querySelector('.y').onclick = function () { set('yes'); d.remove(); loadPixel(); };
+    d.innerHTML = '<p>We use optional cookies (Meta Pixel' + (window.PG_ADS ? ' and Google ads' : '') + ') to measure our ads and show them to the right people. Essential site features work without them. <a href="/privacy/">Privacy</a></p><button class="y" type="button">Accept</button><button class="n" type="button">Decline</button>';
+    d.querySelector('.y').onclick = function () { set('yes'); d.remove(); loadPixel(); loadAds(); };
     d.querySelector('.n').onclick = function () { set('no'); d.remove(); };
     document.body.appendChild(d);
   }
 
   var c = get();
-  if (c === 'yes') loadPixel();
+  if (c === 'yes') { loadPixel(); loadAds(); }
   else if (c !== 'no') {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', banner); else banner();
   }
